@@ -198,19 +198,19 @@
     "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
   },
   "wbn-vegan-protein-flavor-combo": {
-    "serving_size_g": 36,
-    "protein_per_serving_g": 22,
-    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+    "serving_size_g": 32.0,
+    "protein_per_serving_g": 22.0,
+    "source": "Manual override from product label image"
   },
   "wbn-superfood-plant-protein-powder-in-banoffee-pie": {
-    "serving_size_g": 36,
-    "protein_per_serving_g": 22,
-    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+    "serving_size_g": 32.0,
+    "protein_per_serving_g": 22.12,
+    "source": "Manual override from product label image"
   },
   "wbn-superfood-plant-protein-powder-for-women": {
-    "serving_size_g": 36,
-    "protein_per_serving_g": 22,
-    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+    "serving_size_g": 30.0,
+    "protein_per_serving_g": 18.0,
+    "source": "Manual override from product label image"
   },
   "wbn-vegan-protein-dark-chocolate-hazelnut": {
     "serving_size_g": 36,
@@ -218,9 +218,9 @@
     "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
   },
   "wbn-whey-protein-isolate-dark-chocolate-creatine-monohydrate-combo": {
-    "serving_size_g": 33,
-    "protein_per_serving_g": 24,
-    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+    "serving_size_g": 35.5,
+    "protein_per_serving_g": 26.6,
+    "source": "Manual override from product label image"
   },
   "wbn-unflavored-whey-protein-concentrate-creatine-monohydrate-combo": {
     "serving_size_g": 33,
@@ -228,9 +228,9 @@
     "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
   },
   "wbn-unflavored-whey-protein-isolate-creatine-monohydrate-combo": {
-    "serving_size_g": 33,
-    "protein_per_serving_g": 24,
-    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+    "serving_size_g": 35.5,
+    "protein_per_serving_g": 30.9,
+    "source": "Manual override from product label image"
   },
   "wbn-whey-protein-swiss-chocolate-creatine-monohydrate-combo": {
     "serving_size_g": 33,
