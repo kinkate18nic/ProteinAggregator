@@ -296,6 +296,87 @@ def scrape_shopify(product_url):
 
 
 # =============================================================================
+# PLIXLIFE SCRAPER
+# =============================================================================
+
+def scrape_plix(product_url):
+    """
+    Scraper for PlixLife, which uses Next.js with a deeply nested variant structure.
+    Target variant should be specified via '?sku=' in the URL.
+    """
+    result = {k: None for k in [
+        'scraped_name', 'price', 'in_stock', 'protein_percent',
+        'protein_per_serving_g', 'serving_size_g', 'num_servings', 'total_weight_g'
+    ]}
+    
+    try:
+        from urllib.parse import urlparse, parse_qs
+        parsed_url = urlparse(product_url)
+        qs = parse_qs(parsed_url.query)
+        target_sku = qs.get('sku', [None])[0]
+        
+        # Clean URL for request
+        clean_url = product_url.split('?')[0]
+        resp = requests.get(clean_url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15)
+        if resp.status_code != 200:
+            print(f"  [Plix Error] {product_url}: HTTP {resp.status_code}")
+            return result
+            
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        nd = soup.find('script', id='__NEXT_DATA__')
+        if not nd:
+            print(f"  [Plix Error] {product_url}: No __NEXT_DATA__ found")
+            return result
+            
+        data = json.loads(nd.string)
+        product = data.get('props', {}).get('pageProps', {}).get('productPageData', {}).get('product', {})
+        if not product:
+            print(f"  [Plix Error] {product_url}: Product block not found in NEXT_DATA")
+            return result
+            
+        variants = product.get('variants', [])
+        
+        # Find matching variant
+        target_variant = None
+        if target_sku:
+            for v in variants:
+                if v.get('sku') == target_sku:
+                    target_variant = v
+                    break
+        
+        if not target_variant and variants:
+            target_variant = variants[0] # Fallback to first
+            
+        if target_variant:
+            result['scraped_name'] = target_variant.get('name')
+            
+            # Price
+            try:
+                result['price'] = float(target_variant.get('pricing', {}).get('price', {}).get('gross', {}).get('amount'))
+            except (ValueError, TypeError):
+                pass
+                
+            # Stock
+            qty = target_variant.get('quantityAvailable', 0)
+            result['in_stock'] = qty > 0
+            
+            # Weight Extraction
+            import re
+            wt_match = re.search(r'(\d+(?:\.\d+)?)\s*(?:kg|Kg|KG)\b', result['scraped_name'] or '')
+            if wt_match:
+                result['total_weight_g'] = float(wt_match.group(1)) * 1000
+            else:
+                wt_match = re.search(r'(\d+)\s*(?:g|gm|gms|G)\b', result['scraped_name'] or '')
+                if wt_match:
+                    result['total_weight_g'] = float(wt_match.group(1))
+                    
+    except Exception as e:
+        print(f"  [Plix Error] {product_url}: {e}")
+        
+    return result
+
+
+# =============================================================================
 # JSON-LD SCRAPER (onlywhatsneeded, etc.)
 # =============================================================================
 
@@ -374,6 +455,7 @@ BRAND_SCRAPERS = {
     "truebasics": scrape_healthkart,
     "bgreen": scrape_shopify,
     "onlywhatsneeded": scrape_jsonld,
+    "plixlife": scrape_plix,
 }
 
 

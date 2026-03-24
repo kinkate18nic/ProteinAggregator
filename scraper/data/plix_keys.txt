@@ -1,0 +1,18 @@
+Top level pageProps keys: ['productPageData', 'headerAndFooterData', 'shopMeta', 'topPages']
+
+Paths to 'price':
+  productPageData -> product -> variants -> [0] -> pricing -> price: {'gross': {'amount': 1110, 'currency': 'INR'}, 'ne
+  productPageData -> product -> variants -> [1] -> pricing -> price: {'gross': {'amount': 2045, 'currency': 'INR'}, 'ne
+  productPageData -> product -> variants -> [2] -> pricing -> price: {'gross': {'amount': 4090, 'currency': 'INR'}, 'ne
+  productPageData -> product -> variants -> [3] -> pricing -> price: {'gross': {'amount': 1110, 'currency': 'INR'}, 'ne
+  productPageData -> product -> variants -> [4] -> pricing -> price: {'gross': {'amount': 2045, 'currency': 'INR'}, 'ne
+  productPageData -> product -> variants -> [5] -> pricing -> price: {'gross': {'amount': 4090, 'currency': 'INR'}, 'ne
+  productPageData -> product -> variants -> [6] -> pricing -> price: {'gross': {'amount': 2045, 'currency': 'INR'}, 'ne
+  productPageData -> product -> variants -> [7] -> pricing -> price: {'gross': {'amount': 4090, 'currency': 'INR'}, 'ne
+  productPageData -> product -> variants -> [8] -> pricing -> price: {'gross': {'amount': 6135, 'currency': 'INR'}, 'ne
+  productPageData -> product -> variants -> [9] -> pricing -> price: {'gross': {'amount': 2045, 'currency': 'INR'}, 'ne
+
+Paths to 'name':
+  productPageData -> product -> name: Super Strength Plant Protein Powder 
+
+Paths to 'stock_status' or 'in_stock':

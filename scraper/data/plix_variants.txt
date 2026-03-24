@@ -1,0 +1,101 @@
+Product Name: Super Strength Plant Protein Powder 
+Product ID: UHJvZHVjdDozMQ==
+Slug: strength
+
+Found 12 variants:
+
+--- Variant 0 ---
+SKU: SPP15-V
+Name: Vanilla Banana / Pack of 500g
+Price: 1110
+Quantity Available: 50
+  Size: ['Pack of 500g']
+  Flavors: ['Vanilla Banana']
+
+--- Variant 1 ---
+SKU: SPP30-V
+Name: Vanilla Banana / Pack of 1Kg
+Price: 2045
+Quantity Available: 50
+  Size: ['Pack of 1Kg']
+  Flavors: ['Vanilla Banana']
+
+--- Variant 2 ---
+SKU: SPP60-V
+Name: Vanilla Banana / Pack of 2Kg
+Price: 4090
+Quantity Available: 50
+  Size: ['Pack of 2Kg']
+  Flavors: ['Vanilla Banana']
+
+--- Variant 3 ---
+SKU: SPP15-C
+Name: Raw Chocolate / Pack of 500g
+Price: 1110
+Quantity Available: 50
+  Size: ['Pack of 500g']
+  Flavors: ['Raw Chocolate']
+
+--- Variant 4 ---
+SKU: SPP30-C
+Name: Raw Chocolate / Pack of 1Kg
+Price: 2045
+Quantity Available: 50
+  Size: ['Pack of 1Kg']
+  Flavors: ['Raw Chocolate']
+
+--- Variant 5 ---
+SKU: SPP60-C
+Name: Raw Chocolate / Pack of 2Kg
+Price: 4090
+Quantity Available: 50
+  Size: ['Pack of 2Kg']
+  Flavors: ['Raw Chocolate']
+
+--- Variant 6 ---
+SKU: SPP30-M
+Name: Cafe Mocha / Pack of 1Kg
+Price: 2045
+Quantity Available: 50
+  Size: ['Pack of 1Kg']
+  Flavors: ['Cafe Mocha']
+
+--- Variant 7 ---
+SKU: SPP60-M
+Name: Cafe Mocha / Pack of 2Kg
+Price: 4090
+Quantity Available: 50
+  Size: ['Pack of 2Kg']
+  Flavors: ['Cafe Mocha']
+
+--- Variant 8 ---
+SKU: SPP90-M
+Name: Cafe Mocha / Pack of 3Kg
+Price: 6135
+Quantity Available: 50
+  Size: ['Pack of 3Kg']
+  Flavors: ['Cafe Mocha']
+
+--- Variant 9 ---
+SKU: SPP30-A
+Name: Mango / Pack of 1Kg
+Price: 2045
+Quantity Available: 50
+  Size: ['Pack of 1Kg']
+  Flavors: ['Mango']
+
+--- Variant 10 ---
+SKU: SPP60-A
+Name: Mango / Pack of 2Kg
+Price: 4090
+Quantity Available: 50
+  Size: ['Pack of 2Kg']
+  Flavors: ['Mango']
+
+--- Variant 11 ---
+SKU: SPP90-A
+Name: Mango / Pack of 3Kg
+Price: 6135
+Quantity Available: 50
+  Size: ['Pack of 3Kg']
+  Flavors: ['Mango']

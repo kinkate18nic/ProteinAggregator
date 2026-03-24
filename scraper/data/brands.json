@@ -236,5 +236,27 @@
         "url": "https://onlywhatsneeded.in/product/whey-coffee-1kg"
       }
     ]
+  },
+  {
+    "brand_id": "plixlife",
+    "brand_name": "Plix",
+    "base_url": "https://www.plixlife.com/",
+    "products": [
+      {
+        "product_id": "plix-yeast-1kg-choc",
+        "name": "Super Strength Fermented Yeast Protein - 1kg Milk Chocolate",
+        "url": "https://www.plixlife.com/product/super-strength-fermented-yeast-protein/1616/4435?sku=FG-SSP-POW-YEAST-CHOC-1KG"
+      },
+      {
+        "product_id": "plix-evolve-1kg-vanilla",
+        "name": "EVOLVE Plant Protein - 1kg Vanilla",
+        "url": "https://www.plixlife.com/product/plant-protein-powder/14?sku=CPPP30-V"
+      },
+      {
+        "product_id": "plix-strength-1kg-banana",
+        "name": "Super Strength Plant Protein - 1kg Vanilla Banana",
+        "url": "https://www.plixlife.com/product/strength/31?sku=SPP30-V"
+      }
+    ]
   }
 ]

@@ -112,5 +112,21 @@
     "serving_size_g": 33,
     "protein_per_serving_g": 24,
     "source": "Product page: 24g protein per scoop, same scoop as plant protein"
+  },
+
+  "plix-yeast-1kg-choc": {
+    "serving_size_g": 37,
+    "protein_per_serving_g": 26,
+    "source": "Plix packaging label: 26g protein per 37g scoop"
+  },
+  "plix-evolve-1kg-vanilla": {
+    "serving_size_g": 33,
+    "protein_per_serving_g": 25,
+    "source": "Plix packaging label: 25g protein per 33g scoop"
+  },
+  "plix-strength-1kg-banana": {
+    "serving_size_g": 33,
+    "protein_per_serving_g": 25,
+    "source": "Plix packaging label: 25g protein per 33g scoop"
   }
 }

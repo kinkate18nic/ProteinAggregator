@@ -1,0 +1,26 @@
+[
+  {
+    "url": "https://www.plixlife.com/product/super-strength-fermented-yeast-protein/1616/4435",
+    "has_next_data": true,
+    "has_nuxt": false,
+    "has_shopify": false,
+    "meta_product:price:amount": "1699",
+    "meta_product:price:currency": "INR"
+  },
+  {
+    "url": "https://www.plixlife.com/product/plant-protein-powder/14",
+    "has_next_data": true,
+    "has_nuxt": false,
+    "has_shopify": false,
+    "meta_product:price:amount": "2045",
+    "meta_product:price:currency": "INR"
+  },
+  {
+    "url": "https://www.plixlife.com/product/strength/31",
+    "has_next_data": true,
+    "has_nuxt": false,
+    "has_shopify": false,
+    "meta_product:price:amount": "1110",
+    "meta_product:price:currency": "INR"
+  }
+]
