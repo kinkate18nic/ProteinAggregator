@@ -5,14 +5,179 @@
     "base_url": "https://www.muscleblaze.com",
     "products": [
       {
-        "product_id": "mb-biozyme-performance",
-        "name": "Biozyme Performance Whey (Chocolate)",
-        "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-performance-whey-1-kg-2-2-lb-rich-chocolate/SP-84138"
+        "product_id": "mb-bpw-1kg-rc",
+        "name": "Biozyme Performance Whey - 1kg Rich Chocolate",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-performance-whey/SP-88093?navKey=VRNT-165145"
       },
       {
-        "product_id": "mb-fuel-one",
-        "name": "Fuel One Whey Protein",
-        "url": "https://www.muscleblaze.com/sv/muscleblaze-fuel-one-whey-protein/SP-84140"
+        "product_id": "mb-bpw-1kg-ch",
+        "name": "Biozyme Performance Whey - 1kg Chocolate Hazelnut",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-performance-whey/SP-88093?navKey=VRNT-207850"
+      },
+      {
+        "product_id": "mb-bpw-1kg-lsc",
+        "name": "Biozyme Performance Whey - 1kg Less Sweet Chocolate",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-performance-whey/SP-88093?navKey=VRNT-269971"
+      },
+      {
+        "product_id": "mb-bpw-2kg-rc",
+        "name": "Biozyme Performance Whey - 2kg Rich Chocolate",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-performance-whey/SP-88093"
+      },
+      {
+        "product_id": "mb-bpw-base",
+        "name": "Biozyme Performance Whey - Base Product Page",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-performance-whey/SP-88093"
+      },
+      {
+        "product_id": "mb-biz-1kg-lcicc",
+        "name": "Biozyme Iso-Zero - 1kg Low Carb Ice Cream Chocolate",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-iso-zero/SP-45405?navKey=VRNT-89957"
+      },
+      {
+        "product_id": "mb-biz-2kg-lcicc",
+        "name": "Biozyme Iso-Zero - 2kg Low Carb Ice Cream Chocolate",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-iso-zero/SP-45405?navKey=VRNT-89955"
+      },
+      {
+        "product_id": "mb-biz-base",
+        "name": "Biozyme Iso-Zero - Base Product Page",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-iso-zero/SP-45405"
+      },
+      {
+        "product_id": "mb-bg100-1kg-drc",
+        "name": "Biozyme Gold 100% Whey - 1kg Double Rich Chocolate",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-gold-100-whey/SP-130031?navKey=VRNT-252447"
+      },
+      {
+        "product_id": "mb-bg100-2kg-drc",
+        "name": "Biozyme Gold 100% Whey - 2kg Double Rich Chocolate",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-gold-100-whey/SP-130031?navKey=VRNT-252445"
+      },
+      {
+        "product_id": "mb-bg100-base",
+        "name": "Biozyme Gold 100% Whey - Base Product Page",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-gold-100-whey/SP-130031"
+      },
+      {
+        "product_id": "mb-bwpr-1kg-mcc",
+        "name": "Biozyme Whey PR - 1kg Molten Chocolate Cake",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-whey-pr/SP-122029?navKey=VRNT-249465"
+      },
+      {
+        "product_id": "mb-bwpr-2kg-mcc",
+        "name": "Biozyme Whey PR - 2kg Molten Chocolate Cake",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-whey-pr/SP-122029?navKey=VRNT-249463"
+      },
+      {
+        "product_id": "mb-bwpr-2kg-cf",
+        "name": "Biozyme Whey PR - 2kg Chocolate Fudge",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-whey-pr/SP-122029"
+      },
+      {
+        "product_id": "mb-bwpr-base",
+        "name": "Biozyme Whey PR - Base Product Page",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-whey-pr/SP-122029"
+      },
+      {
+        "product_id": "mb-100wp-1kg-rmc",
+        "name": "100% Whey Protein - 1kg Rich Milk Chocolate",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-100-whey-protein-supplement-powder-with-digestive-enzyme/SP-33626?navKey=VRNT-72752"
+      },
+      {
+        "product_id": "mb-100wp-2kg-rmc",
+        "name": "100% Whey Protein - 2kg Rich Milk Chocolate",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-100-whey-protein-supplement-powder-with-digestive-enzyme/SP-33626"
+      },
+      {
+        "product_id": "mb-100wp-4kg-rmc",
+        "name": "100% Whey Protein - 4kg Rich Milk Chocolate",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-100-whey-protein-supplement-powder-with-digestive-enzyme/SP-33626?navKey=VRNT-72745"
+      },
+      {
+        "product_id": "mb-100wp-4lb-var",
+        "name": "100% Whey Protein - 4lb (variant)",
+        "url": "https://www.muscleblaze.com/sv/sv/muscleblaze-100-whey-protein-supplement-powder-with-digestive-enzyme/SP-33626?navKey=VRNT-130987"
+      },
+      {
+        "product_id": "mb-raw-500g-un",
+        "name": "100% Clean Raw Whey Protein - 500g Unflavoured",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-80-raw-whey-protein-supplement-powder/SP-40454?navKey=VRNT-131607"
+      },
+      {
+        "product_id": "mb-raw-1kg-un",
+        "name": "100% Clean Raw Whey Protein - 1kg Unflavoured",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-80-raw-whey-protein-supplement-powder/SP-40454?navKey=VRNT-77192"
+      },
+      {
+        "product_id": "mb-raw-base",
+        "name": "100% Clean Raw Whey Protein - Base Product Page",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-80-raw-whey-protein-supplement-powder/SP-40454"
+      },
+      {
+        "product_id": "mb-beg-500g-ch",
+        "name": "Beginner's Protein Powder - 500g Chocolate",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-beginners-protein-powder/SP-45581?navKey=VRNT-176588"
+      },
+      {
+        "product_id": "mb-beg-1kg-ch",
+        "name": "Beginner's Protein Powder - 1kg Chocolate",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-beginners-protein-powder/SP-45581"
+      },
+      {
+        "product_id": "mb-beg-base",
+        "name": "Beginner's Protein Powder - Base Product Page",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-beginners-protein-powder/SP-45581"
+      },
+      {
+        "product_id": "mb-plant-1kg-rc",
+        "name": "MB bGreen Plant Protein - 1kg Rich Chocolate",
+        "url": "https://www.muscleblaze.com/sv/bgreen-plant-protein-pea-protein-isolate/SP-80119"
+      },
+      {
+        "product_id": "mb-plant-base",
+        "name": "MuscleBlaze Plant Protein - Base Product Page",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-plant-protein/SP-103284"
+      },
+      {
+        "product_id": "mb-lean-1kg-ch",
+        "name": "High Protein Lean Mass Gainer - 1kg Chocolate",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-high-protein-lean-mass-gainer/SP-43512?navKey=VRNT-95493"
+      },
+      {
+        "product_id": "mb-lean-3kg-ch",
+        "name": "High Protein Lean Mass Gainer - 3kg Chocolate",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-high-protein-lean-mass-gainer/SP-43512"
+      },
+      {
+        "product_id": "mb-lean-5kg-ch",
+        "name": "High Protein Lean Mass Gainer - 5kg Chocolate",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-high-protein-lean-mass-gainer/SP-43512?navKey=VRNT-89173"
+      },
+      {
+        "product_id": "mb-xxl-1kg-ch",
+        "name": "Mass Gainer XXL - 1kg Chocolate",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-mass-gainer-xxl-with-complex-carbs-and-proteins-in-3:1-ratio/SP-33848?navKey=VRNT-72272"
+      },
+      {
+        "product_id": "mb-xxl-3kg-ch",
+        "name": "Mass Gainer XXL - 3kg Chocolate",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-mass-gainer-xxl-with-complex-carbs-and-proteins-in-3:1-ratio/SP-33848"
+      },
+      {
+        "product_id": "mb-xxl-5kg-ch",
+        "name": "Mass Gainer XXL - 5kg Chocolate",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-mass-gainer-xxl-with-complex-carbs-and-proteins-in-3:1-ratio/SP-33848?navKey=VRNT-72747"
+      },
+      {
+        "product_id": "mb-combo-bpw1kg",
+        "name": "Biozyme Performance Whey 1kg & Gym Bag Combo",
+        "url": "https://www.muscleblaze.com/pk/biozyme-performance-whey-1-kg-n-gym-bag-combo?navKey=PA-132625"
+      },
+      {
+        "product_id": "mb-combo-bpw2kg",
+        "name": "Biozyme Performance Whey 2kg & Creatine 100g Combo",
+        "url": "https://www.muscleblaze.com/pk/biozyme-performance-whey-2-kg-n-creatine-100g-combo?navKey=PA-128288"
       }
     ]
   }
