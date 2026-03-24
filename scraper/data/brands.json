@@ -1,0 +1,48 @@
+[
+  {
+    "brand_id": "nutrabox",
+    "brand_name": "Nutrabox",
+    "base_url": "https://nutrabox.in",
+    "products": [
+      {
+        "product_id": "nutrabox-whey-raw",
+        "name": "100% Pure Whey Protein Concentrate (Raw)",
+        "url": "https://nutrabox.in/products/100-pure-whey-protein-concentrate-raw"
+      },
+      {
+        "product_id": "nutrabox-whey-flavored",
+        "name": "100% Pure Whey Protein Concentrate (Flavored)",
+        "url": "https://nutrabox.in/products/whey-protein-concentrate-flavored"
+      }
+    ]
+  },
+  {
+    "brand_id": "muscleblaze",
+    "brand_name": "MuscleBlaze",
+    "base_url": "https://www.muscleblaze.com",
+    "products": [
+      {
+        "product_id": "mb-biozyme-whey",
+        "name": "Biozyme Performance Whey",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-performance-whey/SP-84138"
+      },
+      {
+        "product_id": "mb-fuel-one",
+        "name": "Fuel One Whey Protein",
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-fuel-one-whey-protein/SP-84140"
+      }
+    ]
+  },
+  {
+    "brand_id": "the_whole_truth",
+    "brand_name": "The Whole Truth",
+    "base_url": "https://thewholetruthfoods.com",
+    "products": [
+      {
+        "product_id": "twt-whey-isolate-unflavored",
+        "name": "Raw Whey Protein Isolate",
+        "url": "https://thewholetruthfoods.com/products/raw-whey-protein-isolate"
+      }
+    ]
+  }
+]

@@ -1,0 +1,84 @@
+[
+  {
+    "id": "nutrabox-whey-raw",
+    "brand": "Nutrabox",
+    "product_name": "100% Pure Whey Protein Concentrate (Raw)",
+    "product_url": "https://nutrabox.in/products/100-pure-whey-protein-concentrate-raw",
+    "live_price_inr": 1799.0,
+    "last_updated": "2026-03-24T09:12:47.908975",
+    "cost_per_gram": 2.29,
+    "is_tested": true,
+    "protein_verified_percent": 78.5,
+    "quality_score_note": "Verified via Lab",
+    "lab_details": {
+      "brand_id": "nutrabox",
+      "product_id": "nutrabox-whey-raw",
+      "is_tested": true,
+      "source": "Trustified",
+      "report_url": "https://trustified.in/example-report",
+      "protein_claimed_percent": 80.0,
+      "protein_verified_percent": 78.5,
+      "amino_spiking_detected": false,
+      "heavy_metals_pass": true
+    }
+  },
+  {
+    "id": "nutrabox-whey-flavored",
+    "brand": "Nutrabox",
+    "product_name": "100% Pure Whey Protein Concentrate (Flavored)",
+    "product_url": "https://nutrabox.in/products/whey-protein-concentrate-flavored",
+    "live_price_inr": 1799.0,
+    "last_updated": "2026-03-24T09:12:47.910982",
+    "cost_per_gram": 2.4,
+    "is_tested": false,
+    "protein_verified_percent": null,
+    "quality_score_note": "Unverified (Claimed)"
+  },
+  {
+    "id": "mb-biozyme-whey",
+    "brand": "MuscleBlaze",
+    "product_name": "Biozyme Performance Whey",
+    "product_url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-performance-whey/SP-84138",
+    "live_price_inr": 2299.0,
+    "last_updated": "2026-03-24T09:12:47.911229",
+    "cost_per_gram": 3.07,
+    "is_tested": false,
+    "protein_verified_percent": null,
+    "quality_score_note": "Unverified (Claimed)"
+  },
+  {
+    "id": "mb-fuel-one",
+    "brand": "MuscleBlaze",
+    "product_name": "Fuel One Whey Protein",
+    "product_url": "https://www.muscleblaze.com/sv/muscleblaze-fuel-one-whey-protein/SP-84140",
+    "live_price_inr": 2299.0,
+    "last_updated": "2026-03-24T09:12:47.911639",
+    "cost_per_gram": 3.07,
+    "is_tested": false,
+    "protein_verified_percent": null,
+    "quality_score_note": "Unverified (Claimed)",
+    "lab_details": {
+      "brand_id": "muscleblaze",
+      "product_id": "mb-fuel-one",
+      "is_tested": false,
+      "source": null,
+      "report_url": null,
+      "protein_claimed_percent": 75.0,
+      "protein_verified_percent": null,
+      "amino_spiking_detected": null,
+      "heavy_metals_pass": null
+    }
+  },
+  {
+    "id": "twt-whey-isolate-unflavored",
+    "brand": "The Whole Truth",
+    "product_name": "Raw Whey Protein Isolate",
+    "product_url": "https://thewholetruthfoods.com/products/raw-whey-protein-isolate",
+    "live_price_inr": 2999.0,
+    "last_updated": "2026-03-24T09:12:47.911990",
+    "cost_per_gram": 4.0,
+    "is_tested": false,
+    "protein_verified_percent": null,
+    "quality_score_note": "Unverified (Claimed)"
+  }
+]

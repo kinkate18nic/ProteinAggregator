@@ -1,0 +1,24 @@
+[
+  {
+    "brand_id": "nutrabox",
+    "product_id": "nutrabox-whey-raw",
+    "is_tested": true,
+    "source": "Trustified",
+    "report_url": "https://trustified.in/example-report",
+    "protein_claimed_percent": 80.0,
+    "protein_verified_percent": 78.5,
+    "amino_spiking_detected": false,
+    "heavy_metals_pass": true
+  },
+  {
+    "brand_id": "muscleblaze",
+    "product_id": "mb-fuel-one",
+    "is_tested": false,
+    "source": null,
+    "report_url": null,
+    "protein_claimed_percent": 75.0,
+    "protein_verified_percent": null,
+    "amino_spiking_detected": null,
+    "heavy_metals_pass": null
+  }
+]
