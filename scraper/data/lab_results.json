@@ -1,12 +1,12 @@
 [
   {
-    "brand_id": "nutrabox",
-    "product_id": "nutrabox-whey-raw",
+    "brand_id": "muscleblaze",
+    "product_id": "mb-biozyme-performance",
     "is_tested": true,
     "source": "Trustified",
-    "report_url": "https://trustified.in/example-report",
-    "protein_claimed_percent": 80.0,
-    "protein_verified_percent": 78.5,
+    "report_url": "https://www.trustified.in/proteinpowders",
+    "protein_claimed_percent": 69.4,
+    "protein_verified_percent": 69.2,
     "amino_spiking_detected": false,
     "heavy_metals_pass": true
   },
@@ -16,7 +16,7 @@
     "is_tested": false,
     "source": null,
     "report_url": null,
-    "protein_claimed_percent": 75.0,
+    "protein_claimed_percent": 66.6,
     "protein_verified_percent": null,
     "amino_spiking_detected": null,
     "heavy_metals_pass": null
