@@ -5,94 +5,237 @@ import requests
 import re
 from bs4 import BeautifulSoup
 
-def get_live_price(brand_id, product_url):
+# =============================================================================
+# BRAND-SPECIFIC SCRAPERS
+# =============================================================================
+
+def scrape_muscleblaze(product_url):
+    """
+    MuscleBlaze-specific scraper.
+    Extracts ALL data from the __NEXT_DATA__ JSON payload embedded in each product page.
+    
+    Returns dict with:
+      - price: float or None
+      - protein_per_serving_g: float or None (e.g., 25.0)
+      - serving_size_g: float or None (e.g., 36.0)
+      - protein_percent: float or None (e.g., 69.0)
+      - num_servings: int or None
+      - in_stock: bool
+      - total_weight_g: float or None (computed from serving_size * num_servings)
+    """
+    result = {
+        "price": None,
+        "protein_per_serving_g": None,
+        "serving_size_g": None,
+        "protein_percent": None,
+        "num_servings": None,
+        "in_stock": None,
+        "total_weight_g": None,
+    }
+    
+    try:
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0'}
+        r = requests.get(product_url, headers=headers, timeout=15)
+        if r.status_code != 200:
+            return result
+            
+        soup = BeautifulSoup(r.text, 'html.parser')
+        next_data_tag = soup.find('script', id='__NEXT_DATA__')
+        if not next_data_tag or not next_data_tag.string:
+            return result
+            
+        data = json.loads(next_data_tag.string)
+        results = data.get('props', {}).get('pageProps', {}).get('data', {}).get('results', {})
+        if not results:
+            return result
+        
+        # --- PRICE ---
+        hk_pricing = results.get('hkUserLoyaltyPricingDto', {})
+        result['price'] = float(hk_pricing.get('hkNormalOfferPrice', 0)) or None
+        if result['price'] is None:
+            offer_pr = results.get('offer_pr')
+            if offer_pr:
+                result['price'] = float(offer_pr)
+        
+        # --- STOCK STATUS ---
+        result['in_stock'] = not results.get('oos', True)
+        
+        # --- NUTRITIONAL DATA from nut_info_grp ---
+        nut_info = results.get('nut_info_grp', [])
+        for item in nut_info:
+            nm = (item.get('nm') or item.get('dis_nm') or '').lower()
+            val_str = item.get('val', '')
+            if 'protein' in nm and val_str:
+                num = re.search(r'([\d.]+)', val_str)
+                if num:
+                    result['protein_per_serving_g'] = float(num.group(1))
+        
+        # --- VARIANT ATTRIBUTES (Protein %, Serving Size, Number of Servings) ---
+        # These are inside each variant's 'hghAttr' within 'availVar', NOT the top-level 'attr'.
+        # Step 1: Find the currently selected variant (or match by navKey)
+        avail_var = results.get('availVar', {})
+        selected_variant = None
+        
+        # Try to find the variant that is marked as 'selected'
+        for var_key, var_data in avail_var.items():
+            if isinstance(var_data, dict) and var_data.get('selected'):
+                selected_variant = var_data
+                break
+        
+        # If no variant is explicitly selected, just use the first one
+        if not selected_variant and avail_var:
+            selected_variant = next(iter(avail_var.values()))
+        
+        if selected_variant and isinstance(selected_variant, dict):
+            # Read hghAttr from the variant
+            hgh_attrs = selected_variant.get('hghAttr', [])
+            for attr_item in hgh_attrs:
+                if not isinstance(attr_item, dict):
+                    continue
+                dis_nm = (attr_item.get('dis_nm') or '').lower()
+                # Values is a list of dicts with 'val' key
+                values = attr_item.get('values', [])
+                val_str = values[0].get('val', '') if values else ''
+                _parse_mb_attr(dis_nm, val_str, result)
+            
+            # Also read price and stock from this specific variant if available
+            var_pricing = selected_variant.get('hkUserLoyaltyPricingDto', {})
+            if var_pricing.get('hkNormalOfferPrice'):
+                result['price'] = float(var_pricing['hkNormalOfferPrice'])
+            elif selected_variant.get('offer_pr'):
+                result['price'] = float(selected_variant['offer_pr'])
+            
+            result['in_stock'] = not selected_variant.get('oos', True)
+        
+        # --- COMPUTE TOTAL WEIGHT ---
+        if result['serving_size_g'] and result['num_servings']:
+            result['total_weight_g'] = round(result['serving_size_g'] * result['num_servings'], 1)
+        
+    except Exception as e:
+        print(f"  [MB Scraper Error] {product_url}: {e}")
+    
+    return result
+
+
+def _parse_mb_attr(dis_nm, val_str, result):
+    """Helper to parse MuscleBlaze attribute key-value pairs."""
+    if not val_str:
+        return
+    num = re.search(r'([\d.]+)', str(val_str))
+    if not num:
+        return
+    
+    val = float(num.group(1))
+    
+    if 'protein %' in dis_nm or 'protein percent' in dis_nm:
+        result['protein_percent'] = val
+    elif 'serving size' in dis_nm:
+        result['serving_size_g'] = val
+    elif 'number of serving' in dis_nm:
+        result['num_servings'] = int(val)
+
+
+# =============================================================================
+# GENERIC FALLBACK SCRAPER (for brands not yet implemented)
+# =============================================================================
+
+def scrape_generic(product_url):
+    """Generic scraper that only extracts price from DOM text."""
+    result = {
+        "price": None,
+        "protein_per_serving_g": None,
+        "serving_size_g": None,
+        "protein_percent": None,
+        "num_servings": None,
+        "in_stock": None,
+        "total_weight_g": None,
+    }
     try:
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0'}
         r = requests.get(product_url, headers=headers, timeout=10)
-        
         if r.status_code == 200:
             soup = BeautifulSoup(r.text, 'html.parser')
-            
-            # 1. Advanced Next.js specific extraction
-            next_data = soup.find('script', id='__NEXT_DATA__')
-            if next_data and next_data.string:
-                try:
-                    data = json.loads(next_data.string)
-                    results = data.get('props', {}).get('pageProps', {}).get('data', {}).get('results', {})
-                    hk_pricing = results.get('hkUserLoyaltyPricingDto', {})
-                    if 'hkNormalOfferPrice' in hk_pricing:
-                        return float(hk_pricing['hkNormalOfferPrice'])
-                except:
-                    pass
-            
-            # 2. Generic unescaped HTML DOM extraction
             text = soup.get_text(separator=' ')
             matches = re.findall(r'₹\s*([\d,]+)', text)
             if matches:
-                prices = [int(m.replace(',', '')) for m in matches if int(m.replace(',', '')) > 800]
+                prices = [int(m.replace(',', '')) for m in matches if int(m.replace(',', '')) > 100]
                 if prices:
-                    return float(prices[0])
-    except Exception as e:
+                    result['price'] = float(prices[0])
+    except Exception:
         pass
-        
-    # STRICLY NO FALLBACK!
-    return None
+    return result
 
-def extract_weight_in_grams(name):
-    name_lower = name.lower()
-    kg_match = re.search(r'([\d.]+)\s*kg', name_lower)
-    if kg_match: return int(float(kg_match.group(1)) * 1000)
-    g_match = re.search(r'([\d.]+)\s*g\b', name_lower)
-    if g_match: return int(float(g_match.group(1)))
-    lb_match = re.search(r'([\d.]+)\s*lb', name_lower)
-    if lb_match: return int(float(lb_match.group(1)) * 453.592)
-    return 1000
 
-def calculate_quality_metrics(product_data, lab_data):
+# =============================================================================
+# SCRAPER ROUTER
+# =============================================================================
+
+BRAND_SCRAPERS = {
+    "muscleblaze": scrape_muscleblaze,
+    # Future: "truebasics": scrape_truebasics,
+    # Future: "nakpro": scrape_nakpro,
+}
+
+
+def scrape_product(brand_id, product_url):
+    """Route to the correct brand-specific scraper."""
+    scraper = BRAND_SCRAPERS.get(brand_id, scrape_generic)
+    return scraper(product_url)
+
+
+# =============================================================================
+# METRIC CALCULATION (ZERO FALLBACK)
+# =============================================================================
+
+def calculate_metrics(scraped_data, lab_data):
+    """
+    Calculate cost-per-gram metrics using ONLY real scraped data.
+    
+    Shows TWO cost-per-gram values:
+      1. cost_per_gram_claimed: based on brand's own label claim (always from scraper)
+      2. cost_per_gram_verified: based on independent lab test (only if lab data exists)
+    """
     metrics = {
-        "cost_per_gram": None,
-        "is_tested": False,
-        "total_weight_grams": extract_weight_in_grams(product_data['product_name']),
+        "live_price_inr": scraped_data['price'],
+        "in_stock": scraped_data['in_stock'],
+        "protein_per_serving_g": scraped_data['protein_per_serving_g'],
+        "serving_size_g": scraped_data['serving_size_g'],
+        "protein_claimed_percent": scraped_data['protein_percent'],
+        "num_servings": scraped_data['num_servings'],
+        "total_weight_g": scraped_data['total_weight_g'],
+        "cost_per_gram_claimed": None,
+        "cost_per_gram_verified": None,
+        "is_lab_tested": False,
         "protein_verified_percent": None,
-        "protein_claimed_percent": None,
-        "quality_score_note": "Data Unavailable"
     }
     
-    total_weight = metrics["total_weight_grams"]
-    live_price = product_data['live_price_inr']
-
-    # Rule 1: We absolutely cannot build a metric without knowing the exact live price first
-    if live_price is None:
-        metrics['quality_score_note'] = "Price Unavailable"
-        return metrics
-
-    if lab_data and lab_data.get('is_tested'):
-        metrics['is_tested'] = True
-        verified_pct = lab_data['protein_verified_percent']
-        metrics['protein_verified_percent'] = verified_pct
-        metrics['protein_claimed_percent'] = lab_data.get('protein_claimed_percent')
-        
-        if verified_pct:
-            total_verified_protein = total_weight * (verified_pct / 100)
-            if total_verified_protein > 0:
-                metrics['cost_per_gram'] = round(live_price / total_verified_protein, 2)
-            metrics['quality_score_note'] = "Verified via Lab"
-            
-    elif lab_data and lab_data.get('protein_claimed_percent'):
-        # We explicitly rely on the labeled claim explicitly mapped in the JSON
-        claimed_pct = lab_data['protein_claimed_percent']
-        metrics['protein_claimed_percent'] = claimed_pct
-        
+    price = scraped_data['price']
+    claimed_pct = scraped_data['protein_percent']
+    total_weight = scraped_data['total_weight_g']
+    
+    # Cost per gram based on CLAIMED protein %
+    if price and claimed_pct and total_weight:
         total_claimed_protein = total_weight * (claimed_pct / 100)
         if total_claimed_protein > 0:
-            metrics['cost_per_gram'] = round(live_price / total_claimed_protein, 2)
-        metrics['quality_score_note'] = "Unverified (Claimed)"
-    else:
-        # Rule 2: If we don't have a verified source OR an exact labeled claim for this product, we abort metric processing completely!
-        # NO 75% FALLBACKS.
-        metrics['quality_score_note'] = "Missing Protein %"
+            metrics['cost_per_gram_claimed'] = round(price / total_claimed_protein, 2)
+    
+    # Cost per gram based on LAB VERIFIED protein %
+    if lab_data and lab_data.get('is_tested') and lab_data.get('protein_verified_percent'):
+        metrics['is_lab_tested'] = True
+        verified_pct = lab_data['protein_verified_percent']
+        metrics['protein_verified_percent'] = verified_pct
         
+        if price and total_weight:
+            total_verified_protein = total_weight * (verified_pct / 100)
+            if total_verified_protein > 0:
+                metrics['cost_per_gram_verified'] = round(price / total_verified_protein, 2)
+    
     return metrics
+
+
+# =============================================================================
+# MAIN
+# =============================================================================
 
 def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -105,48 +248,50 @@ def main():
     
     with open(brands_path, "r", encoding="utf-8") as f:
         brands = json.load(f)
-        
     with open(lab_results_path, "r", encoding="utf-8") as f:
         lab_results_list = json.load(f)
-        
     lab_results = {item['product_id']: item for item in lab_results_list}
 
     master_catalog = []
-    print("Executing Strict Zero-Fallback Scraper Protocol...")
     
     for brand in brands:
-        brand_id = brand.get("brand_id")
-        brand_name = brand.get("brand_name")
+        brand_id = brand['brand_id']
+        brand_name = brand['brand_name']
         
-        for product in brand.get("products", []):
-            product_id = product.get("product_id")
+        for product in brand.get('products', []):
+            product_id = product['product_id']
+            product_url = product['url']
             
-            live_price = get_live_price(brand_id, product.get("url"))
-            print(f"Scraped {product_id}: Price={live_price}")
-            
-            product_lab_data = lab_results.get(product_id)
+            print(f"Scraping: {brand_name} > {product['name']}")
+            scraped = scrape_product(brand_id, product_url)
+            lab_data = lab_results.get(product_id)
+            metrics = calculate_metrics(scraped, lab_data)
             
             catalog_entry = {
                 "id": product_id,
                 "brand": brand_name,
-                "product_name": product.get("name"),
-                "product_url": product.get("url"),
-                "live_price_inr": live_price,
-                "last_updated": datetime.datetime.now().isoformat()
+                "product_name": product['name'],
+                "product_url": product_url,
+                "last_updated": datetime.datetime.now().isoformat(),
+                **metrics,
             }
             
-            metrics = calculate_quality_metrics(catalog_entry, product_lab_data)
-            catalog_entry.update(metrics)
+            if lab_data:
+                catalog_entry["lab_details"] = lab_data
             
-            if product_lab_data:
-                catalog_entry["lab_details"] = product_lab_data
+            # Log what we got
+            p = metrics['live_price_inr']
+            c = metrics['protein_claimed_percent']
+            s = metrics['in_stock']
+            cpg = metrics['cost_per_gram_claimed']
+            print(f"  -> Price=₹{p}, Protein%={c}, InStock={s}, ₹/g(claimed)={cpg}")
             
             master_catalog.append(catalog_entry)
-            
+    
     with open(master_catalog_path, "w", encoding="utf-8") as f:
         json.dump(master_catalog, f, indent=2)
-        
-    print(f"Successfully generated 100% transparent master_catalog.json with {len(master_catalog)} products.")
+    
+    print(f"\nGenerated master_catalog.json with {len(master_catalog)} products.")
 
 if __name__ == "__main__":
     main()

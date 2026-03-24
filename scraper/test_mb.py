@@ -1,17 +1,18 @@
 import json
 
-def search_keys(d, path=""):
-    if isinstance(d, dict):
-        for k, v in d.items():
-            if any(term in str(k).lower() for term in ['protein', 'serv', 'nutri', 'stock', 'price']):
-                if isinstance(v, (str, int, float, bool)):
-                    print(f"{path}.{k} = {v}")
-            search_keys(v, path+"."+str(k))
-    elif isinstance(d, list):
-        for i, item in enumerate(d):
-            search_keys(item, path+f"[{i}]")
-
 with open('mb_debug.json', 'r', encoding='utf-8') as f:
     data = json.load(f)
 
-search_keys(data)
+results = data['props']['pageProps']['data']['results']
+
+# Full attr dump
+print("=== ATTR (full dump) ===")
+print(json.dumps(results.get('attr', []), indent=2)[:3000])
+
+# Also check availVar for the specific variant we requested (VRNT-165145)
+print("\n=== CURRENT VARIANT KEYS ===")
+avail = results.get('availVar', {})
+# Find the first variant and show its full structure
+for key, val in list(avail.items())[:1]:
+    print(f"\nVariant key: {key}")
+    print(json.dumps(val, indent=2)[:3000])
