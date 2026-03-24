@@ -110,5 +110,82 @@
         "url": "https://www.muscleblaze.com/sv/muscleblaze-plant-protein/SP-103284"
       }
     ]
+  },
+  {
+    "brand_id": "truebasics",
+    "brand_name": "TrueBasics",
+    "base_url": "https://www.truebasics.com",
+    "products": [
+      {
+        "product_id": "tb-wpi-c-1kg-choc",
+        "name": "Clean Whey Protein (Isolate + Concentrate) - 1kg Chocolate",
+        "url": "https://www.truebasics.com/sv/truebasics-clean-whey-protein-isolate-plus-concentrate/SP-135011?navKey=VRNT-266871"
+      },
+      {
+        "product_id": "tb-wpi-c-1kg-coffee",
+        "name": "Clean Whey Protein (Isolate + Concentrate) - 1kg Coffee",
+        "url": "https://www.truebasics.com/sv/truebasics-clean-whey-protein-isolate-plus-concentrate/SP-135011?navKey=VRNT-274779"
+      },
+      {
+        "product_id": "tb-wpi-c-1kg-matcha",
+        "name": "Clean Whey Protein (Isolate + Concentrate) - 1kg Matcha",
+        "url": "https://www.truebasics.com/sv/truebasics-clean-whey-protein-isolate-plus-concentrate/SP-135011?navKey=VRNT-277507"
+      },
+      {
+        "product_id": "tb-wpi-c-1kg-choc-refill",
+        "name": "Clean Whey Protein (Isolate + Concentrate) - 1kg Chocolate Refill",
+        "url": "https://www.truebasics.com/sv/truebasics-clean-whey-protein-isolate-plus-concentrate/SP-135011?navKey=VRNT-277575"
+      },
+      {
+        "product_id": "tb-wpi-c-sachet-coffee",
+        "name": "Clean Whey Protein (Isolate + Concentrate) - Coffee Sachet Pack (5x35g)",
+        "url": "https://www.truebasics.com/sv/truebasics-clean-whey-protein-isolate-plus-concentrate/SP-135011?navKey=VRNT-279771"
+      },
+      {
+        "product_id": "tb-wpi-c-sachet-choc",
+        "name": "Clean Whey Protein (Isolate + Concentrate) - Chocolate Sachet Pack (5x35g)",
+        "url": "https://www.truebasics.com/sv/truebasics-clean-whey-protein-isolate-plus-concentrate/SP-135011?navKey=VRNT-268555"
+      },
+      {
+        "product_id": "tb-wpi-1kg-choc",
+        "name": "Clean Whey Protein Isolate - 1kg Chocolate",
+        "url": "https://www.truebasics.com/sv/truebasics-clean-whey-protein-isolate/SP-135063?navKey=VRNT-274397"
+      },
+      {
+        "product_id": "tb-wpi-1kg-coffee",
+        "name": "Clean Whey Protein Isolate - 1kg Coffee",
+        "url": "https://www.truebasics.com/sv/truebasics-clean-whey-protein-isolate/SP-135063?navKey=VRNT-279151"
+      },
+      {
+        "product_id": "tb-wpi-1kg-vanilla",
+        "name": "Clean Whey Protein Isolate - 1kg Vanilla",
+        "url": "https://www.truebasics.com/sv/truebasics-clean-whey-protein-isolate/SP-135063?navKey=VRNT-267055"
+      },
+      {
+        "product_id": "tb-wpi-sachet-choc",
+        "name": "Clean Whey Protein Isolate - Chocolate Sachet Pack (5x34g)",
+        "url": "https://www.truebasics.com/sv/truebasics-clean-whey-protein-isolate/SP-135063?navKey=VRNT-273053"
+      },
+      {
+        "product_id": "tb-wpi-1kg-vanilla-refill",
+        "name": "Clean Whey Protein Isolate - 1kg Vanilla Refill",
+        "url": "https://www.truebasics.com/sv/truebasics-clean-whey-protein-isolate/SP-135063?navKey=VRNT-277577"
+      },
+      {
+        "product_id": "tb-plant-1kg-choc",
+        "name": "Clean Plant Protein - 1kg Chocolate",
+        "url": "https://www.truebasics.com/sv/truebasics-clean-plant-protein/SP-136871?navKey=VRNT-272429"
+      },
+      {
+        "product_id": "tb-raw-conc-1kg-unflav",
+        "name": "Clean Raw Whey Concentrate - 1kg Unflavoured",
+        "url": "https://www.truebasics.com/sv/truebasics-clean-raw-whey-concentrate/SP-136503?navKey=VRNT-271469"
+      },
+      {
+        "product_id": "tb-raw-iso-1kg-unflav",
+        "name": "Clean Raw Whey Isolate - 1kg Unflavoured",
+        "url": "https://www.truebasics.com/sv/truebasics-clean-raw-whey-isolate/SP-139677?navKey=VRNT-281081"
+      }
+    ]
   }
 ]

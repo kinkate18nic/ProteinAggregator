@@ -9,9 +9,9 @@ from bs4 import BeautifulSoup
 # BRAND-SPECIFIC SCRAPERS
 # =============================================================================
 
-def scrape_muscleblaze(product_url):
+def scrape_healthkart(product_url):
     """
-    MuscleBlaze-specific scraper.
+    HealthKart platform scraper (works for MuscleBlaze, TrueBasics, etc.).
     Extracts ALL data from the __NEXT_DATA__ JSON payload embedded in each product page.
     
     Returns dict with:
@@ -61,7 +61,7 @@ def scrape_muscleblaze(product_url):
             return result
         
         # --- PRICE ---
-        hk_pricing = results.get('hkUserLoyaltyPricingDto', {})
+        hk_pricing = results.get('hkUserLoyaltyPricingDto') or {}
         result['price'] = float(hk_pricing.get('hkNormalOfferPrice', 0)) or None
         if result['price'] is None:
             offer_pr = results.get('offer_pr')
@@ -131,7 +131,7 @@ def scrape_muscleblaze(product_url):
                 _parse_mb_attr(dis_nm, val_str, result)
             
             # Also read price and stock from this specific variant if available
-            var_pricing = selected_variant.get('hkUserLoyaltyPricingDto', {})
+            var_pricing = selected_variant.get('hkUserLoyaltyPricingDto') or {}
             if var_pricing.get('hkNormalOfferPrice'):
                 result['price'] = float(var_pricing['hkNormalOfferPrice'])
             elif selected_variant.get('offer_pr'):
@@ -235,8 +235,8 @@ def scrape_generic(product_url):
 # =============================================================================
 
 BRAND_SCRAPERS = {
-    "muscleblaze": scrape_muscleblaze,
-    # Future: "truebasics": scrape_truebasics,
+    "muscleblaze": scrape_healthkart,
+    "truebasics": scrape_healthkart,
     # Future: "nakpro": scrape_nakpro,
 }
 
