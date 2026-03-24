@@ -3,6 +3,7 @@ import datetime
 import os
 import requests
 import re
+from bs4 import BeautifulSoup
 
 def get_live_price(brand_id, product_url):
     """
@@ -13,9 +14,10 @@ def get_live_price(brand_id, product_url):
         r = requests.get(product_url, headers=headers, timeout=10)
         
         if r.status_code == 200:
-            html = r.text
-            # Look for Indian Rupee symbols attached to large numbers within the HTML standard output
-            matches = re.findall(r'₹\s*([\d,]+)', html)
+            soup = BeautifulSoup(r.text, 'html.parser')
+            text = soup.get_text(separator=' ')
+            # Look for Indian Rupee symbols attached to large numbers
+            matches = re.findall(r'₹\s*([\d,]+)', text)
             if matches:
                 prices = [int(m.replace(',', '')) for m in matches if int(m.replace(',', '')) > 800]
                 if prices:
