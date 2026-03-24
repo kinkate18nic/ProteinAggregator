@@ -5,6 +5,9 @@ on:
     - cron: '0 */12 * * *' # Run every 12 hours automatically
   workflow_dispatch:       # Allow manual triggering from GitHub UI
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   scrape_and_deploy:
     runs-on: ubuntu-latest
