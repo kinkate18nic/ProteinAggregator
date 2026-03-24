@@ -1,0 +1,79 @@
+{
+  "_comment": "Static nutritional overrides for HealthKart products where __NEXT_DATA__ hghAttr is incomplete. Extracted one-time from product page nutritional label images. Only update when a product is reformulated or a new product is added.",
+  "_last_updated": "2026-03-24",
+  
+  "mb-biz-1kg-lcicc": {
+    "serving_size_g": 34,
+    "protein_per_serving_g": 27,
+    "source": "Nutritional label image on product page"
+  },
+  "mb-biz-2kg-lcicc": {
+    "serving_size_g": 34,
+    "protein_per_serving_g": 27,
+    "source": "Same formulation as 1kg variant"
+  },
+
+  "tb-wpi-c-1kg-choc": {
+    "serving_size_g": 35,
+    "protein_per_serving_g": 25.2,
+    "source": "Nutritional label image on product page"
+  },
+  "tb-wpi-c-1kg-coffee": {
+    "serving_size_g": 35,
+    "protein_per_serving_g": 25.2,
+    "source": "Same formulation as Chocolate variant"
+  },
+  "tb-wpi-c-1kg-matcha": {
+    "serving_size_g": 35,
+    "protein_per_serving_g": 25.2,
+    "source": "Same formulation as Chocolate variant"
+  },
+  "tb-wpi-c-1kg-choc-refill": {
+    "serving_size_g": 35,
+    "protein_per_serving_g": 25.2,
+    "source": "Same formulation as Chocolate variant"
+  },
+  "tb-wpi-c-sachet-coffee": {
+    "serving_size_g": 35,
+    "protein_per_serving_g": 25.2,
+    "source": "Same formulation, sachet = 1 serving"
+  },
+  "tb-wpi-c-sachet-choc": {
+    "serving_size_g": 35,
+    "protein_per_serving_g": 25.2,
+    "source": "Same formulation, sachet = 1 serving"
+  },
+
+  "tb-wpi-1kg-choc": {
+    "serving_size_g": 34,
+    "protein_per_serving_g": 27.9,
+    "source": "Calculated from 82% protein claim: 34g * 0.82 = 27.9g"
+  },
+  "tb-wpi-1kg-coffee": {
+    "serving_size_g": 34,
+    "protein_per_serving_g": 28.9,
+    "source": "Calculated from 85% protein claim: 34g * 0.85 = 28.9g"
+  },
+  "tb-wpi-1kg-vanilla": {
+    "serving_size_g": 34,
+    "protein_per_serving_g": 30,
+    "source": "Nutritional label image on product page (Vanilla)"
+  },
+  "tb-wpi-sachet-choc": {
+    "serving_size_g": 34,
+    "protein_per_serving_g": 27.9,
+    "source": "Same formulation as Chocolate 1kg"
+  },
+  "tb-wpi-1kg-vanilla-refill": {
+    "serving_size_g": 34,
+    "protein_per_serving_g": 30,
+    "source": "Same formulation as Vanilla 1kg"
+  },
+
+  "tb-raw-conc-1kg-unflav": {
+    "serving_size_g": 35,
+    "protein_per_serving_g": 28,
+    "protein_percent_override": 80.0,
+    "source": "Nutritional label: 28g protein per 35g serving. HealthKart reports 229% which is a data error."
+  }
+}

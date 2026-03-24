@@ -316,6 +316,15 @@ def main():
         lab_results_list = json.load(f)
     lab_results = {item['product_id']: item for item in lab_results_list}
 
+    # Load nutrition overrides (static, one-time extracted data from label images)
+    overrides_path = os.path.join(script_dir, "data", "nutrition_overrides.json")
+    nutrition_overrides = {}
+    if os.path.exists(overrides_path):
+        with open(overrides_path, "r", encoding="utf-8") as f:
+            raw_overrides = json.load(f)
+            # Filter out comment keys
+            nutrition_overrides = {k: v for k, v in raw_overrides.items() if not k.startswith('_')}
+
     master_catalog = []
     
     for brand in brands:
@@ -328,6 +337,31 @@ def main():
             
             print(f"Scraping: {brand_name} > {product['name']}")
             scraped = scrape_product(brand_id, product_url)
+            
+            # Apply nutrition overrides for missing fields
+            if product_id in nutrition_overrides:
+                ovr = nutrition_overrides[product_id]
+                # protein_percent_override forces correction (e.g., TB Raw Whey 229% → 80%)
+                # When override is present, force-apply ALL override fields since scraped data is wrong
+                if 'protein_percent_override' in ovr:
+                    scraped['protein_percent'] = ovr['protein_percent_override']
+                    if 'serving_size_g' in ovr:
+                        scraped['serving_size_g'] = ovr['serving_size_g']
+                    if 'protein_per_serving_g' in ovr:
+                        scraped['protein_per_serving_g'] = ovr['protein_per_serving_g']
+                else:
+                    # Normal fallback: only fill in missing fields
+                    if scraped['serving_size_g'] is None and 'serving_size_g' in ovr:
+                        scraped['serving_size_g'] = ovr['serving_size_g']
+                    if scraped['protein_per_serving_g'] is None and 'protein_per_serving_g' in ovr:
+                        scraped['protein_per_serving_g'] = ovr['protein_per_serving_g']
+                # Recompute total_weight if we now have serving data
+                if scraped['total_weight_g'] is None and scraped['serving_size_g'] and scraped['num_servings']:
+                    scraped['total_weight_g'] = round(scraped['serving_size_g'] * scraped['num_servings'], 1)
+                # Recompute protein_percent if we now have protein_per_serving and serving_size
+                if scraped['protein_percent'] is None and scraped['protein_per_serving_g'] and scraped['serving_size_g']:
+                    scraped['protein_percent'] = round((scraped['protein_per_serving_g'] / scraped['serving_size_g']) * 100, 1)
+            
             lab_data = lab_results.get(product_id)
             metrics = calculate_metrics(scraped, lab_data)
             

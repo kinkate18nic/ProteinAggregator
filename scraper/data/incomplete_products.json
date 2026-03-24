@@ -1,0 +1,230 @@
+[
+  {
+    "product_id": "mb-biz-1kg-lcicc",
+    "name": "MuscleBlaze Biozyme Iso-Zero,  1 kg  Low Carb Ice Cream Chocolate",
+    "brand": "muscleblaze",
+    "missing_fields": [
+      "serving_size",
+      "protein_per_serving",
+      "num_servings"
+    ],
+    "has_protein_pct": 79.0,
+    "has_price": 4199.0,
+    "label_images": [
+      "https://img1.hkrtcdn.com/20436/bnr_2043524_o.jpg",
+      "https://img1.hkrtcdn.com/20436/bnr_2043522_o.jpg",
+      "https://img1.hkrtcdn.com/20436/bnr_2043526_o.jpg",
+      "https://img1.hkrtcdn.com/20436/normal_2043518_o.jpg"
+    ]
+  },
+  {
+    "product_id": "mb-biz-2kg-lcicc",
+    "name": "MuscleBlaze Biozyme Iso-Zero,  2 kg  Low Carb Ice Cream Chocolate",
+    "brand": "muscleblaze",
+    "missing_fields": [
+      "serving_size",
+      "protein_per_serving",
+      "num_servings"
+    ],
+    "has_protein_pct": 79.0,
+    "has_price": 8199.0,
+    "label_images": [
+      "https://img1.hkrtcdn.com/20436/bnr_2043524_o.jpg",
+      "https://img1.hkrtcdn.com/20436/bnr_2043522_o.jpg",
+      "https://img1.hkrtcdn.com/20436/bnr_2043526_o.jpg",
+      "https://img1.hkrtcdn.com/20436/normal_2043518_o.jpg",
+      "https://img1.hkrtcdn.com/20436/bnr_2043524_o.jpg",
+      "https://img1.hkrtcdn.com/20436/bnr_2043522_o.jpg",
+      "https://img1.hkrtcdn.com/20436/bnr_2043526_o.jpg",
+      "https://img1.hkrtcdn.com/20436/normal_2043518_o.jpg",
+      "https://img1.hkrtcdn.com/20436/normal_2043520_o.jpg"
+    ]
+  },
+  {
+    "product_id": "tb-wpi-c-1kg-choc",
+    "name": "TrueBasics Clean Whey Protein (Isolate + Concentrate),  1 kg  Chocolate",
+    "brand": "truebasics",
+    "missing_fields": [
+      "serving_size",
+      "protein_per_serving",
+      "num_servings"
+    ],
+    "has_protein_pct": 72.0,
+    "has_price": 3499.0,
+    "label_images": [
+      "https://img1.hkrtcdn.com/39230/normal_3922983_o.jpg",
+      "https://img1.hkrtcdn.com/39074/normal_3907335_o.jpg",
+      "https://img1.hkrtcdn.com/39225/normal_3922423_o.jpg"
+    ]
+  },
+  {
+    "product_id": "tb-wpi-c-1kg-coffee",
+    "name": "TrueBasics Clean Whey Protein (Isolate + Concentrate),  1 kg  Coffee",
+    "brand": "truebasics",
+    "missing_fields": [
+      "serving_size",
+      "protein_per_serving",
+      "num_servings"
+    ],
+    "has_protein_pct": 72.0,
+    "has_price": 3499.0,
+    "label_images": [
+      "https://img1.hkrtcdn.com/41355/normal_4135419_o.png",
+      "https://img8.hkrtcdn.com/41271/bnr_4127037_o.jpg",
+      "https://img1.hkrtcdn.com/39225/normal_3922423_o.jpg"
+    ]
+  },
+  {
+    "product_id": "tb-wpi-c-1kg-matcha",
+    "name": "TrueBasics Clean Whey Protein (Isolate + Concentrate),  1 kg  Matcha",
+    "brand": "truebasics",
+    "missing_fields": [
+      "serving_size",
+      "protein_per_serving",
+      "num_servings"
+    ],
+    "has_protein_pct": 72.0,
+    "has_price": 3859.0,
+    "label_images": [
+      "https://img1.hkrtcdn.com/41964/normal_4196339_o.png",
+      "https://img1.hkrtcdn.com/41928/normal_4192781_o.jpg",
+      "https://img1.hkrtcdn.com/39225/normal_3922423_o.jpg"
+    ]
+  },
+  {
+    "product_id": "tb-wpi-c-1kg-choc-refill",
+    "name": "TrueBasics Clean Whey Protein (Isolate + Concentrate),  1 kg  Chocolate (Refill Pack)",
+    "brand": "truebasics",
+    "missing_fields": [
+      "serving_size",
+      "protein_per_serving",
+      "num_servings"
+    ],
+    "has_protein_pct": 72.0,
+    "has_price": 3399.0,
+    "label_images": [
+      "https://img1.hkrtcdn.com/42044/normal_4204367_o.png",
+      "https://img1.hkrtcdn.com/39074/normal_3907335_o.jpg",
+      "https://img1.hkrtcdn.com/39225/normal_3922423_o.jpg"
+    ]
+  },
+  {
+    "product_id": "tb-wpi-c-sachet-coffee",
+    "name": "TrueBasics Clean Whey Protein (Isolate + Concentrate),  0.18 kg  Coffee Pack of 5 (35 g x 5)",
+    "brand": "truebasics",
+    "missing_fields": [
+      "serving_size",
+      "protein_per_serving",
+      "num_servings"
+    ],
+    "has_protein_pct": 72.0,
+    "has_price": 689.0,
+    "label_images": [
+      "https://img1.hkrtcdn.com/43675/normal_4367421_o.png",
+      "https://img1.hkrtcdn.com/42535/normal_4253437_o.jpg",
+      "https://img1.hkrtcdn.com/39225/normal_3922423_o.jpg"
+    ]
+  },
+  {
+    "product_id": "tb-wpi-c-sachet-choc",
+    "name": "TrueBasics Clean Whey Protein (Isolate + Concentrate),  0.18 kg  Chocolate Pack of 5 (35 g x 5)",
+    "brand": "truebasics",
+    "missing_fields": [
+      "serving_size",
+      "protein_per_serving",
+      "num_servings"
+    ],
+    "has_protein_pct": 72.0,
+    "has_price": 689.0,
+    "label_images": [
+      "https://img1.hkrtcdn.com/43674/normal_4367373_o.png",
+      "https://img1.hkrtcdn.com/39693/normal_3969299_o.jpg",
+      "https://img1.hkrtcdn.com/39225/normal_3922423_o.jpg"
+    ]
+  },
+  {
+    "product_id": "tb-wpi-1kg-choc",
+    "name": "TrueBasics Clean Whey Protein (Isolate),  1 kg  Chocolate",
+    "brand": "truebasics",
+    "missing_fields": [
+      "serving_size",
+      "protein_per_serving",
+      "num_servings"
+    ],
+    "has_protein_pct": 82.0,
+    "has_price": 4099.0,
+    "label_images": [
+      "https://img1.hkrtcdn.com/41247/normal_4124649_o.png",
+      "https://img1.hkrtcdn.com/41242/normal_4124143_o.jpg",
+      "https://img1.hkrtcdn.com/39225/normal_3922423_o.jpg"
+    ]
+  },
+  {
+    "product_id": "tb-wpi-1kg-coffee",
+    "name": "TrueBasics Clean Whey Protein (Isolate),  1 kg  Coffee",
+    "brand": "truebasics",
+    "missing_fields": [
+      "serving_size",
+      "protein_per_serving",
+      "num_servings"
+    ],
+    "has_protein_pct": 85.0,
+    "has_price": 4099.0,
+    "label_images": [
+      "https://img1.hkrtcdn.com/42411/normal_4241089_o.png",
+      "https://img1.hkrtcdn.com/42397/normal_4239655_o.jpg",
+      "https://img1.hkrtcdn.com/39225/normal_3922423_o.jpg"
+    ]
+  },
+  {
+    "product_id": "tb-wpi-1kg-vanilla",
+    "name": "TrueBasics Clean Whey Protein (Isolate),  1 kg  Vanilla",
+    "brand": "truebasics",
+    "missing_fields": [
+      "serving_size",
+      "protein_per_serving",
+      "num_servings"
+    ],
+    "has_protein_pct": 88.0,
+    "has_price": 4099.0,
+    "label_images": [
+      "https://img1.hkrtcdn.com/40868/normal_4086725_o.png",
+      "https://img1.hkrtcdn.com/39173/normal_3917265_o.jpg",
+      "https://img1.hkrtcdn.com/39225/normal_3922423_o.jpg"
+    ]
+  },
+  {
+    "product_id": "tb-wpi-sachet-choc",
+    "name": "TrueBasics Clean Whey Protein (Isolate),  0.17 kg  Chocolate Pack of 5 (34 g x 5)",
+    "brand": "truebasics",
+    "missing_fields": [
+      "serving_size",
+      "protein_per_serving",
+      "num_servings"
+    ],
+    "has_protein_pct": 82.0,
+    "has_price": 819.0,
+    "label_images": [
+      "https://img1.hkrtcdn.com/40868/normal_4086713_o.png",
+      "https://img1.hkrtcdn.com/40825/normal_4082467_o.jpg",
+      "https://img1.hkrtcdn.com/39225/normal_3922423_o.jpg"
+    ]
+  },
+  {
+    "product_id": "tb-wpi-1kg-vanilla-refill",
+    "name": "TrueBasics Clean Whey Protein (Isolate),  1 kg  Vanilla (Refill Pack)",
+    "brand": "truebasics",
+    "missing_fields": [
+      "serving_size",
+      "protein_per_serving",
+      "num_servings"
+    ],
+    "has_protein_pct": 88.0,
+    "has_price": 3999.0,
+    "label_images": [
+      "https://img1.hkrtcdn.com/42044/normal_4204371_o.png",
+      "https://img1.hkrtcdn.com/39173/normal_3917265_o.jpg",
+      "https://img1.hkrtcdn.com/39225/normal_3922423_o.jpg"
+    ]
+  }
+]
