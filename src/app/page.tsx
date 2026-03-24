@@ -93,8 +93,8 @@ export default function Home() {
     <main className="max-w-5xl mx-auto p-4 md:p-8 min-h-screen">
       {/* Hero Header */}
       <header className="mb-10 text-center md:text-left">
-        <div className="inline-block bg-gradient-to-r from-blue-400 to-indigo-400 text-transparent bg-clip-text">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight pb-2 drop-shadow-sm">ProteinDB 🇮🇳</h1>
+        <div>
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight pb-2 text-slate-100">ProteinDB <span className="text-3xl">🇮🇳</span></h1>
         </div>
         <p className="text-slate-400 mt-2 text-base font-medium max-w-xl">
           The ultimate live comparison engine for Indian protein supplements. Ranked honestly by <span className="text-indigo-300 font-bold bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-md">Cost per Gram</span>.
