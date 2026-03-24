@@ -231,13 +231,78 @@ def scrape_generic(product_url):
 
 
 # =============================================================================
+# SHOPIFY SCRAPER (bgreen, etc.)
+# =============================================================================
+
+def scrape_shopify(product_url):
+    """
+    Shopify-based D2C brand scraper.
+    Uses the public /products/{handle}.json endpoint.
+    
+    URL format: https://domain.com/products/{handle}?variant={variant_id}
+    """
+    result = {k: None for k in [
+        'scraped_name', 'price', 'in_stock', 'protein_percent',
+        'protein_per_serving_g', 'serving_size_g', 'num_servings', 'total_weight_g'
+    ]}
+    
+    try:
+        from urllib.parse import urlparse, parse_qs
+        parsed = urlparse(product_url)
+        params = parse_qs(parsed.query)
+        variant_id = int(params.get('variant', [0])[0])
+        
+        # Build JSON API URL: /products/{handle}.json
+        path_parts = parsed.path.strip('/').split('/')
+        handle = path_parts[-1] if path_parts else ''
+        json_url = f"{parsed.scheme}://{parsed.netloc}/products/{handle}.json"
+        
+        resp = requests.get(json_url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15)
+        if resp.status_code != 200:
+            print(f"  [Shopify Error] {json_url}: HTTP {resp.status_code}")
+            return result
+        
+        data = resp.json()
+        product = data.get('product', {})
+        variants = product.get('variants', [])
+        
+        # Find the target variant
+        selected = None
+        for v in variants:
+            if v.get('id') == variant_id:
+                selected = v
+                break
+        if not selected and variants:
+            selected = variants[0]
+        
+        if not selected:
+            return result
+        
+        # Extract data
+        result['scraped_name'] = f"{product.get('title', '')}, {selected.get('title', '')}"
+        result['price'] = float(selected.get('price', 0)) or None
+        # Shopify .json API doesn't reliably expose stock; assume in-stock
+        # (out-of-stock variants are typically removed from the product page)
+        result['in_stock'] = True
+        result['total_weight_g'] = float(selected.get('grams', 0)) or None
+        
+        # Nutritional data not available in Shopify product JSON
+        # Will be filled by nutrition_overrides.json
+        
+    except Exception as e:
+        print(f"  [Shopify Error] {product_url}: {e}")
+    
+    return result
+
+
+# =============================================================================
 # SCRAPER ROUTER
 # =============================================================================
 
 BRAND_SCRAPERS = {
     "muscleblaze": scrape_healthkart,
     "truebasics": scrape_healthkart,
-    # Future: "nakpro": scrape_nakpro,
+    "bgreen": scrape_shopify,
 }
 
 

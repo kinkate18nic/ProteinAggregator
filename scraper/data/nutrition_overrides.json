@@ -75,5 +75,26 @@
     "protein_per_serving_g": 28,
     "protein_percent_override": 80.0,
     "source": "Nutritional label: 28g protein per 35g serving. HealthKart reports 229% which is a data error."
+  },
+
+  "bg-plant-1kg-choc": {
+    "serving_size_g": 36,
+    "protein_per_serving_g": 22,
+    "source": "bgreen.in product page: 22g plant protein per scoop (36g serving)"
+  },
+  "bg-plant-1kg-mocha": {
+    "serving_size_g": 36,
+    "protein_per_serving_g": 22,
+    "source": "Same formulation as Chocolate"
+  },
+  "bg-plant-500g-choc": {
+    "serving_size_g": 36,
+    "protein_per_serving_g": 22,
+    "source": "Same formulation, 500g pack"
+  },
+  "bg-plant-500g-mocha": {
+    "serving_size_g": 36,
+    "protein_per_serving_g": 22,
+    "source": "Same formulation, 500g pack"
   }
 }

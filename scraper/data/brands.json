@@ -187,5 +187,32 @@
         "url": "https://www.truebasics.com/sv/truebasics-clean-raw-whey-isolate/SP-139677?navKey=VRNT-281081"
       }
     ]
+  },
+  {
+    "brand_id": "bgreen",
+    "brand_name": "bGREEN",
+    "base_url": "https://bgreen.in",
+    "products": [
+      {
+        "product_id": "bg-plant-1kg-choc",
+        "name": "bGREEN Plant Protein - 1kg Chocolate",
+        "url": "https://bgreen.in/products/bgreen-plant-protein?variant=37380414046358"
+      },
+      {
+        "product_id": "bg-plant-1kg-mocha",
+        "name": "bGREEN Plant Protein - 1kg Cafe Mocha",
+        "url": "https://bgreen.in/products/bgreen-plant-protein?variant=37788851699862"
+      },
+      {
+        "product_id": "bg-plant-500g-choc",
+        "name": "bGREEN Plant Protein - 500g Chocolate",
+        "url": "https://bgreen.in/products/bgreen-plant-protein?variant=37352424931478"
+      },
+      {
+        "product_id": "bg-plant-500g-mocha",
+        "name": "bGREEN Plant Protein - 500g Cafe Mocha",
+        "url": "https://bgreen.in/products/bgreen-plant-protein?variant=37788857860246"
+      }
+    ]
   }
 ]
