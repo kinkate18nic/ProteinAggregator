@@ -31,6 +31,7 @@ def scrape_muscleblaze(product_url):
         "num_servings": None,
         "in_stock": None,
         "total_weight_g": None,
+        "scraped_name": None,
     }
     
     try:
@@ -72,17 +73,38 @@ def scrape_muscleblaze(product_url):
         
         # --- VARIANT ATTRIBUTES (Protein %, Serving Size, Number of Servings) ---
         # These are inside each variant's 'hghAttr' within 'availVar', NOT the top-level 'attr'.
-        # Step 1: Find the currently selected variant (or match by navKey)
         avail_var = results.get('availVar', {})
         selected_variant = None
         
-        # Try to find the variant that is marked as 'selected'
-        for var_key, var_data in avail_var.items():
-            if isinstance(var_data, dict) and var_data.get('selected'):
-                selected_variant = var_data
-                break
+        # Strategy 1: Match by navKey from URL (e.g., ?navKey=VRNT-165145 → sv_id=165145)
+        nav_match = re.search(r'navKey=VRNT-(\d+)', product_url)
+        if nav_match:
+            target_sv_id = int(nav_match.group(1))
+            for var_key, var_data in avail_var.items():
+                if isinstance(var_data, dict) and var_data.get('sv_id') == target_sv_id:
+                    selected_variant = var_data
+                    break
         
-        # If no variant is explicitly selected, just use the first one
+        # Strategy 2: Find the variant marked as 'selected' by MuscleBlaze
+        if not selected_variant:
+            for var_key, var_data in avail_var.items():
+                if isinstance(var_data, dict) and var_data.get('selected'):
+                    selected_variant = var_data
+                    break
+        
+        # Strategy 3: Fall back to the page-level default variant (navKey in results)
+        if not selected_variant:
+            page_nav = results.get('navKey', '')
+            if page_nav:
+                nav_id = re.search(r'VRNT-(\d+)', str(page_nav))
+                if nav_id:
+                    target_id = int(nav_id.group(1))
+                    for var_key, var_data in avail_var.items():
+                        if isinstance(var_data, dict) and var_data.get('sv_id') == target_id:
+                            selected_variant = var_data
+                            break
+        
+        # Strategy 4: Last resort - first variant in dict
         if not selected_variant and avail_var:
             selected_variant = next(iter(avail_var.values()))
         
@@ -106,10 +128,27 @@ def scrape_muscleblaze(product_url):
                 result['price'] = float(selected_variant['offer_pr'])
             
             result['in_stock'] = not selected_variant.get('oos', True)
+            
+            # Read the variant's actual full name (includes weight + flavor)
+            if selected_variant.get('fullName'):
+                result['scraped_name'] = selected_variant['fullName'].strip()
         
         # --- COMPUTE TOTAL WEIGHT ---
         if result['serving_size_g'] and result['num_servings']:
             result['total_weight_g'] = round(result['serving_size_g'] * result['num_servings'], 1)
+        
+        # Fallback: parse weight from variant's fullName (e.g., "2.2 lb", "1 kg")
+        if not result['total_weight_g'] and result.get('scraped_name'):
+            name_lower = result['scraped_name'].lower()
+            kg_m = re.search(r'([\d.]+)\s*kg', name_lower)
+            lb_m = re.search(r'([\d.]+)\s*lb', name_lower)
+            g_m = re.search(r'([\d.]+)\s*g\b', name_lower)
+            if kg_m:
+                result['total_weight_g'] = round(float(kg_m.group(1)) * 1000, 1)
+            elif lb_m:
+                result['total_weight_g'] = round(float(lb_m.group(1)) * 453.592, 1)
+            elif g_m:
+                result['total_weight_g'] = float(g_m.group(1))
         
     except Exception as e:
         print(f"  [MB Scraper Error] {product_url}: {e}")
@@ -267,10 +306,13 @@ def main():
             lab_data = lab_results.get(product_id)
             metrics = calculate_metrics(scraped, lab_data)
             
+            # Use scraped name if available, otherwise fall back to our static name
+            display_name = scraped.get('scraped_name') or product['name']
+            
             catalog_entry = {
                 "id": product_id,
                 "brand": brand_name,
-                "product_name": product['name'],
+                "product_name": display_name,
                 "product_url": product_url,
                 "last_updated": datetime.datetime.now().isoformat(),
                 **metrics,

@@ -25,11 +25,6 @@
         "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-performance-whey/SP-88093"
       },
       {
-        "product_id": "mb-bpw-base",
-        "name": "Biozyme Performance Whey - Base Product Page",
-        "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-performance-whey/SP-88093"
-      },
-      {
         "product_id": "mb-biz-1kg-lcicc",
         "name": "Biozyme Iso-Zero - 1kg Low Carb Ice Cream Chocolate",
         "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-iso-zero/SP-45405?navKey=VRNT-89957"
@@ -40,11 +35,6 @@
         "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-iso-zero/SP-45405?navKey=VRNT-89955"
       },
       {
-        "product_id": "mb-biz-base",
-        "name": "Biozyme Iso-Zero - Base Product Page",
-        "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-iso-zero/SP-45405"
-      },
-      {
         "product_id": "mb-bg100-1kg-drc",
         "name": "Biozyme Gold 100% Whey - 1kg Double Rich Chocolate",
         "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-gold-100-whey/SP-130031?navKey=VRNT-252447"
@@ -53,11 +43,6 @@
         "product_id": "mb-bg100-2kg-drc",
         "name": "Biozyme Gold 100% Whey - 2kg Double Rich Chocolate",
         "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-gold-100-whey/SP-130031?navKey=VRNT-252445"
-      },
-      {
-        "product_id": "mb-bg100-base",
-        "name": "Biozyme Gold 100% Whey - Base Product Page",
-        "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-gold-100-whey/SP-130031"
       },
       {
         "product_id": "mb-bwpr-1kg-mcc",
@@ -72,11 +57,6 @@
       {
         "product_id": "mb-bwpr-2kg-cf",
         "name": "Biozyme Whey PR - 2kg Chocolate Fudge",
-        "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-whey-pr/SP-122029"
-      },
-      {
-        "product_id": "mb-bwpr-base",
-        "name": "Biozyme Whey PR - Base Product Page",
         "url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-whey-pr/SP-122029"
       },
       {
@@ -97,7 +77,7 @@
       {
         "product_id": "mb-100wp-4lb-var",
         "name": "100% Whey Protein - 4lb (variant)",
-        "url": "https://www.muscleblaze.com/sv/sv/muscleblaze-100-whey-protein-supplement-powder-with-digestive-enzyme/SP-33626?navKey=VRNT-130987"
+        "url": "https://www.muscleblaze.com/sv/muscleblaze-100-whey-protein-supplement-powder-with-digestive-enzyme/SP-33626?navKey=VRNT-130987"
       },
       {
         "product_id": "mb-raw-500g-un",
@@ -110,11 +90,6 @@
         "url": "https://www.muscleblaze.com/sv/muscleblaze-80-raw-whey-protein-supplement-powder/SP-40454?navKey=VRNT-77192"
       },
       {
-        "product_id": "mb-raw-base",
-        "name": "100% Clean Raw Whey Protein - Base Product Page",
-        "url": "https://www.muscleblaze.com/sv/muscleblaze-80-raw-whey-protein-supplement-powder/SP-40454"
-      },
-      {
         "product_id": "mb-beg-500g-ch",
         "name": "Beginner's Protein Powder - 500g Chocolate",
         "url": "https://www.muscleblaze.com/sv/muscleblaze-beginners-protein-powder/SP-45581?navKey=VRNT-176588"
@@ -125,18 +100,13 @@
         "url": "https://www.muscleblaze.com/sv/muscleblaze-beginners-protein-powder/SP-45581"
       },
       {
-        "product_id": "mb-beg-base",
-        "name": "Beginner's Protein Powder - Base Product Page",
-        "url": "https://www.muscleblaze.com/sv/muscleblaze-beginners-protein-powder/SP-45581"
-      },
-      {
         "product_id": "mb-plant-1kg-rc",
         "name": "MB bGreen Plant Protein - 1kg Rich Chocolate",
         "url": "https://www.muscleblaze.com/sv/bgreen-plant-protein-pea-protein-isolate/SP-80119"
       },
       {
-        "product_id": "mb-plant-base",
-        "name": "MuscleBlaze Plant Protein - Base Product Page",
+        "product_id": "mb-plant-1kg-base",
+        "name": "MuscleBlaze Plant Protein - 1kg",
         "url": "https://www.muscleblaze.com/sv/muscleblaze-plant-protein/SP-103284"
       },
       {

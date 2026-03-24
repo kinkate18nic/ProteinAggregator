@@ -4,15 +4,12 @@ with open('mb_debug.json', 'r', encoding='utf-8') as f:
     data = json.load(f)
 
 results = data['props']['pageProps']['data']['results']
+avail_var = results.get('availVar', {})
 
-# Full attr dump
-print("=== ATTR (full dump) ===")
-print(json.dumps(results.get('attr', []), indent=2)[:3000])
-
-# Also check availVar for the specific variant we requested (VRNT-165145)
-print("\n=== CURRENT VARIANT KEYS ===")
-avail = results.get('availVar', {})
-# Find the first variant and show its full structure
-for key, val in list(avail.items())[:1]:
-    print(f"\nVariant key: {key}")
-    print(json.dumps(val, indent=2)[:3000])
+print("=== ALL VARIANT KEYS WITH THEIR sv_id ===")
+for var_key, var_data in avail_var.items():
+    sv_id = var_data.get('sv_id', '?')
+    full_name = var_data.get('fullName', '?')
+    oos = var_data.get('oos', '?')
+    price = var_data.get('hkUserLoyaltyPricingDto', {}).get('hkNormalOfferPrice', '?')
+    print(f"  VRNT-{sv_id} | ₹{price} | OOS={oos} | {full_name}")
