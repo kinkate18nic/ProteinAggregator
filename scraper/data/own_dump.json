@@ -1,0 +1,74 @@
+[
+  {
+    "url": "https://onlywhatsneeded.in/product/whey-isolate-500g",
+    "has_next_data": true,
+    "has_shopify": false,
+    "meta_product:price:amount": "1999",
+    "meta_product:price:currency": "INR",
+    "jsonld_name": "24g Whey Protein Isolate | 500g Pack | Cocoa",
+    "jsonld_offers": {
+      "@type": "Offer",
+      "price": 1999,
+      "priceCurrency": "INR",
+      "availability": "https://schema.org/InStock",
+      "url": "https://onlywhatsneeded.in/product/whey-isolate-500g",
+      "priceValidUntil": "2026-04-23"
+    },
+    "shopify_json_status": 404,
+    "script_price_context": "b6aoii.png?tr=w-600\",\"productID\":\"whey-isolate-500g\",\"offers\":{\"@type\":\"Offer\",\"price\":1999,\"priceCurrency\":\"INR\",\"availability\":\"https://schema.org/InStock\",\"url\":\"https://onlywhatsneeded.in/product/"
+  },
+  {
+    "url": "https://onlywhatsneeded.in/product/plant-coffee-1kg",
+    "has_next_data": true,
+    "has_shopify": false,
+    "meta_product:price:amount": "1399",
+    "meta_product:price:currency": "INR",
+    "jsonld_name": "24g Plant Protein Powder | Coffee | 1Kg",
+    "jsonld_offers": {
+      "@type": "Offer",
+      "price": 1399,
+      "priceCurrency": "INR",
+      "availability": "https://schema.org/InStock",
+      "url": "https://onlywhatsneeded.in/product/plant-coffee-1kg",
+      "priceValidUntil": "2026-04-23"
+    },
+    "shopify_json_status": 404,
+    "script_price_context": "_41xg6u.png?tr=w-600\",\"productID\":\"plant-coffee-1kg\",\"offers\":{\"@type\":\"Offer\",\"price\":1399,\"priceCurrency\":\"INR\",\"availability\":\"https://schema.org/InStock\",\"url\":\"https://onlywhatsneeded.in/product/"
+  },
+  {
+    "url": "https://onlywhatsneeded.in/product/whey-protein-2",
+    "has_next_data": true,
+    "has_shopify": false,
+    "meta_product:price:amount": "2491",
+    "meta_product:price:currency": "INR",
+    "jsonld_name": "24g Whey Protein Concentrate | 1Kg Pack | Cocoa",
+    "jsonld_offers": {
+      "@type": "Offer",
+      "price": 2491,
+      "priceCurrency": "INR",
+      "availability": "https://schema.org/InStock",
+      "url": "https://onlywhatsneeded.in/product/whey-protein-2",
+      "priceValidUntil": "2026-04-23"
+    },
+    "shopify_json_status": 404,
+    "script_price_context": "52_hy8o1l.png?tr=w-600\",\"productID\":\"whey-protein-2\",\"offers\":{\"@type\":\"Offer\",\"price\":2491,\"priceCurrency\":\"INR\",\"availability\":\"https://schema.org/InStock\",\"url\":\"https://onlywhatsneeded.in/product/"
+  },
+  {
+    "url": "https://onlywhatsneeded.in/product/whey-coffee-1kg",
+    "has_next_data": true,
+    "has_shopify": false,
+    "meta_product:price:amount": "2549",
+    "meta_product:price:currency": "INR",
+    "jsonld_name": "24g Whey Protein Concentrate | 1Kg | Coffee",
+    "jsonld_offers": {
+      "@type": "Offer",
+      "price": 2549,
+      "priceCurrency": "INR",
+      "availability": "https://schema.org/InStock",
+      "url": "https://onlywhatsneeded.in/product/whey-coffee-1kg",
+      "priceValidUntil": "2026-04-23"
+    },
+    "shopify_json_status": 404,
+    "script_price_context": "0_ew52xb.png?tr=w-600\",\"productID\":\"whey-coffee-1kg\",\"offers\":{\"@type\":\"Offer\",\"price\":2549,\"priceCurrency\":\"INR\",\"availability\":\"https://schema.org/InStock\",\"url\":\"https://onlywhatsneeded.in/product/"
+  }
+]

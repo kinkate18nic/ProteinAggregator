@@ -296,6 +296,76 @@ def scrape_shopify(product_url):
 
 
 # =============================================================================
+# JSON-LD SCRAPER (onlywhatsneeded, etc.)
+# =============================================================================
+
+def scrape_jsonld(product_url):
+    """
+    Generic scraper for sites that expose product data via JSON-LD
+    (schema.org Product type with Offer).
+    Also checks meta tags as fallback for price.
+    """
+    result = {k: None for k in [
+        'scraped_name', 'price', 'in_stock', 'protein_percent',
+        'protein_per_serving_g', 'serving_size_g', 'num_servings', 'total_weight_g'
+    ]}
+    
+    try:
+        resp = requests.get(product_url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15)
+        if resp.status_code != 200:
+            print(f"  [JSONLD Error] {product_url}: HTTP {resp.status_code}")
+            return result
+        
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        
+        # Extract from JSON-LD
+        for script in soup.find_all('script', type='application/ld+json'):
+            try:
+                ld = json.loads(script.string)
+                if isinstance(ld, dict) and 'offers' in ld:
+                    result['scraped_name'] = ld.get('name')
+                    offers = ld['offers']
+                    if isinstance(offers, dict):
+                        result['price'] = float(offers.get('price', 0)) or None
+                        avail = offers.get('availability', '')
+                        result['in_stock'] = 'InStock' in avail
+                    elif isinstance(offers, list) and offers:
+                        result['price'] = float(offers[0].get('price', 0)) or None
+                        avail = offers[0].get('availability', '')
+                        result['in_stock'] = 'InStock' in avail
+            except (json.JSONDecodeError, ValueError):
+                pass
+        
+        # Fallback: meta tags for price
+        if result['price'] is None:
+            meta_price = soup.find('meta', property='product:price:amount')
+            if meta_price and meta_price.get('content'):
+                try:
+                    result['price'] = float(meta_price['content'])
+                except ValueError:
+                    pass
+        
+        # Extract weight from URL first (more reliable), then product name
+        import re
+        # Search URL first, then product name
+        for text in [product_url, result['scraped_name'] or '']:
+            wt_match = re.search(r'(\d+(?:\.\d+)?)\s*(?:kg|Kg|KG)\b', text)
+            if wt_match:
+                result['total_weight_g'] = float(wt_match.group(1)) * 1000
+                break
+            # For grams, only match pack sizes (≥100g) to avoid "24g protein"
+            wt_match = re.search(r'(\d{3,})\s*(?:g|gm|gms|G)\b', text)
+            if wt_match:
+                result['total_weight_g'] = float(wt_match.group(1))
+                break
+        
+    except Exception as e:
+        print(f"  [JSONLD Error] {product_url}: {e}")
+    
+    return result
+
+
+# =============================================================================
 # SCRAPER ROUTER
 # =============================================================================
 
@@ -303,6 +373,7 @@ BRAND_SCRAPERS = {
     "muscleblaze": scrape_healthkart,
     "truebasics": scrape_healthkart,
     "bgreen": scrape_shopify,
+    "onlywhatsneeded": scrape_jsonld,
 }
 
 

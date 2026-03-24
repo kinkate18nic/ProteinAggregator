@@ -91,5 +91,26 @@
     "serving_size_g": 36,
     "protein_per_serving_g": 22,
     "source": "Same formulation, 500g pack"
+  },
+
+  "own-iso-500g-cocoa": {
+    "serving_size_g": 31,
+    "protein_per_serving_g": 24,
+    "source": "Product page: 24g of protein from a 31g scoop"
+  },
+  "own-plant-1kg-coffee": {
+    "serving_size_g": 33,
+    "protein_per_serving_g": 24,
+    "source": "Product page: use the 33g scoop, 24g protein per serving"
+  },
+  "own-wpc-1kg-cocoa": {
+    "serving_size_g": 33,
+    "protein_per_serving_g": 24,
+    "source": "Product page: 24g protein per scoop, same scoop as plant protein"
+  },
+  "own-wpc-1kg-coffee": {
+    "serving_size_g": 33,
+    "protein_per_serving_g": 24,
+    "source": "Product page: 24g protein per scoop, same scoop as plant protein"
   }
 }

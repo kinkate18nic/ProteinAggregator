@@ -209,5 +209,32 @@
         "url": "https://bgreen.in/products/bgreen-plant-protein?variant=39248589455510"
       }
     ]
+  },
+  {
+    "brand_id": "onlywhatsneeded",
+    "brand_name": "Only What's Needed",
+    "base_url": "https://onlywhatsneeded.in",
+    "products": [
+      {
+        "product_id": "own-iso-500g-cocoa",
+        "name": "24g Whey Protein Isolate - 500g Cocoa",
+        "url": "https://onlywhatsneeded.in/product/whey-isolate-500g"
+      },
+      {
+        "product_id": "own-plant-1kg-coffee",
+        "name": "24g Plant Protein - 1kg Coffee",
+        "url": "https://onlywhatsneeded.in/product/plant-coffee-1kg"
+      },
+      {
+        "product_id": "own-wpc-1kg-cocoa",
+        "name": "24g Whey Protein Concentrate - 1kg Cocoa",
+        "url": "https://onlywhatsneeded.in/product/whey-protein-2"
+      },
+      {
+        "product_id": "own-wpc-1kg-coffee",
+        "name": "24g Whey Protein Concentrate - 1kg Coffee",
+        "url": "https://onlywhatsneeded.in/product/whey-coffee-1kg"
+      }
+    ]
   }
 ]
