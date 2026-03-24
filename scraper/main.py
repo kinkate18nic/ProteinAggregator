@@ -718,6 +718,10 @@ def main():
                         scraped['serving_size_g'] = ovr['serving_size_g']
                     if scraped['protein_per_serving_g'] is None and 'protein_per_serving_g' in ovr:
                         scraped['protein_per_serving_g'] = ovr['protein_per_serving_g']
+                    if scraped['total_weight_g'] is None and 'total_weight_g' in ovr:
+                        scraped['total_weight_g'] = float(ovr['total_weight_g'])
+                    if scraped['num_servings'] is None and 'num_servings' in ovr:
+                        scraped['num_servings'] = int(ovr['num_servings'])
                 # Recompute total_weight if we now have serving data
                 if scraped['total_weight_g'] is None and scraped['serving_size_g'] and scraped['num_servings']:
                     scraped['total_weight_g'] = round(scraped['serving_size_g'] * scraped['num_servings'], 1)

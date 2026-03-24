@@ -4,32 +4,31 @@ overrides_file = 'scraper/data/nutrition_overrides.json'
 with open(overrides_file, 'r') as f:
     overrides = json.load(f)
 
-# Update the 5 specific missing ones from screenshots
+# Update weight for the 6 missing ones
 updates = {
-    "wbn-unflavored-whey-protein-isolate-creatine-monohydrate-combo": {
-        "serving_size_g": 35.5,
-        "protein_per_serving_g": 30.9,
-        "source": "Manual override from product label image"
-    },
-    "wbn-vegan-protein-flavor-combo": {
-        "serving_size_g": 32.0,
-        "protein_per_serving_g": 22.0,
-        "source": "Manual override from product label image"
-    },
     "wbn-superfood-plant-protein-powder-in-banoffee-pie": {
-        "serving_size_g": 32.0,
-        "protein_per_serving_g": 22.12,
-        "source": "Manual override from product label image"
+        "total_weight_g": 500.0,
+        "num_servings": 15
     },
     "wbn-superfood-plant-protein-powder-for-women": {
-        "serving_size_g": 30.0,
-        "protein_per_serving_g": 18.0,
-        "source": "Manual override from product label image"
+        "total_weight_g": 500.0,
+        "num_servings": 16
+    },
+    "wbn-vegan-protein-flavor-combo": {
+        "total_weight_g": 480.0,
+        "num_servings": 15
     },
     "wbn-whey-protein-isolate-dark-chocolate-creatine-monohydrate-combo": {
-        "serving_size_g": 35.5,
-        "protein_per_serving_g": 26.6,
-        "source": "Manual override from product label image"
+        "total_weight_g": 1000.0,
+        "num_servings": 28
+    },
+    "wbn-unflavored-whey-protein-isolate-creatine-monohydrate-combo": {
+        "total_weight_g": 1000.0,
+        "num_servings": 28
+    },
+    "wbn-unflavored-whey-protein-concentrate-creatine-monohydrate-combo": {
+        "total_weight_g": 1000.0,
+        "num_servings": 30
     }
 }
 
@@ -42,4 +41,4 @@ for pid, data in updates.items():
 with open(overrides_file, 'w') as f:
     json.dump(overrides, f, indent=2)
 
-print("Succesfully updated the overrides.")
+print("Mapped missing weights for WBN.")
