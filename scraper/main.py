@@ -50,6 +50,16 @@ def scrape_muscleblaze(product_url):
         if not results:
             return result
         
+        # --- CHECK IF THIS IS A COMBO PACK (/pk/ URL) ---
+        is_combo = '/pk/' in product_url
+        if is_combo:
+            packs = results.get('packs', {})
+            if isinstance(packs, dict):
+                result['price'] = float(packs['offer_pr']) if packs.get('offer_pr') else None
+                result['in_stock'] = not packs.get('oos', True)
+                result['scraped_name'] = packs.get('nm', '').strip() if packs.get('nm') else None
+            return result
+        
         # --- PRICE ---
         hk_pricing = results.get('hkUserLoyaltyPricingDto', {})
         result['price'] = float(hk_pricing.get('hkNormalOfferPrice', 0)) or None
@@ -149,6 +159,21 @@ def scrape_muscleblaze(product_url):
                 result['total_weight_g'] = round(float(lb_m.group(1)) * 453.592, 1)
             elif g_m:
                 result['total_weight_g'] = float(g_m.group(1))
+        
+        # --- COMPUTE PROTEIN % from protein_per_serving / serving_size if missing ---
+        if not result['protein_percent'] and result['protein_per_serving_g'] and result['serving_size_g']:
+            result['protein_percent'] = round((result['protein_per_serving_g'] / result['serving_size_g']) * 100, 1)
+        
+        # --- CONVERT lb-BASED NAMES TO kg FOR INDIAN DISPLAY ---
+        if result.get('scraped_name'):
+            name = result['scraped_name']
+            def lb_to_kg_replace(m):
+                lb_val = float(m.group(1))
+                kg_val = round(lb_val * 0.453592, 2)
+                # Clean up trailing zeros: 1.0 → 1, 0.5 → 0.5
+                kg_str = f"{kg_val:g}"
+                return f"{kg_str} kg"
+            result['scraped_name'] = re.sub(r'(\d+\.?\d*)\s*lb\b', lb_to_kg_replace, name, flags=re.IGNORECASE)
         
     except Exception as e:
         print(f"  [MB Scraper Error] {product_url}: {e}")
