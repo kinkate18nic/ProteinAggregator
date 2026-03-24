@@ -258,5 +258,132 @@
         "url": "https://www.plixlife.com/product/strength/31?sku=SPP30-V"
       }
     ]
+  },
+  {
+    "brand_id": "wellbeingnutrition",
+    "brand_name": "Wellbeing Nutrition",
+    "base_url": "https://wellbeingnutrition.com/",
+    "products": [
+      {
+        "product_id": "wbn-whey-protein-isolate-dark-chocolate",
+        "name": "Whey Protein Isolate Dark Chocolate",
+        "url": "https://wellbeingnutrition.com/products/whey-protein-isolate-dark-chocolate"
+      },
+      {
+        "product_id": "wbn-whey-protein-isolate-dark-chocolate-2kg",
+        "name": "Whey Protein Isolate Dark Chocolate 2kg",
+        "url": "https://wellbeingnutrition.com/products/whey-protein-isolate-dark-chocolate-2kg"
+      },
+      {
+        "product_id": "wbn-raw-whey-protein-isolate-unflavored",
+        "name": "Raw Whey Protein Isolate Unflavored",
+        "url": "https://wellbeingnutrition.com/products/raw-whey-protein-isolate-unflavored"
+      },
+      {
+        "product_id": "wbn-whey-protein-isolate-unflavoured-2kg",
+        "name": "Whey Protein Isolate Unflavoured 2kg",
+        "url": "https://wellbeingnutrition.com/products/whey-protein-isolate-unflavoured-2kg"
+      },
+      {
+        "product_id": "wbn-whey-protein-concentrate-unflavored",
+        "name": "Whey Protein Concentrate Unflavored",
+        "url": "https://wellbeingnutrition.com/products/whey-protein-concentrate-unflavored"
+      },
+      {
+        "product_id": "wbn-whey-protein-blend-mango-flavored",
+        "name": "Whey Protein Blend Mango Flavored",
+        "url": "https://wellbeingnutrition.com/products/whey-protein-blend-mango-flavored"
+      },
+      {
+        "product_id": "wbn-whey-protein-isolate-bourbon-vanilla",
+        "name": "Whey Protein Isolate Bourbon Vanilla",
+        "url": "https://wellbeingnutrition.com/products/whey-protein-isolate-bourbon-vanilla"
+      },
+      {
+        "product_id": "wbn-whey-protein-blend-swiss-chocolate",
+        "name": "Whey Protein Blend Swiss Chocolate",
+        "url": "https://wellbeingnutrition.com/products/whey-protein-blend-swiss-chocolate"
+      },
+      {
+        "product_id": "wbn-whey-protein-blend-cappuccino",
+        "name": "Whey Protein Blend Cappuccino",
+        "url": "https://wellbeingnutrition.com/products/whey-protein-blend-cappuccino"
+      },
+      {
+        "product_id": "wbn-vegan-protein-canadian-mixed-berry",
+        "name": "Vegan Protein Canadian Mixed Berry",
+        "url": "https://wellbeingnutrition.com/products/vegan-protein-canadian-mixed-berry"
+      },
+      {
+        "product_id": "wbn-vegan-protein-belgian-dark-chocolate-probiotics",
+        "name": "Vegan Protein Belgian Dark Chocolate Probiotics",
+        "url": "https://wellbeingnutrition.com/products/vegan-protein-belgian-dark-chocolate-probiotics"
+      },
+      {
+        "product_id": "wbn-vegan-protein-french-vanilla-caramel-copy",
+        "name": "Vegan Protein French Vanilla Caramel Copy",
+        "url": "https://wellbeingnutrition.com/products/vegan-protein-french-vanilla-caramel-copy"
+      },
+      {
+        "product_id": "wbn-vegan-protein-belgian-chocolate",
+        "name": "Vegan Protein Belgian Chocolate",
+        "url": "https://wellbeingnutrition.com/products/vegan-protein-belgian-chocolate"
+      },
+      {
+        "product_id": "wbn-vegan-protein-french-vanilla-caramel",
+        "name": "Vegan Protein French Vanilla Caramel",
+        "url": "https://wellbeingnutrition.com/products/vegan-protein-french-vanilla-caramel"
+      },
+      {
+        "product_id": "wbn-vegan-protein-italian-cafe-mocha",
+        "name": "Vegan Protein Italian Cafe Mocha",
+        "url": "https://wellbeingnutrition.com/products/vegan-protein-italian-cafe-mocha"
+      },
+      {
+        "product_id": "wbn-vegan-protein-flavor-combo",
+        "name": "Vegan Protein Flavor Combo",
+        "url": "https://wellbeingnutrition.com/products/vegan-protein-flavor-combo"
+      },
+      {
+        "product_id": "wbn-superfood-plant-protein-powder-in-banoffee-pie",
+        "name": "Superfood Plant Protein Powder In Banoffee Pie",
+        "url": "https://wellbeingnutrition.com/products/superfood-plant-protein-powder-in-banoffee-pie"
+      },
+      {
+        "product_id": "wbn-superfood-plant-protein-powder-for-women",
+        "name": "Superfood Plant Protein Powder For Women",
+        "url": "https://wellbeingnutrition.com/products/superfood-plant-protein-powder-for-women"
+      },
+      {
+        "product_id": "wbn-vegan-protein-dark-chocolate-hazelnut",
+        "name": "Vegan Protein Dark Chocolate Hazelnut",
+        "url": "https://wellbeingnutrition.com/products/vegan-protein-dark-chocolate-hazelnut"
+      },
+      {
+        "product_id": "wbn-whey-protein-isolate-dark-chocolate-creatine-monohydrate-combo",
+        "name": "Whey Protein Isolate Dark Chocolate Creatine Monohydrate Combo",
+        "url": "https://wellbeingnutrition.com/products/whey-protein-isolate-dark-chocolate-creatine-monohydrate-combo"
+      },
+      {
+        "product_id": "wbn-unflavored-whey-protein-concentrate-creatine-monohydrate-combo",
+        "name": "Unflavored Whey Protein Concentrate Creatine Monohydrate Combo",
+        "url": "https://wellbeingnutrition.com/products/unflavored-whey-protein-concentrate-creatine-monohydrate-combo"
+      },
+      {
+        "product_id": "wbn-unflavored-whey-protein-isolate-creatine-monohydrate-combo",
+        "name": "Unflavored Whey Protein Isolate Creatine Monohydrate Combo",
+        "url": "https://wellbeingnutrition.com/products/unflavored-whey-protein-isolate-creatine-monohydrate-combo"
+      },
+      {
+        "product_id": "wbn-whey-protein-swiss-chocolate-creatine-monohydrate-combo",
+        "name": "Whey Protein Swiss Chocolate Creatine Monohydrate Combo",
+        "url": "https://wellbeingnutrition.com/products/whey-protein-swiss-chocolate-creatine-monohydrate-combo"
+      },
+      {
+        "product_id": "wbn-whey-protein-cappuccino-creatine-monohydrate-combo",
+        "name": "Whey Protein Cappuccino Creatine Monohydrate Combo",
+        "url": "https://wellbeingnutrition.com/products/whey-protein-cappuccino-creatine-monohydrate-combo"
+      }
+    ]
   }
 ]

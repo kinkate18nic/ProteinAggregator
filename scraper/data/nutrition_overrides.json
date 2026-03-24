@@ -1,7 +1,6 @@
 {
   "_comment": "Static nutritional overrides for HealthKart products where __NEXT_DATA__ hghAttr is incomplete. Extracted one-time from product page nutritional label images. Only update when a product is reformulated or a new product is added.",
   "_last_updated": "2026-03-24",
-  
   "mb-biz-1kg-lcicc": {
     "serving_size_g": 34,
     "protein_per_serving_g": 27,
@@ -12,7 +11,6 @@
     "protein_per_serving_g": 27,
     "source": "Same formulation as 1kg variant"
   },
-
   "tb-wpi-c-1kg-choc": {
     "serving_size_g": 35,
     "protein_per_serving_g": 25.2,
@@ -43,7 +41,6 @@
     "protein_per_serving_g": 25.2,
     "source": "Same formulation, sachet = 1 serving"
   },
-
   "tb-wpi-1kg-choc": {
     "serving_size_g": 34,
     "protein_per_serving_g": 27.9,
@@ -69,14 +66,12 @@
     "protein_per_serving_g": 30,
     "source": "Same formulation as Vanilla 1kg"
   },
-
   "tb-raw-conc-1kg-unflav": {
     "serving_size_g": 35,
     "protein_per_serving_g": 28,
     "protein_percent_override": 80.0,
     "source": "Nutritional label: 28g protein per 35g serving. HealthKart reports 229% which is a data error."
   },
-
   "bg-plant-1kg-choc": {
     "serving_size_g": 36,
     "protein_per_serving_g": 22,
@@ -92,7 +87,6 @@
     "protein_per_serving_g": 22,
     "source": "Same formulation, 500g pack"
   },
-
   "own-iso-500g-cocoa": {
     "serving_size_g": 31,
     "protein_per_serving_g": 24,
@@ -113,7 +107,6 @@
     "protein_per_serving_g": 24,
     "source": "Product page: 24g protein per scoop, same scoop as plant protein"
   },
-
   "plix-yeast-1kg-choc": {
     "serving_size_g": 37,
     "protein_per_serving_g": 26,
@@ -128,5 +121,125 @@
     "serving_size_g": 33,
     "protein_per_serving_g": 25,
     "source": "Plix packaging label: 25g protein per 33g scoop"
+  },
+  "wbn-whey-protein-isolate-dark-chocolate": {
+    "serving_size_g": 33,
+    "protein_per_serving_g": 26.0,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-whey-protein-isolate-dark-chocolate-2kg": {
+    "serving_size_g": 33,
+    "protein_per_serving_g": 26.0,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-raw-whey-protein-isolate-unflavored": {
+    "serving_size_g": 33,
+    "protein_per_serving_g": 31.0,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-whey-protein-isolate-unflavoured-2kg": {
+    "serving_size_g": 33,
+    "protein_per_serving_g": 31.0,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-whey-protein-concentrate-unflavored": {
+    "serving_size_g": 33,
+    "protein_per_serving_g": 27.0,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-whey-protein-blend-mango-flavored": {
+    "serving_size_g": 33,
+    "protein_per_serving_g": 24.0,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-whey-protein-isolate-bourbon-vanilla": {
+    "serving_size_g": 33,
+    "protein_per_serving_g": 26.0,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-whey-protein-blend-swiss-chocolate": {
+    "serving_size_g": 33,
+    "protein_per_serving_g": 24.0,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-whey-protein-blend-cappuccino": {
+    "serving_size_g": 33,
+    "protein_per_serving_g": 24.0,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-vegan-protein-canadian-mixed-berry": {
+    "serving_size_g": 36,
+    "protein_per_serving_g": 22.0,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-vegan-protein-belgian-dark-chocolate-probiotics": {
+    "serving_size_g": 36,
+    "protein_per_serving_g": 22.0,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-vegan-protein-french-vanilla-caramel-copy": {
+    "serving_size_g": 36,
+    "protein_per_serving_g": 22.0,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-vegan-protein-belgian-chocolate": {
+    "serving_size_g": 36,
+    "protein_per_serving_g": 22.0,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-vegan-protein-french-vanilla-caramel": {
+    "serving_size_g": 36,
+    "protein_per_serving_g": 22.0,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-vegan-protein-italian-cafe-mocha": {
+    "serving_size_g": 36,
+    "protein_per_serving_g": 22.0,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-vegan-protein-flavor-combo": {
+    "serving_size_g": 36,
+    "protein_per_serving_g": 22,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-superfood-plant-protein-powder-in-banoffee-pie": {
+    "serving_size_g": 36,
+    "protein_per_serving_g": 22,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-superfood-plant-protein-powder-for-women": {
+    "serving_size_g": 36,
+    "protein_per_serving_g": 22,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-vegan-protein-dark-chocolate-hazelnut": {
+    "serving_size_g": 36,
+    "protein_per_serving_g": 22.0,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-whey-protein-isolate-dark-chocolate-creatine-monohydrate-combo": {
+    "serving_size_g": 33,
+    "protein_per_serving_g": 24,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-unflavored-whey-protein-concentrate-creatine-monohydrate-combo": {
+    "serving_size_g": 33,
+    "protein_per_serving_g": 24,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-unflavored-whey-protein-isolate-creatine-monohydrate-combo": {
+    "serving_size_g": 33,
+    "protein_per_serving_g": 24,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-whey-protein-swiss-chocolate-creatine-monohydrate-combo": {
+    "serving_size_g": 33,
+    "protein_per_serving_g": 24.0,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
+  },
+  "wbn-whey-protein-cappuccino-creatine-monohydrate-combo": {
+    "serving_size_g": 33,
+    "protein_per_serving_g": 24.0,
+    "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
   }
 }

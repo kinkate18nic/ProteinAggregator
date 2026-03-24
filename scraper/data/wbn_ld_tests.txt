@@ -1,0 +1,12 @@
+--- META TAGS ---
+
+--- JSON-LD ---
+[
+  {
+    "@type": "Offer",
+    "priceCurrency": "INR",
+    "price": 3824.0,
+    "availability": "http://schema.org/InStock",
+    "itemCondition": "http://schema.org/NewCondition",
+    "url": "https://wellbeingnutrition.com/products/whey-protein-isolate-dark-chocolate?variant=40976642211920",
+    "p

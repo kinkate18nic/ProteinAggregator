@@ -401,6 +401,126 @@ def scrape_plix(product_url):
 
 
 # =============================================================================
+# WELLBEING NUTRITION SCRAPER
+# =============================================================================
+
+def scrape_wbn(product_url):
+    """
+    Scraper for Wellbeing Nutrition. Combines Shopify JSON (for variants/pricing)
+    and HTML JSON-LD (for stock availability, since their Shopify API returns null).
+    """
+    result = {k: None for k in [
+        'scraped_name', 'price', 'in_stock', 'protein_percent',
+        'protein_per_serving_g', 'serving_size_g', 'num_servings', 'total_weight_g'
+    ]}
+    
+    try:
+        from urllib.parse import urlparse
+        import re
+        
+        parsed_url = urlparse(product_url)
+        # Handle is everything after /products/
+        handle = parsed_url.path.split('/products/')[-1].split('/')[0]
+        
+        # 1. Fetch Shopify JSON
+        json_url = f"https://wellbeingnutrition.com/products/{handle}.json"
+        j_resp = requests.get(json_url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15)
+        if j_resp.status_code != 200:
+            print(f"  [WBN Error] {product_url}: HTTP {j_resp.status_code} at json endpoint")
+            return result
+            
+        product = j_resp.json().get('product', {})
+        title = product.get('title', '')
+        
+        # Assuming we just track the first/default variant since WBN pages map URLs 1:1 to single flavors
+        variants = product.get('variants', [])
+        target_variant = variants[0] if variants else {}
+        variant_id = str(target_variant.get('id', ''))
+        
+        # Build Name
+        var_title = target_variant.get('title', '')
+        if var_title and var_title.lower() not in ['default title', 'pack of 1']:
+            result['scraped_name'] = f"{title} - {var_title}"
+        else:
+            result['scraped_name'] = title
+            
+        # Price
+        try:
+            result['price'] = float(target_variant.get('price'))
+        except (ValueError, TypeError):
+            pass
+            
+        # Extract Weight from Title (e.g. "26g | 1kg | 4B CFU")
+        wt_match = re.search(r'\|\s*(\d+(?:\.\d+)?)\s*(kg|g|KG|G)\b', title, re.IGNORECASE)
+        if wt_match:
+            val = float(wt_match.group(1))
+            unit = wt_match.group(2).lower()
+            if unit == 'kg':
+                 result['total_weight_g'] = val * 1000
+            else:
+                 result['total_weight_g'] = val
+                 
+        # If weight failed from title, fallback to finding weight in variant title 
+        if not result['total_weight_g']:
+            # Example: "Vegan Protein | French Vanilla Caramel (500g)" if they put it there
+            wt_match_2 = re.search(r'(\d+(?:\.\d+)?)\s*(kg|Kg|KG|g|gm|gms)\b', var_title)
+            if wt_match_2:
+                val = float(wt_match_2.group(1))
+                unit = wt_match_2.group(2).lower()
+                if unit == 'kg':
+                    result['total_weight_g'] = val * 1000
+                else:
+                    result['total_weight_g'] = val
+                    
+        # Extract protein per serving from title (e.g. "26g |")
+        prot_match = re.search(r'(\d+(?:\.\d+)?)g\s*\|', title, re.IGNORECASE)
+        if prot_match:
+            result['protein_per_serving_g'] = float(prot_match.group(1))
+
+        # 2. Fetch HTML to check JSON-LD for stock
+        html_resp = requests.get(product_url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15)
+        if html_resp.status_code == 200:
+            soup = BeautifulSoup(html_resp.text, 'html.parser')
+            ld_scripts = soup.find_all('script', type='application/ld+json')
+            stock_found = False
+            for script in ld_scripts:
+                try:
+                    ld = json.loads(script.string)
+                    # Handle both list and dict ld+json structures
+                    items = ld if isinstance(ld, list) else [ld]
+                    for item in items:
+                        if isinstance(item, dict) and item.get('@type') in ['Product', 'product']:
+                            offers = item.get('offers', [])
+                            offers = offers if isinstance(offers, list) else [offers]
+                            for offer in offers:
+                                # Match variant_id in offer URL
+                                if f"variant={variant_id}" in offer.get('url', ''):
+                                    avail = offer.get('availability', '')
+                                    result['in_stock'] = 'InStock' in avail
+                                    stock_found = True
+                                    break
+                            if stock_found: break
+                    if stock_found: break
+                except:
+                    pass
+            
+            # Fallback to meta tags if JSON-LD parsing failed
+            if not stock_found:
+                in_stock = False
+                for meta in soup.find_all('meta'):
+                    prop = meta.get('property', '') or meta.get('name', '')
+                    if 'availability' in prop.lower():
+                        in_stock = 'instock' in meta.get('content', '').lower()
+                        break
+                result['in_stock'] = in_stock
+
+    except Exception as e:
+        print(f"  [WBN Error] {product_url}: {e}")
+    
+    return result
+
+
+# =============================================================================
 # JSON-LD SCRAPER (onlywhatsneeded, etc.)
 # =============================================================================
 
@@ -480,6 +600,7 @@ BRAND_SCRAPERS = {
     "bgreen": scrape_shopify,
     "onlywhatsneeded": scrape_jsonld,
     "plixlife": scrape_plix,
+    "wellbeingnutrition": scrape_wbn,
 }
 
 
