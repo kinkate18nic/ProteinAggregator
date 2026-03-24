@@ -6,10 +6,8 @@ interface LabDetails {
   is_tested: boolean;
   source: string | null;
   report_url: string | null;
-  protein_claimed_percent: number;
+  protein_claimed_percent: number | null;
   protein_verified_percent: number | null;
-  amino_spiking_detected: boolean | null;
-  heavy_metals_pass: boolean | null;
 }
 
 interface ProteinProduct {
@@ -17,11 +15,12 @@ interface ProteinProduct {
   brand: string;
   product_name: string;
   product_url: string;
-  live_price_inr: number;
+  live_price_inr: number | null;
   last_updated: string;
   is_tested: boolean;
-  cost_per_gram: number;
+  cost_per_gram: number | null;
   protein_verified_percent: number | null;
+  protein_claimed_percent: number | null;
   quality_score_note: string;
   lab_details?: LabDetails;
 }
@@ -48,11 +47,16 @@ export default function Home() {
   const processedData = useMemo(() => {
     return data
       .filter(product => {
-        if (product.live_price_inr > budgetLimit) return false;
+        if (product.live_price_inr !== null && product.live_price_inr > budgetLimit) return false;
         if (filterLabTested && !product.is_tested) return false;
         return true;
       })
-      .sort((a, b) => a.cost_per_gram - b.cost_per_gram);
+      .sort((a, b) => {
+        if (a.cost_per_gram === null && b.cost_per_gram === null) return 0;
+        if (a.cost_per_gram === null) return 1;
+        if (b.cost_per_gram === null) return -1;
+        return a.cost_per_gram - b.cost_per_gram;
+      });
   }, [data, budgetLimit, filterLabTested]);
 
   return (
@@ -69,7 +73,7 @@ export default function Home() {
             Max Unit Price: <span className="text-blue-600">₹{budgetLimit}</span>
           </label>
           <input 
-            type="range" min="1000" max="6000" step="100" 
+            type="range" min="1000" max="10000" step="500" 
             value={budgetLimit} 
             onChange={(e) => setBudgetLimit(Number(e.target.value))}
             className="w-full accent-blue-600 cursor-pointer"
@@ -106,15 +110,21 @@ export default function Home() {
                     </a>
                   </h2>
                 </div>
-                <div className="bg-blue-50 border border-blue-100 text-blue-800 font-black px-3 py-2 rounded-xl text-base whitespace-nowrap shadow-sm">
-                  ₹{product.cost_per_gram} <span className="text-[11px] font-bold text-blue-600 uppercase">/g</span>
+                <div className={`${product.cost_per_gram ? 'bg-blue-50 border-blue-100 text-blue-800' : 'bg-gray-50 border-gray-100 text-gray-500'} border font-black px-3 py-2 rounded-xl text-base whitespace-nowrap shadow-sm`}>
+                  {product.cost_per_gram ? (
+                    <>₹{product.cost_per_gram} <span className="text-[11px] font-bold text-blue-600 uppercase">/g</span></>
+                  ) : (
+                    <span className="text-sm">N/A</span>
+                  )}
                 </div>
               </div>
               
               <div className="grid grid-cols-2 gap-3 text-sm flex-grow items-end">
                 <div className="bg-gray-50 p-3.5 rounded-2xl border border-gray-100 flex flex-col justify-center">
                   <span className="text-gray-400 text-[11px] font-bold uppercase tracking-wide block mb-1">Live Tub Price</span>
-                  <span className="font-black text-gray-900 text-base">₹{product.live_price_inr}</span>
+                  <span className={`font-black ${product.live_price_inr ? 'text-gray-900 text-base' : 'text-amber-600 text-sm'}`}>
+                    {product.live_price_inr ? `₹${product.live_price_inr}` : "Missing Data"}
+                  </span>
                 </div>
                 
                 <div className="bg-gray-50 p-3.5 rounded-2xl border border-gray-100 flex flex-col justify-center">
@@ -125,7 +135,7 @@ export default function Home() {
                         Lab Verified
                      </span>
                   ) : (
-                     <span className="font-bold text-amber-500 text-sm">Unverified</span>
+                     <span className="font-bold text-amber-500 text-sm">{product.quality_score_note}</span>
                   )}
                 </div>
 
@@ -144,11 +154,23 @@ export default function Home() {
                   </div>
                 )}
                 
-                {!product.is_tested && (
-                  <div className="bg-amber-50/50 p-4 rounded-2xl col-span-2 border border-amber-100 mt-1">
-                     <p className="text-amber-800/80 text-[11px] leading-relaxed font-semibold">
-                        Metrics calculated based on the brand's label claim. Independent lab data is currently unavailable.
+                {!product.is_tested && product.quality_score_note === "Missing Protein %" && (
+                  <div className="bg-rose-50/50 p-4 rounded-2xl col-span-2 border border-rose-100 mt-1">
+                     <p className="text-rose-800/80 text-[11px] leading-relaxed font-semibold">
+                        This product is missing official macro-nutritional table statistics in our database, preventing score integrity.
                      </p>
+                  </div>
+                )}
+                
+                {!product.is_tested && product.quality_score_note === "Unverified (Claimed)" && (
+                  <div className="bg-amber-50/50 p-4 rounded-2xl col-span-2 border border-amber-100 mt-1 flex justify-between items-center">
+                     <p className="text-amber-800/80 text-[11px] leading-relaxed font-semibold pr-2">
+                        Metrics are heavily bound to the manufacturer's label claim. Independent lab verified data is vacant.
+                     </p>
+                     <div className="text-right whitespace-nowrap pl-2 border-l border-amber-200/50">
+                        <span className="text-amber-700/80 text-[10px] font-black block uppercase tracking-wider mb-0.5">Claimed</span>
+                        <span className="font-black text-amber-800 text-lg">{product.protein_claimed_percent}%</span>
+                     </div>
                   </div>
                 )}
               </div>

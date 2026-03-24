@@ -5,12 +5,13 @@
     "product_name": "Biozyme Performance Whey - 1kg Rich Chocolate",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-performance-whey/SP-88093?navKey=VRNT-165145",
     "live_price_inr": 2949.0,
-    "last_updated": "2026-03-24T11:20:21.392179",
-    "cost_per_gram": 3.93,
+    "last_updated": "2026-03-24T11:33:54.759101",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 1000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-bpw-1kg-ch",
@@ -18,12 +19,13 @@
     "product_name": "Biozyme Performance Whey - 1kg Chocolate Hazelnut",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-performance-whey/SP-88093?navKey=VRNT-207850",
     "live_price_inr": 2949.0,
-    "last_updated": "2026-03-24T11:20:21.878411",
-    "cost_per_gram": 3.93,
+    "last_updated": "2026-03-24T11:33:55.229788",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 1000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-bpw-1kg-lsc",
@@ -31,12 +33,13 @@
     "product_name": "Biozyme Performance Whey - 1kg Less Sweet Chocolate",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-performance-whey/SP-88093?navKey=VRNT-269971",
     "live_price_inr": 2949.0,
-    "last_updated": "2026-03-24T11:20:22.354240",
-    "cost_per_gram": 3.93,
+    "last_updated": "2026-03-24T11:33:55.719339",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 1000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-bpw-2kg-rc",
@@ -44,12 +47,13 @@
     "product_name": "Biozyme Performance Whey - 2kg Rich Chocolate",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-performance-whey/SP-88093",
     "live_price_inr": 4999.0,
-    "last_updated": "2026-03-24T11:20:22.818789",
-    "cost_per_gram": 3.33,
+    "last_updated": "2026-03-24T11:33:56.280327",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 2000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-bpw-base",
@@ -57,12 +61,13 @@
     "product_name": "Biozyme Performance Whey - Base Product Page",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-performance-whey/SP-88093",
     "live_price_inr": 4999.0,
-    "last_updated": "2026-03-24T11:20:23.444253",
-    "cost_per_gram": 6.67,
+    "last_updated": "2026-03-24T11:33:56.670552",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 1000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-biz-1kg-lcicc",
@@ -70,12 +75,13 @@
     "product_name": "Biozyme Iso-Zero - 1kg Low Carb Ice Cream Chocolate",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-iso-zero/SP-45405?navKey=VRNT-89957",
     "live_price_inr": 4199.0,
-    "last_updated": "2026-03-24T11:20:23.844594",
-    "cost_per_gram": 5.6,
+    "last_updated": "2026-03-24T11:33:56.923727",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 1000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-biz-2kg-lcicc",
@@ -83,12 +89,13 @@
     "product_name": "Biozyme Iso-Zero - 2kg Low Carb Ice Cream Chocolate",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-iso-zero/SP-45405?navKey=VRNT-89955",
     "live_price_inr": 8199.0,
-    "last_updated": "2026-03-24T11:20:24.272974",
-    "cost_per_gram": 5.47,
+    "last_updated": "2026-03-24T11:33:57.390013",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 2000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-biz-base",
@@ -96,12 +103,13 @@
     "product_name": "Biozyme Iso-Zero - Base Product Page",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-iso-zero/SP-45405",
     "live_price_inr": 8199.0,
-    "last_updated": "2026-03-24T11:20:25.189003",
-    "cost_per_gram": 10.93,
+    "last_updated": "2026-03-24T11:33:57.718883",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 1000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-bg100-1kg-drc",
@@ -109,12 +117,13 @@
     "product_name": "Biozyme Gold 100% Whey - 1kg Double Rich Chocolate",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-gold-100-whey/SP-130031?navKey=VRNT-252447",
     "live_price_inr": 3699.0,
-    "last_updated": "2026-03-24T11:20:26.290490",
-    "cost_per_gram": 4.93,
+    "last_updated": "2026-03-24T11:33:58.091772",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 1000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-bg100-2kg-drc",
@@ -122,12 +131,13 @@
     "product_name": "Biozyme Gold 100% Whey - 2kg Double Rich Chocolate",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-gold-100-whey/SP-130031?navKey=VRNT-252445",
     "live_price_inr": 6699.0,
-    "last_updated": "2026-03-24T11:20:26.581539",
-    "cost_per_gram": 4.47,
+    "last_updated": "2026-03-24T11:33:58.333950",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 2000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-bg100-base",
@@ -135,12 +145,13 @@
     "product_name": "Biozyme Gold 100% Whey - Base Product Page",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-gold-100-whey/SP-130031",
     "live_price_inr": 6699.0,
-    "last_updated": "2026-03-24T11:20:27.000894",
-    "cost_per_gram": 8.93,
+    "last_updated": "2026-03-24T11:33:58.649066",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 1000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-bwpr-1kg-mcc",
@@ -148,12 +159,13 @@
     "product_name": "Biozyme Whey PR - 1kg Molten Chocolate Cake",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-whey-pr/SP-122029?navKey=VRNT-249465",
     "live_price_inr": 3299.0,
-    "last_updated": "2026-03-24T11:20:27.370679",
-    "cost_per_gram": 4.4,
+    "last_updated": "2026-03-24T11:33:59.674530",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 1000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-bwpr-2kg-mcc",
@@ -161,12 +173,13 @@
     "product_name": "Biozyme Whey PR - 2kg Molten Chocolate Cake",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-whey-pr/SP-122029?navKey=VRNT-249463",
     "live_price_inr": 5549.0,
-    "last_updated": "2026-03-24T11:20:27.617276",
-    "cost_per_gram": 3.7,
+    "last_updated": "2026-03-24T11:34:00.116339",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 2000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-bwpr-2kg-cf",
@@ -174,12 +187,13 @@
     "product_name": "Biozyme Whey PR - 2kg Chocolate Fudge",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-whey-pr/SP-122029",
     "live_price_inr": 5549.0,
-    "last_updated": "2026-03-24T11:20:28.099084",
-    "cost_per_gram": 3.7,
+    "last_updated": "2026-03-24T11:34:00.370429",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 2000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-bwpr-base",
@@ -187,12 +201,13 @@
     "product_name": "Biozyme Whey PR - Base Product Page",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-biozyme-whey-pr/SP-122029",
     "live_price_inr": 5549.0,
-    "last_updated": "2026-03-24T11:20:28.366339",
-    "cost_per_gram": 7.4,
+    "last_updated": "2026-03-24T11:34:00.635995",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 1000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-100wp-1kg-rmc",
@@ -200,12 +215,13 @@
     "product_name": "100% Whey Protein - 1kg Rich Milk Chocolate",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-100-whey-protein-supplement-powder-with-digestive-enzyme/SP-33626?navKey=VRNT-72752",
     "live_price_inr": 2999.0,
-    "last_updated": "2026-03-24T11:20:28.784071",
-    "cost_per_gram": 4.0,
+    "last_updated": "2026-03-24T11:34:01.068409",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 1000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-100wp-2kg-rmc",
@@ -213,12 +229,13 @@
     "product_name": "100% Whey Protein - 2kg Rich Milk Chocolate",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-100-whey-protein-supplement-powder-with-digestive-enzyme/SP-33626",
     "live_price_inr": 5719.0,
-    "last_updated": "2026-03-24T11:20:29.280930",
-    "cost_per_gram": 3.81,
+    "last_updated": "2026-03-24T11:34:01.627554",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 2000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-100wp-4kg-rmc",
@@ -226,12 +243,13 @@
     "product_name": "100% Whey Protein - 4kg Rich Milk Chocolate",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-100-whey-protein-supplement-powder-with-digestive-enzyme/SP-33626?navKey=VRNT-72745",
     "live_price_inr": 11059.0,
-    "last_updated": "2026-03-24T11:20:29.677888",
-    "cost_per_gram": 3.69,
+    "last_updated": "2026-03-24T11:34:02.205441",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 4000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-100wp-4lb-var",
@@ -239,12 +257,13 @@
     "product_name": "100% Whey Protein - 4lb (variant)",
     "product_url": "https://www.muscleblaze.com/sv/sv/muscleblaze-100-whey-protein-supplement-powder-with-digestive-enzyme/SP-33626?navKey=VRNT-130987",
     "live_price_inr": 5489.0,
-    "last_updated": "2026-03-24T11:20:30.316778",
-    "cost_per_gram": 4.03,
+    "last_updated": "2026-03-24T11:34:02.623934",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 1814,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-raw-500g-un",
@@ -252,12 +271,13 @@
     "product_name": "100% Clean Raw Whey Protein - 500g Unflavoured",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-80-raw-whey-protein-supplement-powder/SP-40454?navKey=VRNT-131607",
     "live_price_inr": 1209.0,
-    "last_updated": "2026-03-24T11:20:30.554570",
-    "cost_per_gram": 3.22,
+    "last_updated": "2026-03-24T11:34:02.847182",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 500,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-raw-1kg-un",
@@ -265,12 +285,13 @@
     "product_name": "100% Clean Raw Whey Protein - 1kg Unflavoured",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-80-raw-whey-protein-supplement-powder/SP-40454?navKey=VRNT-77192",
     "live_price_inr": 2299.0,
-    "last_updated": "2026-03-24T11:20:30.856129",
-    "cost_per_gram": 3.07,
+    "last_updated": "2026-03-24T11:34:03.061378",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 1000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-raw-base",
@@ -278,12 +299,13 @@
     "product_name": "100% Clean Raw Whey Protein - Base Product Page",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-80-raw-whey-protein-supplement-powder/SP-40454",
     "live_price_inr": 8799.0,
-    "last_updated": "2026-03-24T11:20:31.092081",
-    "cost_per_gram": 11.73,
+    "last_updated": "2026-03-24T11:34:03.267326",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 1000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-beg-500g-ch",
@@ -291,12 +313,13 @@
     "product_name": "Beginner's Protein Powder - 500g Chocolate",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-beginners-protein-powder/SP-45581?navKey=VRNT-176588",
     "live_price_inr": 849.0,
-    "last_updated": "2026-03-24T11:20:31.306835",
-    "cost_per_gram": 2.26,
+    "last_updated": "2026-03-24T11:34:03.552259",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 500,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-beg-1kg-ch",
@@ -304,12 +327,13 @@
     "product_name": "Beginner's Protein Powder - 1kg Chocolate",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-beginners-protein-powder/SP-45581",
     "live_price_inr": 1499.0,
-    "last_updated": "2026-03-24T11:20:31.569747",
-    "cost_per_gram": 2.0,
+    "last_updated": "2026-03-24T11:34:03.783419",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 1000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-beg-base",
@@ -317,12 +341,13 @@
     "product_name": "Beginner's Protein Powder - Base Product Page",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-beginners-protein-powder/SP-45581",
     "live_price_inr": 1499.0,
-    "last_updated": "2026-03-24T11:20:31.810384",
-    "cost_per_gram": 2.0,
+    "last_updated": "2026-03-24T11:34:04.047225",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 1000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-plant-1kg-rc",
@@ -330,12 +355,13 @@
     "product_name": "MB bGreen Plant Protein - 1kg Rich Chocolate",
     "product_url": "https://www.muscleblaze.com/sv/bgreen-plant-protein-pea-protein-isolate/SP-80119",
     "live_price_inr": 1999.0,
-    "last_updated": "2026-03-24T11:20:32.233143",
-    "cost_per_gram": 2.67,
+    "last_updated": "2026-03-24T11:34:04.482028",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 1000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-plant-base",
@@ -343,12 +369,13 @@
     "product_name": "MuscleBlaze Plant Protein - Base Product Page",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-plant-protein/SP-103284",
     "live_price_inr": 2129.0,
-    "last_updated": "2026-03-24T11:20:32.424058",
-    "cost_per_gram": 2.84,
+    "last_updated": "2026-03-24T11:34:05.006844",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 1000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-lean-1kg-ch",
@@ -356,12 +383,13 @@
     "product_name": "High Protein Lean Mass Gainer - 1kg Chocolate",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-high-protein-lean-mass-gainer/SP-43512?navKey=VRNT-95493",
     "live_price_inr": 1449.0,
-    "last_updated": "2026-03-24T11:20:32.685521",
-    "cost_per_gram": 1.93,
+    "last_updated": "2026-03-24T11:34:05.333231",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 1000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-lean-3kg-ch",
@@ -369,12 +397,13 @@
     "product_name": "High Protein Lean Mass Gainer - 3kg Chocolate",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-high-protein-lean-mass-gainer/SP-43512",
     "live_price_inr": 3799.0,
-    "last_updated": "2026-03-24T11:20:32.875319",
-    "cost_per_gram": 1.69,
+    "last_updated": "2026-03-24T11:34:05.497508",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 3000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-lean-5kg-ch",
@@ -382,12 +411,13 @@
     "product_name": "High Protein Lean Mass Gainer - 5kg Chocolate",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-high-protein-lean-mass-gainer/SP-43512?navKey=VRNT-89173",
     "live_price_inr": 5799.0,
-    "last_updated": "2026-03-24T11:20:33.123216",
-    "cost_per_gram": 1.55,
+    "last_updated": "2026-03-24T11:34:05.912620",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 5000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-xxl-1kg-ch",
@@ -395,12 +425,13 @@
     "product_name": "Mass Gainer XXL - 1kg Chocolate",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-mass-gainer-xxl-with-complex-carbs-and-proteins-in-3:1-ratio/SP-33848?navKey=VRNT-72272",
     "live_price_inr": 1149.0,
-    "last_updated": "2026-03-24T11:20:33.457104",
-    "cost_per_gram": 1.53,
+    "last_updated": "2026-03-24T11:34:06.357197",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 1000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-xxl-3kg-ch",
@@ -408,12 +439,13 @@
     "product_name": "Mass Gainer XXL - 3kg Chocolate",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-mass-gainer-xxl-with-complex-carbs-and-proteins-in-3:1-ratio/SP-33848",
     "live_price_inr": 3099.0,
-    "last_updated": "2026-03-24T11:20:33.803562",
-    "cost_per_gram": 1.38,
+    "last_updated": "2026-03-24T11:34:06.931354",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 3000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-xxl-5kg-ch",
@@ -421,12 +453,13 @@
     "product_name": "Mass Gainer XXL - 5kg Chocolate",
     "product_url": "https://www.muscleblaze.com/sv/muscleblaze-mass-gainer-xxl-with-complex-carbs-and-proteins-in-3:1-ratio/SP-33848?navKey=VRNT-72747",
     "live_price_inr": 4599.0,
-    "last_updated": "2026-03-24T11:20:34.192183",
-    "cost_per_gram": 1.23,
+    "last_updated": "2026-03-24T11:34:07.440997",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 5000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-combo-bpw1kg",
@@ -434,12 +467,13 @@
     "product_name": "Biozyme Performance Whey 1kg & Gym Bag Combo",
     "product_url": "https://www.muscleblaze.com/pk/biozyme-performance-whey-1-kg-n-gym-bag-combo?navKey=PA-132625",
     "live_price_inr": 3149.0,
-    "last_updated": "2026-03-24T11:20:34.596533",
-    "cost_per_gram": 4.2,
+    "last_updated": "2026-03-24T11:34:07.857747",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 1000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   },
   {
     "id": "mb-combo-bpw2kg",
@@ -447,11 +481,12 @@
     "product_name": "Biozyme Performance Whey 2kg & Creatine 100g Combo",
     "product_url": "https://www.muscleblaze.com/pk/biozyme-performance-whey-2-kg-n-creatine-100g-combo?navKey=PA-128288",
     "live_price_inr": 5489.0,
-    "last_updated": "2026-03-24T11:20:35.010698",
-    "cost_per_gram": 3.66,
+    "last_updated": "2026-03-24T11:34:08.350264",
+    "cost_per_gram": null,
     "is_tested": false,
     "total_weight_grams": 2000,
     "protein_verified_percent": null,
-    "quality_score_note": "Unverified (Claimed)"
+    "protein_claimed_percent": null,
+    "quality_score_note": "Missing Protein %"
   }
 ]
