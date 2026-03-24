@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 
 interface ProteinProduct {
   id: string;
@@ -45,6 +45,22 @@ export default function Home() {
         console.error("Could not load catalog", err);
         setLoading(false);
       });
+  }, []);
+
+  // Searchable Dropdown State
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [brandSearch, setBrandSearch] = useState('');
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown on click outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const brands = useMemo(() => {
@@ -104,22 +120,52 @@ export default function Home() {
 
         {/* Filters Group */}
         <div className="flex flex-col sm:flex-row gap-5 md:gap-8 w-full md:w-auto">
-          {/* Brand Select */}
-          <div className="flex flex-col w-full sm:w-48">
+          {/* Searchable Brand Select */}
+          <div className="flex flex-col w-full sm:w-56" ref={dropdownRef}>
             <label className="text-sm font-bold text-gray-700 mb-2">Brand</label>
             <div className="relative">
-              <select 
-                value={filterBrand} 
-                onChange={(e) => setFilterBrand(e.target.value)}
-                className="w-full appearance-none bg-gray-50 border border-gray-200 text-gray-700 py-2.5 px-4 pr-8 rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all cursor-pointer text-sm"
+              <div 
+                className="w-full bg-gray-50 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded-xl font-medium cursor-pointer text-sm flex items-center justify-between"
+                onClick={() => setDropdownOpen(!dropdownOpen)}
               >
-                {brands.map(b => (
-                  <option key={b} value={b}>{b}</option>
-                ))}
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
-                <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                <span className="truncate">{filterBrand}</span>
+                <svg className={`fill-current h-4 w-4 text-gray-500 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
               </div>
+              
+              {dropdownOpen && (
+                <div className="absolute z-50 mt-2 w-full bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden flex flex-col max-h-64">
+                  <div className="p-2 border-b border-gray-100 bg-gray-50 sticky top-0">
+                    <input 
+                      type="text" 
+                      placeholder="Search brand..." 
+                      className="w-full text-sm bg-white border-gray-300 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 border"
+                      value={brandSearch}
+                      onChange={(e) => setBrandSearch(e.target.value)}
+                      onClick={(e) => e.stopPropagation()}
+                      autoFocus
+                    />
+                  </div>
+                  <ul className="overflow-y-auto">
+                    {brands.filter(b => b.toLowerCase().includes(brandSearch.toLowerCase())).length === 0 ? (
+                      <li className="px-4 py-3 text-sm text-gray-500 text-center">No brands found</li>
+                    ) : (
+                      brands.filter(b => b.toLowerCase().includes(brandSearch.toLowerCase())).map(b => (
+                        <li 
+                          key={b} 
+                          className={`px-4 py-2.5 text-sm cursor-pointer transition-colors ${filterBrand === b ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-gray-700 hover:bg-gray-50'}`}
+                          onClick={() => {
+                            setFilterBrand(b);
+                            setDropdownOpen(false);
+                            setBrandSearch('');
+                          }}
+                        >
+                          {b}
+                        </li>
+                      ))
+                    )}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
 
@@ -149,7 +195,7 @@ export default function Home() {
       {loading ? (
         <div className="text-center py-12 text-gray-500 font-medium">Loading catalog...</div>
       ) : (
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {visibleData.map((product) => (
             <div key={product.id} className="bg-white border border-gray-200 rounded-3xl p-5 md:p-6 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group">
               
@@ -158,7 +204,7 @@ export default function Home() {
                 <div className="pr-3">
                   <p className="text-[10px] text-indigo-500 font-black uppercase tracking-widest mb-1.5">{product.brand}</p>
                   <h2 className="font-extrabold text-lg text-gray-900 leading-snug">
-                    <a href={product.product_url} target="_blank" rel="noreferrer" className="group-hover:text-indigo-600 transition-colors line-clamp-3">
+                    <a href={product.product_url} target="_blank" rel="noreferrer" className="group-hover:text-indigo-600 transition-colors">
                       {product.product_name}
                     </a>
                   </h2>
