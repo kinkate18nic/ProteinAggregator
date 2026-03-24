@@ -358,6 +358,9 @@ def main():
                 # Recompute total_weight if we now have serving data
                 if scraped['total_weight_g'] is None and scraped['serving_size_g'] and scraped['num_servings']:
                     scraped['total_weight_g'] = round(scraped['serving_size_g'] * scraped['num_servings'], 1)
+                # Recompute num_servings if we have total_weight and serving_size
+                if scraped['num_servings'] is None and scraped['total_weight_g'] and scraped['serving_size_g']:
+                    scraped['num_servings'] = int(scraped['total_weight_g'] / scraped['serving_size_g'])
                 # Recompute protein_percent if we now have protein_per_serving and serving_size
                 if scraped['protein_percent'] is None and scraped['protein_per_serving_g'] and scraped['serving_size_g']:
                     scraped['protein_percent'] = round((scraped['protein_per_serving_g'] / scraped['serving_size_g']) * 100, 1)
