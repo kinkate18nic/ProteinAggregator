@@ -311,6 +311,8 @@ def scrape_plix(product_url):
     
     try:
         from urllib.parse import urlparse, parse_qs
+        import re
+        
         parsed_url = urlparse(product_url)
         qs = parse_qs(parsed_url.query)
         target_sku = qs.get('sku', [None])[0]
@@ -333,7 +335,8 @@ def scrape_plix(product_url):
         if not product:
             print(f"  [Plix Error] {product_url}: Product block not found in NEXT_DATA")
             return result
-            
+        
+        parent_name = (product.get('name') or '').strip()
         variants = product.get('variants', [])
         
         # Find matching variant
@@ -345,30 +348,51 @@ def scrape_plix(product_url):
                     break
         
         if not target_variant and variants:
-            target_variant = variants[0] # Fallback to first
+            target_variant = variants[0]
             
         if target_variant:
-            result['scraped_name'] = target_variant.get('name')
+            # --- Build a clean product name ---
+            # Variant name looks like "Milk Chocolate / Pack of 1Kg__1 Month__27 Scoops"
+            raw_variant = target_variant.get('name') or ''
+            # Extract flavor (before ' / ')
+            flavor = raw_variant.split(' / ')[0].strip() if ' / ' in raw_variant else ''
+            # Extract weight text (e.g. "Pack of 1Kg", "Pack of 500g")
+            wt_part = ''
+            wt_match = re.search(r'Pack\s+of\s+(\d+(?:\.\d+)?)\s*(kg|Kg|KG|g|gm|gms)\b', raw_variant)
+            if wt_match:
+                wt_part = f"{wt_match.group(1)}{wt_match.group(2).lower()}"
             
-            # Price
+            # Compose: "Parent Name, Weight / Flavor"
+            name_parts = [parent_name]
+            if wt_part:
+                name_parts.append(wt_part)
+            if flavor:
+                name_parts.append(flavor)
+            result['scraped_name'] = ', '.join(name_parts)
+            
+            # --- Price ---
             try:
                 result['price'] = float(target_variant.get('pricing', {}).get('price', {}).get('gross', {}).get('amount'))
             except (ValueError, TypeError):
                 pass
                 
-            # Stock
+            # --- Stock ---
             qty = target_variant.get('quantityAvailable', 0)
             result['in_stock'] = qty > 0
             
-            # Weight Extraction
-            import re
-            wt_match = re.search(r'(\d+(?:\.\d+)?)\s*(?:kg|Kg|KG)\b', result['scraped_name'] or '')
+            # --- Weight ---
             if wt_match:
-                result['total_weight_g'] = float(wt_match.group(1)) * 1000
-            else:
-                wt_match = re.search(r'(\d+)\s*(?:g|gm|gms|G)\b', result['scraped_name'] or '')
-                if wt_match:
-                    result['total_weight_g'] = float(wt_match.group(1))
+                val = float(wt_match.group(1))
+                unit = wt_match.group(2).lower()
+                if unit == 'kg':
+                    result['total_weight_g'] = val * 1000
+                else:
+                    result['total_weight_g'] = val
+            
+            # --- Servings from variant name ("27 Scoops") ---
+            scoops_match = re.search(r'(\d+)\s*Scoops', raw_variant, re.IGNORECASE)
+            if scoops_match:
+                result['num_servings'] = int(scoops_match.group(1))
                     
     except Exception as e:
         print(f"  [Plix Error] {product_url}: {e}")
