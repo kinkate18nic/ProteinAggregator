@@ -27,25 +27,36 @@ def get_live_price(brand_id, product_url):
         print(f"Error fetching {product_url}: {e}")
         
     print(f"Failed to scrape {product_url}, falling back to static price mapping.")
-    fallback_map = {
-        "mb-biozyme-performance": 2249.0,
-        "mb-fuel-one": 1749.0
-    }
-    
-    for key, val in fallback_map.items():
-        if key in product_url:
-            return val
     return 2000.0
+
+def extract_weight_in_grams(name):
+    name_lower = name.lower()
+    
+    kg_match = re.search(r'([\d.]+)\s*kg', name_lower)
+    if kg_match:
+        return int(float(kg_match.group(1)) * 1000)
+        
+    g_match = re.search(r'([\d.]+)\s*g\b', name_lower)
+    if g_match:
+        return int(float(g_match.group(1)))
+        
+    lb_match = re.search(r'([\d.]+)\s*lb', name_lower)
+    if lb_match:
+        return int(float(lb_match.group(1)) * 453.592)
+        
+    # Base products without specific weights fall back to standard 1000
+    return 1000
 
 def calculate_quality_metrics(product_data, lab_data):
     metrics = {
         "cost_per_gram": None,
         "is_tested": False,
+        "total_weight_grams": extract_weight_in_grams(product_data['product_name']),
         "protein_verified_percent": None,
         "quality_score_note": "No Lab Data"
     }
     
-    total_weight = 1000 
+    total_weight = metrics["total_weight_grams"]
     live_price = product_data['live_price_inr']
 
     if lab_data and lab_data.get('is_tested'):
@@ -54,13 +65,13 @@ def calculate_quality_metrics(product_data, lab_data):
         metrics['protein_verified_percent'] = verified_pct
         
         total_verified_protein = total_weight * (verified_pct / 100)
-        metrics['cost_per_gram'] = round(live_price / total_verified_protein, 2)
+        metrics['cost_per_gram'] = round(live_price / total_verified_protein, 2) if total_verified_protein > 0 else 0
         metrics['quality_score_note'] = "Verified via Lab"
     else:
         claimed_pct = lab_data.get('protein_claimed_percent') if lab_data else 75.0
         
         total_claimed_protein = total_weight * (claimed_pct / 100)
-        metrics['cost_per_gram'] = round(live_price / total_claimed_protein, 2)
+        metrics['cost_per_gram'] = round(live_price / total_claimed_protein, 2) if total_claimed_protein > 0 else 0
         metrics['quality_score_note'] = "Unverified (Claimed)"
         
     return metrics
