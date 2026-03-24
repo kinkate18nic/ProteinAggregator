@@ -30,6 +30,8 @@ export default function Home() {
   const [budgetLimit, setBudgetLimit] = useState<number>(10000);
   const [filterLabTested, setFilterLabTested] = useState(false);
   const [filterInStock, setFilterInStock] = useState(false);
+  const [filterBrand, setFilterBrand] = useState('All');
+  const [loadedCount, setLoadedCount] = useState(12);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -45,9 +47,15 @@ export default function Home() {
       });
   }, []);
 
+  const brands = useMemo(() => {
+    const list = Array.from(new Set(data.map(p => p.brand)));
+    return ['All', ...list.sort()];
+  }, [data]);
+
   const processedData = useMemo(() => {
     return data
       .filter(product => {
+        if (filterBrand !== 'All' && product.brand !== filterBrand) return false;
         if (product.live_price_inr !== null && product.live_price_inr > budgetLimit) return false;
         if (filterLabTested && !product.is_lab_tested) return false;
         if (filterInStock && product.in_stock === false) return false;
@@ -61,37 +69,79 @@ export default function Home() {
         if (bCpg === null) return -1;
         return aCpg - bCpg;
       });
-  }, [data, budgetLimit, filterLabTested, filterInStock]);
+  }, [data, budgetLimit, filterLabTested, filterInStock, filterBrand]);
+
+  const visibleData = processedData.slice(0, loadedCount);
 
   return (
-    <main className="max-w-4xl mx-auto p-4 md:p-8">
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight text-gray-900">ProteinDB 🇮🇳</h1>
-        <p className="text-gray-500 mt-2 text-sm font-medium">Live Cost-per-Gram Comparison Dashboard</p>
+    <main className="max-w-5xl mx-auto p-4 md:p-8 min-h-screen">
+      {/* Hero Header */}
+      <header className="mb-10 text-center md:text-left">
+        <div className="inline-block bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight pb-2">ProteinDB 🇮🇳</h1>
+        </div>
+        <p className="text-gray-500 mt-2 text-base font-medium max-w-xl">
+          The ultimate live comparison engine for Indian protein supplements. Ranked honestly by <span className="text-indigo-600 font-bold bg-indigo-50 px-2 py-0.5 rounded-md">Cost per Gram</span>.
+        </p>
       </header>
 
-      {/* Control Panel */}
-      <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
-        <div className="flex flex-col w-full md:w-1/2">
-          <label className="text-sm font-bold text-gray-700 mb-3 block">
-            Max Price: <span className="text-blue-600">₹{budgetLimit}</span>
+      {/* Control Panel (Glassmorphism style) */}
+      <section className="bg-white/80 backdrop-blur-xl p-5 md:p-6 rounded-3xl shadow-sm border border-gray-200/60 mb-10 flex flex-col md:flex-row gap-6 md:gap-10 items-start md:items-center justify-between sticky top-4 z-10 transition-shadow hover:shadow-md">
+        
+        {/* Budget Slider */}
+        <div className="flex flex-col w-full md:flex-1">
+          <label className="text-sm font-bold text-gray-700 mb-3 flex justify-between">
+            <span>Max Price Filter</span>
+            <span className="text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-lg">₹{budgetLimit}</span>
           </label>
           <input 
             type="range" min="500" max="15000" step="500" 
             value={budgetLimit} 
             onChange={(e) => setBudgetLimit(Number(e.target.value))}
-            className="w-full accent-blue-600 cursor-pointer"
+            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
           />
         </div>
-        <div className="flex flex-col gap-3">
-          <label className="flex items-center space-x-2 cursor-pointer select-none text-sm font-bold text-gray-600">
-            <input type="checkbox" checked={filterLabTested} onChange={(e) => setFilterLabTested(e.target.checked)} className="w-4 h-4 rounded text-blue-600" />
-            <span>Lab-Tested Only</span>
-          </label>
-          <label className="flex items-center space-x-2 cursor-pointer select-none text-sm font-bold text-gray-600">
-            <input type="checkbox" checked={filterInStock} onChange={(e) => setFilterInStock(e.target.checked)} className="w-4 h-4 rounded text-blue-600" />
-            <span>In Stock Only</span>
-          </label>
+
+        {/* Filters Group */}
+        <div className="flex flex-col sm:flex-row gap-5 md:gap-8 w-full md:w-auto">
+          {/* Brand Select */}
+          <div className="flex flex-col w-full sm:w-48">
+            <label className="text-sm font-bold text-gray-700 mb-2">Brand</label>
+            <div className="relative">
+              <select 
+                value={filterBrand} 
+                onChange={(e) => setFilterBrand(e.target.value)}
+                className="w-full appearance-none bg-gray-50 border border-gray-200 text-gray-700 py-2.5 px-4 pr-8 rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all cursor-pointer text-sm"
+              >
+                {brands.map(b => (
+                  <option key={b} value={b}>{b}</option>
+                ))}
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
+                <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
+
+          {/* Toggles */}
+          <div className="flex flex-row sm:flex-col gap-4 sm:gap-3 py-1 justify-center">
+            <label className="flex items-center space-x-2.5 cursor-pointer select-none group">
+              <div className="relative flex items-center justify-center">
+                <input type="checkbox" checked={filterLabTested} onChange={(e) => setFilterLabTested(e.target.checked)} className="peer sr-only" />
+                <div className="w-5 h-5 bg-gray-100 border-2 border-gray-300 rounded peer-checked:bg-indigo-600 peer-checked:border-indigo-600 transition-colors"></div>
+                <svg className="absolute w-3 h-3 text-white opacity-0 peer-checked:opacity-100 transition-opacity drop-shadow-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span className="text-sm font-semibold text-gray-600 group-hover:text-gray-900 transition-colors">Lab Verified Only</span>
+            </label>
+            <label className="flex items-center space-x-2.5 cursor-pointer select-none group">
+              <div className="relative flex items-center justify-center">
+                <input type="checkbox" checked={filterInStock} onChange={(e) => setFilterInStock(e.target.checked)} className="peer sr-only" />
+                <div className="w-5 h-5 bg-gray-100 border-2 border-gray-300 rounded peer-checked:bg-green-600 peer-checked:border-green-600 transition-colors"></div>
+                <svg className="absolute w-3 h-3 text-white opacity-0 peer-checked:opacity-100 transition-opacity drop-shadow-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span className="text-sm font-semibold text-gray-600 group-hover:text-gray-900 transition-colors">In Stock Only</span>
+            </label>
+          </div>
         </div>
       </section>
 
@@ -99,24 +149,24 @@ export default function Home() {
       {loading ? (
         <div className="text-center py-12 text-gray-500 font-medium">Loading catalog...</div>
       ) : (
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {processedData.map((product) => (
-            <div key={product.id} className="bg-white border border-gray-200 rounded-3xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between">
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {visibleData.map((product) => (
+            <div key={product.id} className="bg-white border border-gray-200 rounded-3xl p-5 md:p-6 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group">
               
               {/* Header */}
-              <div className="flex justify-between items-start mb-5">
-                <div className="pr-4">
-                  <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1.5">{product.brand}</p>
+              <div className="flex justify-between items-start mb-5 relative pb-4 border-b border-gray-100">
+                <div className="pr-3">
+                  <p className="text-[10px] text-indigo-500 font-black uppercase tracking-widest mb-1.5">{product.brand}</p>
                   <h2 className="font-extrabold text-lg text-gray-900 leading-snug">
-                    <a href={product.product_url} target="_blank" rel="noreferrer" className="hover:text-blue-600 transition-colors">
+                    <a href={product.product_url} target="_blank" rel="noreferrer" className="group-hover:text-indigo-600 transition-colors line-clamp-3">
                       {product.product_name}
                     </a>
                   </h2>
                 </div>
                 {/* Cost per gram badge */}
-                <div className={`${product.cost_per_gram_claimed ? 'bg-blue-50 border-blue-100 text-blue-800' : 'bg-gray-100 border-gray-200 text-gray-400'} border font-black px-3 py-2 rounded-xl text-base whitespace-nowrap shadow-sm`}>
+                <div className={`${product.cost_per_gram_claimed ? 'bg-gradient-to-br from-indigo-50 to-blue-50 border-indigo-100 text-indigo-900' : 'bg-gray-50 border-gray-200 text-gray-400'} border-2 font-black px-3 py-2 rounded-2xl text-base whitespace-nowrap shadow-sm`}>
                   {product.cost_per_gram_claimed ? (
-                    <>₹{product.cost_per_gram_claimed} <span className="text-[11px] font-bold uppercase">/g</span></>
+                    <>₹{product.cost_per_gram_claimed} <span className="text-[10px] font-bold text-indigo-500 uppercase">/g</span></>
                   ) : (
                     <span className="text-sm">N/A</span>
                   )}
@@ -159,20 +209,23 @@ export default function Home() {
 
                 {/* Lab Verified Row */}
                 {product.is_lab_tested && (
-                  <div className="bg-green-50 p-3.5 rounded-2xl col-span-2 border border-green-200 flex justify-between items-center">
+                  <div className="bg-gradient-to-r from-emerald-50 to-green-50 p-4 rounded-2xl col-span-2 border border-green-200 flex justify-between items-center shadow-inner">
                      <div>
-                        <span className="text-green-700 text-[10px] font-black block uppercase tracking-wider mb-0.5">Lab Verified</span>
-                        <a href={product.lab_details?.report_url || "#"} target="_blank" rel="noreferrer" className="font-extrabold text-green-800 hover:text-green-600 underline text-sm">
+                        <span className="text-green-700 text-[9px] font-black block uppercase tracking-widest mb-1 flex items-center gap-1">
+                          <svg className="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path></svg>
+                          Lab Verified
+                        </span>
+                        <a href={product.lab_details?.report_url || "#"} target="_blank" rel="noreferrer" className="font-extrabold text-green-800 hover:text-green-600 underline decoration-green-300 text-sm">
                           {product.lab_details?.source} Report
                         </a>
                      </div>
                      <div className="text-right">
-                        <span className="text-green-700 text-[10px] font-black block uppercase tracking-wider mb-0.5">Verified</span>
+                        <span className="text-green-600 text-[10px] font-black block uppercase tracking-wider mb-0.5">Verified</span>
                         <span className="font-black text-green-800 text-xl">{product.protein_verified_percent}%</span>
                      </div>
                      {product.cost_per_gram_verified && (
-                       <div className="text-right ml-3 pl-3 border-l border-green-200">
-                         <span className="text-green-700 text-[10px] font-black block uppercase tracking-wider mb-0.5">₹/g Verified</span>
+                       <div className="text-right ml-3 pl-3 border-l border-green-300/60">
+                         <span className="text-green-600 text-[10px] font-black block uppercase tracking-wider mb-0.5">₹/g Verified</span>
                          <span className="font-black text-green-800 text-lg">₹{product.cost_per_gram_verified}</span>
                        </div>
                      )}
@@ -200,13 +253,28 @@ export default function Home() {
             </div>
           ))}
           
-          {processedData.length === 0 && (
-            <div className="col-span-1 md:col-span-2 text-center py-16 px-4 bg-gray-50 rounded-3xl border border-dashed border-gray-200">
-              <p className="text-gray-500 font-bold text-lg mb-2">No products found</p>
-              <p className="text-gray-400 text-sm">Try adjusting your filters or budget.</p>
+          {visibleData.length === 0 && (
+            <div className="col-span-full text-center py-20 px-4 bg-gray-50/50 rounded-3xl border-2 border-dashed border-gray-200">
+              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+              </div>
+              <p className="text-gray-900 font-extrabold text-xl mb-2">No products found</p>
+              <p className="text-gray-500 text-sm">Try adjusting your filters, budget, or brand selection.</p>
             </div>
           )}
         </section>
+      )}
+
+      {/* Pagination Load More */}
+      {!loading && loadedCount < processedData.length && (
+        <div className="mt-12 text-center pb-8">
+          <button 
+            onClick={() => setLoadedCount(c => c + 15)}
+            className="bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 font-bold tracking-wide py-3 px-8 rounded-xl shadow-sm hover:shadow transition-all duration-200 text-sm active:scale-95"
+          >
+            Load More Products ({processedData.length - loadedCount} remaining)
+          </button>
+        </div>
       )}
     </main>
   );
