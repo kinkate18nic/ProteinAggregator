@@ -33,7 +33,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/master_catalog.json')
+    fetch('master_catalog.json')
       .then((res) => res.json())
       .then((json) => {
         setData(json);
