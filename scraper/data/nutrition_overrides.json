@@ -255,59 +255,59 @@
     "source": "Estimated based on product type (Vegan=36g/22g, Whey=33g/24-26g) from WBN standards"
   },
   "twt-24g-lightcocoa-1kg": {
-    "serving_size_g": 33,
+    "serving_size_g": 35,
     "protein_per_serving_g": 24,
     "total_weight_g": 1000,
-    "num_servings": 30,
-    "source": "TWT product page: 24g protein per 33g scoop, Whey Isolate 50% + Concentrate 24.9%"
+    "num_servings": 28,
+    "source": "TWT product page: 24g protein per 35g scoop, Whey Isolate 50% + Concentrate 24.9%"
   },
   "twt-24g-lightcocoa-2kg": {
-    "serving_size_g": 33,
+    "serving_size_g": 35,
     "protein_per_serving_g": 24,
     "total_weight_g": 2000,
-    "num_servings": 60,
-    "source": "Same formulation as 1kg variant"
+    "num_servings": 57,
+    "source": "Same formulation as 1kg variant (57 servings per 2kg pack)"
   },
   "twt-30g-unflavoured-1kg": {
-    "serving_size_g": 33,
+    "serving_size_g": 35,
     "protein_per_serving_g": 30,
     "total_weight_g": 1000,
-    "num_servings": 30,
-    "source": "TWT product page: 30g protein per 33g scoop, Pure Whey Protein Isolate"
+    "num_servings": 28,
+    "source": "TWT product page: 30g protein per 35g scoop, Pure Whey Protein Isolate"
   },
   "twt-30g-unflavoured-2kg": {
-    "serving_size_g": 33,
+    "serving_size_g": 35,
     "protein_per_serving_g": 30,
     "total_weight_g": 2000,
-    "num_servings": 60,
-    "source": "Same formulation as 1kg variant"
+    "num_servings": 57,
+    "source": "Same formulation as 1kg variant (57 servings per 2kg pack)"
   },
   "twt-15g-ragicocoa-1kg": {
-    "serving_size_g": 33,
+    "serving_size_g": 35,
     "protein_per_serving_g": 15,
     "total_weight_g": 1000,
-    "num_servings": 30,
-    "source": "TWT product page: 15g protein per scoop, Ragi Cocoa flavor"
+    "num_servings": 28,
+    "source": "TWT product page: 15g protein per 35g scoop, Ragi Cocoa flavor"
   },
   "twt-15g-ragicocoa-2kg": {
-    "serving_size_g": 33,
+    "serving_size_g": 35,
     "protein_per_serving_g": 15,
     "total_weight_g": 2000,
-    "num_servings": 60,
+    "num_servings": 57,
     "source": "Same formulation as 1kg variant"
   },
   "twt-15g-coldcoffee-1kg": {
-    "serving_size_g": 33,
+    "serving_size_g": 35,
     "protein_per_serving_g": 15,
     "total_weight_g": 1000,
-    "num_servings": 30,
-    "source": "TWT product page: 15g protein per scoop, Cold Coffee flavor"
+    "num_servings": 28,
+    "source": "TWT product page: 15g protein per 35g scoop, Cold Coffee flavor"
   },
   "twt-15g-coldcoffee-2kg": {
-    "serving_size_g": 33,
+    "serving_size_g": 35,
     "protein_per_serving_g": 15,
     "total_weight_g": 2000,
-    "num_servings": 60,
+    "num_servings": 57,
     "source": "Same formulation as 1kg variant"
   }
 }
