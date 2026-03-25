@@ -380,5 +380,52 @@
         "url": "https://wellbeingnutrition.com/products/whey-protein-cappuccino-creatine-monohydrate-combo"
       }
     ]
+  },
+  {
+    "brand_id": "thewholetruth",
+    "brand_name": "The Whole Truth",
+    "base_url": "https://thewholetruthfoods.com",
+    "products": [
+      {
+        "product_id": "twt-24g-lightcocoa-1kg",
+        "name": "Light Cocoa 24g Whey Protein Isolate + Concentrate - 1kg",
+        "url": "https://thewholetruthfoods.com/products/light-cocoa-24g-whey-protein-isolate-concentrate?sku_id=38730403"
+      },
+      {
+        "product_id": "twt-24g-lightcocoa-2kg",
+        "name": "Light Cocoa 24g Whey Protein Isolate + Concentrate - 2kg",
+        "url": "https://thewholetruthfoods.com/products/light-cocoa-24g-whey-protein-isolate-concentrate?sku_id=38730404"
+      },
+      {
+        "product_id": "twt-30g-unflavoured-1kg",
+        "name": "Unflavoured 30g Pure Whey Protein Isolate - 1kg",
+        "url": "https://thewholetruthfoods.com/products/unflavoured-30-g-pure-whey-protein-isolate?sku_id=38730407"
+      },
+      {
+        "product_id": "twt-30g-unflavoured-2kg",
+        "name": "Unflavoured 30g Pure Whey Protein Isolate - 2kg",
+        "url": "https://thewholetruthfoods.com/products/unflavoured-30-g-pure-whey-protein-isolate?sku_id=38766739"
+      },
+      {
+        "product_id": "twt-15g-ragicocoa-1kg",
+        "name": "Ragi Cocoa 15g Whey Protein Powder - 1kg",
+        "url": "https://thewholetruthfoods.com/products/ragi-cocoa-15g-protein-powder?sku_id=38730399"
+      },
+      {
+        "product_id": "twt-15g-ragicocoa-2kg",
+        "name": "Ragi Cocoa 15g Whey Protein Powder - 2kg",
+        "url": "https://thewholetruthfoods.com/products/ragi-cocoa-15g-protein-powder?sku_id=38730400"
+      },
+      {
+        "product_id": "twt-15g-coldcoffee-1kg",
+        "name": "Cold Coffee 15g Whey Protein Powder - 1kg",
+        "url": "https://thewholetruthfoods.com/products/cold-coffee-15g-protein-powder?sku_id=38730401"
+      },
+      {
+        "product_id": "twt-15g-coldcoffee-2kg",
+        "name": "Cold Coffee 15g Whey Protein Powder - 2kg",
+        "url": "https://thewholetruthfoods.com/products/cold-coffee-15g-protein-powder?sku_id=38730402"
+      }
+    ]
   }
 ]

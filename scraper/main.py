@@ -591,6 +591,82 @@ def scrape_jsonld(product_url):
 
 
 # =============================================================================
+# THE WHOLE TRUTH SCRAPER (Playwright headless)
+# =============================================================================
+
+def scrape_twt(product_url):
+    """
+    Scraper for The Whole Truth Foods.
+    Uses Playwright headless browser since the site is fully CSR (Next.js).
+    Extracts name, price, and stock status from the rendered DOM.
+    Nutritional data comes from nutrition_overrides.json (displayed as images on site).
+    """
+    result = {k: None for k in [
+        'scraped_name', 'price', 'in_stock', 'protein_percent',
+        'protein_per_serving_g', 'serving_size_g', 'num_servings', 'total_weight_g'
+    ]}
+    
+    try:
+        from playwright.sync_api import sync_playwright
+        
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True)
+            page = browser.new_page(
+                user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0'
+            )
+            page.goto(product_url, timeout=30000)
+            # Wait for the product content to render
+            page.wait_for_timeout(5000)
+            
+            # --- PRODUCT NAME ---
+            try:
+                name_el = page.query_selector('h1')
+                if name_el:
+                    result['scraped_name'] = name_el.inner_text().strip()
+            except Exception:
+                pass
+
+            # --- PRICE ---
+            # TWT shows price like "₹3,539" — look for the offer/sale price
+            try:
+                body_text = page.inner_text('body')
+                price_matches = re.findall(r'₹\s*([\d,]+)', body_text)
+                if price_matches:
+                    prices = [int(m.replace(',', '')) for m in price_matches if int(m.replace(',', '')) > 100]
+                    if prices:
+                        result['price'] = float(prices[0])
+            except Exception:
+                pass
+
+            # --- STOCK STATUS ---
+            try:
+                add_to_cart = page.query_selector('button:has-text("ADD TO CART")')
+                buy_now = page.query_selector('button:has-text("BUY NOW")')
+                result['in_stock'] = bool(add_to_cart or buy_now)
+            except Exception:
+                result['in_stock'] = None
+
+            # --- WEIGHT from product name ---
+            if result['scraped_name']:
+                name_lower = result['scraped_name'].lower()
+                kg_m = re.search(r'(\d+(?:\.\d+)?)\s*kg', name_lower)
+                g_m = re.search(r'(\d{3,})\s*g\b', name_lower)
+                if kg_m:
+                    result['total_weight_g'] = float(kg_m.group(1)) * 1000
+                elif g_m:
+                    result['total_weight_g'] = float(g_m.group(1))
+            
+            browser.close()
+    
+    except ImportError:
+        print("  [TWT Error] playwright not installed. Run: pip install playwright && playwright install chromium")
+    except Exception as e:
+        print(f"  [TWT Error] {product_url}: {e}")
+    
+    return result
+
+
+# =============================================================================
 # SCRAPER ROUTER
 # =============================================================================
 
@@ -601,6 +677,7 @@ BRAND_SCRAPERS = {
     "onlywhatsneeded": scrape_jsonld,
     "plixlife": scrape_plix,
     "wellbeingnutrition": scrape_wbn,
+    "thewholetruth": scrape_twt,
 }
 
 
@@ -755,7 +832,7 @@ def main():
             c = metrics['protein_claimed_percent']
             s = metrics['in_stock']
             cpg = metrics['cost_per_gram_claimed']
-            print(f"  -> Price=₹{p}, Protein%={c}, InStock={s}, ₹/g(claimed)={cpg}")
+            print(f"  -> Price=Rs {p}, Protein%={c}, InStock={s}, Rs/g(claimed)={cpg}")
             
             master_catalog.append(catalog_entry)
     
