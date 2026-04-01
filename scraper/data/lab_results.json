@@ -1,1 +1,116 @@
-[]
+[
+  {
+    "product_id": "twt-24g-lightcocoa-1kg",
+    "is_tested": true,
+    "protein_verified_percent": 78.24,
+    "source": "Citizen Protein Project 2",
+    "report_url": "https://journals.lww.com/md-journal/fulltext/2025/11140/the_citizens_protein_project_2__the_first_publicly.70.aspx",
+    "sample_id": "S16",
+    "batch_no": "F2WCU144",
+    "lab": "Eureka Analytical Services",
+    "test_method": "IS 7219:1973 (Kjeldahl)",
+    "test_date": "2025-07"
+  },
+  {
+    "product_id": "twt-24g-lightcocoa-2kg",
+    "is_tested": true,
+    "protein_verified_percent": 78.24,
+    "source": "Citizen Protein Project 2",
+    "report_url": "https://journals.lww.com/md-journal/fulltext/2025/11140/the_citizens_protein_project_2__the_first_publicly.70.aspx",
+    "sample_id": "S16",
+    "batch_no": "F2WCU144",
+    "lab": "Eureka Analytical Services",
+    "test_method": "IS 7219:1973 (Kjeldahl)",
+    "test_date": "2025-07",
+    "_note": "Same formulation as 1kg variant, same batch tested"
+  },
+  {
+    "product_id": "twt-30g-unflavoured-1kg",
+    "is_tested": true,
+    "protein_verified_percent": 86.81,
+    "source": "Citizen Protein Project 2",
+    "report_url": "https://journals.lww.com/md-journal/fulltext/2025/11140/the_citizens_protein_project_2__the_first_publicly.70.aspx",
+    "sample_id": "S17",
+    "batch_no": "F2WIU129",
+    "lab": "Eureka Analytical Services",
+    "test_method": "IS 7219:1973 (Kjeldahl)",
+    "test_date": "2025-07"
+  },
+  {
+    "product_id": "twt-30g-unflavoured-2kg",
+    "is_tested": true,
+    "protein_verified_percent": 86.81,
+    "source": "Citizen Protein Project 2",
+    "report_url": "https://journals.lww.com/md-journal/fulltext/2025/11140/the_citizens_protein_project_2__the_first_publicly.70.aspx",
+    "sample_id": "S17",
+    "batch_no": "F2WIU129",
+    "lab": "Eureka Analytical Services",
+    "test_method": "IS 7219:1973 (Kjeldahl)",
+    "test_date": "2025-07",
+    "_note": "Same formulation as 1kg variant, same batch tested"
+  },
+  {
+    "product_id": "tb-wpi-1kg-choc",
+    "is_tested": true,
+    "protein_verified_percent": 82.07,
+    "source": "Citizen Protein Project 2",
+    "report_url": "https://journals.lww.com/md-journal/fulltext/2025/11140/the_citizens_protein_project_2__the_first_publicly.70.aspx",
+    "sample_id": "S22",
+    "batch_no": "MMCWPV002",
+    "lab": "Eureka Analytical Services",
+    "test_method": "IS 7219:1973 (Kjeldahl)",
+    "test_date": "2025-07"
+  },
+  {
+    "product_id": "tb-wpi-1kg-coffee",
+    "is_tested": true,
+    "protein_verified_percent": 82.07,
+    "source": "Citizen Protein Project 2",
+    "report_url": "https://journals.lww.com/md-journal/fulltext/2025/11140/the_citizens_protein_project_2__the_first_publicly.70.aspx",
+    "sample_id": "S22",
+    "batch_no": "MMCWPV002",
+    "lab": "Eureka Analytical Services",
+    "test_method": "IS 7219:1973 (Kjeldahl)",
+    "test_date": "2025-07",
+    "_note": "Same isolate formulation, different flavor"
+  },
+  {
+    "product_id": "tb-wpi-1kg-vanilla",
+    "is_tested": true,
+    "protein_verified_percent": 82.07,
+    "source": "Citizen Protein Project 2",
+    "report_url": "https://journals.lww.com/md-journal/fulltext/2025/11140/the_citizens_protein_project_2__the_first_publicly.70.aspx",
+    "sample_id": "S22",
+    "batch_no": "MMCWPV002",
+    "lab": "Eureka Analytical Services",
+    "test_method": "IS 7219:1973 (Kjeldahl)",
+    "test_date": "2025-07",
+    "_note": "Same isolate formulation, different flavor"
+  },
+  {
+    "product_id": "tb-wpi-sachet-choc",
+    "is_tested": true,
+    "protein_verified_percent": 82.07,
+    "source": "Citizen Protein Project 2",
+    "report_url": "https://journals.lww.com/md-journal/fulltext/2025/11140/the_citizens_protein_project_2__the_first_publicly.70.aspx",
+    "sample_id": "S22",
+    "batch_no": "MMCWPV002",
+    "lab": "Eureka Analytical Services",
+    "test_method": "IS 7219:1973 (Kjeldahl)",
+    "test_date": "2025-07",
+    "_note": "Same isolate formulation, sachet format"
+  },
+  {
+    "product_id": "tb-wpi-1kg-vanilla-refill",
+    "is_tested": true,
+    "protein_verified_percent": 82.07,
+    "source": "Citizen Protein Project 2",
+    "report_url": "https://journals.lww.com/md-journal/fulltext/2025/11140/the_citizens_protein_project_2__the_first_publicly.70.aspx",
+    "sample_id": "S22",
+    "batch_no": "MMCWPV002",
+    "lab": "Eureka Analytical Services",
+    "test_method": "IS 7219:1973 (Kjeldahl)",
+    "test_date": "2025-07",
+    "_note": "Same isolate formulation, refill pack"
+  }
+]
