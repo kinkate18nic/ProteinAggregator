@@ -710,6 +710,86 @@ def scrape_twt(product_url):
 
 
 # =============================================================================
+# TATA 1MG SCRAPER
+# =============================================================================
+
+def scrape_1mg(product_url):
+    """
+    Scraper for Tata 1mg (1mg.com pharmacy platform).
+    Uses JSON-LD for price/stock/name and page text for nutritional data.
+    """
+    result = {k: None for k in [
+        'scraped_name', 'price', 'in_stock', 'protein_percent',
+        'protein_per_serving_g', 'serving_size_g', 'num_servings', 'total_weight_g'
+    ]}
+    
+    try:
+        resp = requests.get(product_url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15)
+        if resp.status_code != 200:
+            print(f"  [1mg Error] {product_url}: HTTP {resp.status_code}")
+            return result
+        
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        page_text = soup.get_text(separator=' ')
+        
+        # --- JSON-LD: name, price, availability ---
+        for script in soup.find_all('script', type='application/ld+json'):
+            try:
+                ld = json.loads(script.string)
+                if isinstance(ld, dict) and ld.get('@type') == 'Product':
+                    result['scraped_name'] = ld.get('name')
+                    offers = ld.get('offers', {})
+                    if isinstance(offers, dict):
+                        result['price'] = float(offers.get('price', 0)) or None
+                        avail = offers.get('availability', '')
+                        result['in_stock'] = 'InStock' in avail
+            except (json.JSONDecodeError, ValueError):
+                pass
+        
+        # --- Nutritional data from page text ---
+        # Protein per serving (e.g., "24g protein")
+        prot_match = re.search(r'(\d+(?:\.\d+)?)\s*g\s*protein', page_text, re.IGNORECASE)
+        if prot_match:
+            result['protein_per_serving_g'] = float(prot_match.group(1))
+        
+        # Number of servings (e.g., "28 servings" or "28 sachets")
+        serv_match = re.search(r'(\d+)\.?\d*\s*(?:servings?|sachets?)', page_text, re.IGNORECASE)
+        if serv_match:
+            result['num_servings'] = int(serv_match.group(1))
+        
+        # Total weight from product name or title
+        name_for_weight = result['scraped_name'] or ''
+        wt_match = re.search(r'(\d+(?:\.\d+)?)\s*kg', name_for_weight, re.IGNORECASE)
+        if wt_match:
+            result['total_weight_g'] = float(wt_match.group(1)) * 1000
+        else:
+            # Fallback: look for weight in page text (e.g., "1 kg pack")
+            wt_match_2 = re.search(r'(\d+(?:\.\d+)?)\s*kg\s*(?:pack|packs)', page_text, re.IGNORECASE)
+            if wt_match_2:
+                result['total_weight_g'] = float(wt_match_2.group(1)) * 1000
+        
+        # --- DERIVED: serving_size_g and protein_percent ---
+        if result['total_weight_g'] and result['num_servings']:
+            result['serving_size_g'] = round(result['total_weight_g'] / result['num_servings'], 1)
+        
+        if result['protein_per_serving_g'] and result['serving_size_g']:
+            result['protein_percent'] = round(
+                (result['protein_per_serving_g'] / result['serving_size_g']) * 100, 1
+            )
+        
+        # --- VISUAL STOCK FALLBACK ---
+        # 1mg JSON-LD is generally reliable, but double-check
+        if result['in_stock'] is True:
+            if 'out of stock' in page_text.lower() or 'sold out' in page_text.lower():
+                result['in_stock'] = False
+        
+    except Exception as e:
+        print(f"  [1mg Error] {product_url}: {e}")
+    
+    return result
+
+
+# =============================================================================
 # SCRAPER ROUTER
 # =============================================================================
 
@@ -721,6 +801,7 @@ BRAND_SCRAPERS = {
     "plixlife": scrape_plix,
     "wellbeingnutrition": scrape_wbn,
     "thewholetruth": scrape_twt,
+    "tata1mg": scrape_1mg,
 }
 
 
