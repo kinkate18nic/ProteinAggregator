@@ -377,8 +377,8 @@ def scrape_plix(product_url):
                 pass
                 
             # --- Stock ---
-            qty = target_variant.get('quantityAvailable', 0)
-            result['in_stock'] = qty > 0
+            # Prefer explicit isAvailable boolean over quantity (handles pre-orders/negative inventory)
+            result['in_stock'] = target_variant.get('isAvailable', False)
             
             # --- Weight ---
             if wt_match:
@@ -569,6 +569,19 @@ def scrape_jsonld(product_url):
                     result['price'] = float(meta_price['content'])
                 except ValueError:
                     pass
+        
+        # Sanity check: JSON-LD often lies about stock status.
+        # If it claims InStock, verify the actual page doesn't say "out of stock" or have disabled buy buttons.
+        if result['in_stock'] is True:
+            page_text = soup.get_text(separator=' ').lower()
+            oos_indicators = ['out of stock', 'sold out', 'unavailable', 'notify me', 'coming soon']
+            if any(ind in page_text for ind in oos_indicators):
+                result['in_stock'] = False
+            else:
+                # Check if Add to Cart button is disabled or missing
+                atc = soup.find('button', {'type': 'submit', 'name': 'add'})
+                if atc and atc.get('disabled'):
+                    result['in_stock'] = False
         
         # Extract weight from URL first (more reliable), then product name
         import re
