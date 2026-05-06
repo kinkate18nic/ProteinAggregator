@@ -377,8 +377,17 @@ def scrape_plix(product_url):
                 pass
                 
             # --- Stock ---
-            # Prefer explicit isAvailable boolean over quantity (handles pre-orders/negative inventory)
+            # Prefer explicit isAvailable boolean, but Plix shows Add to Cart even when
+            # isAvailable=False (backorders/overselling). Verify visually.
             result['in_stock'] = target_variant.get('isAvailable', False)
+            
+            if not result['in_stock']:
+                # Fallback: check if page shows active Add to Cart and no Sold Out text
+                page_text = soup.get_text(separator=' ')
+                has_atc = 'Add To Cart' in page_text or 'ADD TO CART' in page_text
+                has_oos = 'SOLD OUT' in page_text.upper() or 'out of stock' in page_text.lower()
+                if has_atc and not has_oos:
+                    result['in_stock'] = True
             
             # --- Weight ---
             if wt_match:
