@@ -290,8 +290,11 @@ def scrape_shopify(product_url):
         # Extract data
         result['scraped_name'] = f"{product.get('title', '')}, {selected.get('title', '')}"
         result['price'] = float(selected.get('price', 0)) or None
-        # Shopify variant has 'available' boolean — use it directly
-        result['in_stock'] = selected.get('available', True)
+        # Shopify variant has 'available' boolean — use it directly.
+        # If the field is missing/None (common in public JSON API), assume True
+        # since Shopify typically hides out-of-stock variants from the product JSON.
+        available = selected.get('available')
+        result['in_stock'] = True if available is None else bool(available)
         result['total_weight_g'] = float(selected.get('grams', 0)) or None
         
         # Nutritional data not available in Shopify product JSON
@@ -805,6 +808,16 @@ def main():
             # Filter out comment keys
             nutrition_overrides = {k: v for k, v in raw_overrides.items() if not k.startswith('_')}
 
+    # Load existing catalog to preserve data on scraper failures
+    existing_catalog = {}
+    if os.path.exists(master_catalog_path):
+        try:
+            with open(master_catalog_path, "r", encoding="utf-8") as f:
+                for item in json.load(f):
+                    existing_catalog[item['id']] = item
+        except Exception:
+            pass
+    
     master_catalog = []
     
     for brand in brands:
@@ -867,11 +880,22 @@ def main():
             if lab_data:
                 catalog_entry["lab_details"] = lab_data
             
+            # Preserve existing data if scraper completely failed (network timeout, etc.)
+            # A complete failure means both price and stock are null.
+            existing = existing_catalog.get(product_id)
+            if existing and metrics['live_price_inr'] is None and metrics['in_stock'] is None:
+                print(f"  -> SCRAPER FAILED. Preserving existing data from {existing.get('last_updated', 'unknown')}")
+                # Keep existing metrics but update timestamp to show we attempted refresh
+                catalog_entry = {
+                    **existing,
+                    "last_updated": datetime.datetime.now().isoformat(),
+                }
+            
             # Log what we got
-            p = metrics['live_price_inr']
-            c = metrics['protein_claimed_percent']
-            s = metrics['in_stock']
-            cpg = metrics['cost_per_gram_claimed']
+            p = catalog_entry['live_price_inr']
+            c = catalog_entry['protein_claimed_percent']
+            s = catalog_entry['in_stock']
+            cpg = catalog_entry['cost_per_gram_claimed']
             print(f"  -> Price=Rs {p}, Protein%={c}, InStock={s}, Rs/g(claimed)={cpg}")
             
             master_catalog.append(catalog_entry)
