@@ -175,6 +175,15 @@ def scrape_healthkart(product_url):
                 return f"{kg_str} kg"
             result['scraped_name'] = re.sub(r'(\d+\.?\d*)\s*lb\b', lb_to_kg_replace, name, flags=re.IGNORECASE)
         
+        # --- VISUAL STOCK SANITY CHECK ---
+        # HealthKart's oos field is generally reliable, but verify visually as fallback.
+        # Only trust explicit "out of stock" / "sold out" text (not generic words like
+        # "unavailable" or "notify me" which appear in newsletters/contact forms).
+        if result['in_stock'] is True:
+            page_text = soup.get_text(separator=' ').lower()
+            if 'out of stock' in page_text or 'sold out' in page_text:
+                result['in_stock'] = False
+        
     except Exception as e:
         print(f"  [MB Scraper Error] {product_url}: {e}")
     
@@ -281,9 +290,8 @@ def scrape_shopify(product_url):
         # Extract data
         result['scraped_name'] = f"{product.get('title', '')}, {selected.get('title', '')}"
         result['price'] = float(selected.get('price', 0)) or None
-        # Shopify .json API doesn't reliably expose stock; assume in-stock
-        # (out-of-stock variants are typically removed from the product page)
-        result['in_stock'] = True
+        # Shopify variant has 'available' boolean — use it directly
+        result['in_stock'] = selected.get('available', True)
         result['total_weight_g'] = float(selected.get('grams', 0)) or None
         
         # Nutritional data not available in Shopify product JSON
@@ -522,6 +530,15 @@ def scrape_wbn(product_url):
                         in_stock = 'instock' in meta.get('content', '').lower()
                         break
                 result['in_stock'] = in_stock
+            
+            # Sanity check: JSON-LD often lies. If it claims InStock,
+            # verify the actual page doesn't explicitly say "out of stock" or "sold out".
+            # Only trust these exact phrases (not generic words like "unavailable"/"notify me"
+            # which appear in newsletters and contact forms).
+            if result['in_stock'] is True:
+                page_text = soup.get_text(separator=' ').lower()
+                if 'out of stock' in page_text or 'sold out' in page_text:
+                    result['in_stock'] = False
 
     except Exception as e:
         print(f"  [WBN Error] {product_url}: {e}")
@@ -579,18 +596,19 @@ def scrape_jsonld(product_url):
                 except ValueError:
                     pass
         
-        # Sanity check: JSON-LD often lies about stock status.
-        # If it claims InStock, verify the actual page doesn't say "out of stock" or have disabled buy buttons.
-        if result['in_stock'] is True:
-            page_text = soup.get_text(separator=' ').lower()
-            oos_indicators = ['out of stock', 'sold out', 'unavailable', 'notify me', 'coming soon']
-            if any(ind in page_text for ind in oos_indicators):
-                result['in_stock'] = False
-            else:
-                # Check if Add to Cart button is disabled or missing
-                atc = soup.find('button', {'type': 'submit', 'name': 'add'})
-                if atc and atc.get('disabled'):
+            # Sanity check: JSON-LD often lies about stock status.
+            # If it claims InStock, verify the actual page doesn't explicitly say "out of stock"
+            # or "sold out". We ONLY trust these two exact phrases (not generic words like
+            # "unavailable" or "notify me" which appear in newsletters and contact forms).
+            if result['in_stock'] is True:
+                page_text = soup.get_text(separator=' ').lower()
+                if 'out of stock' in page_text or 'sold out' in page_text:
                     result['in_stock'] = False
+                else:
+                    # Check if Add to Cart button is explicitly disabled
+                    atc = soup.find('button', {'type': 'submit', 'name': 'add'})
+                    if atc and atc.get('disabled'):
+                        result['in_stock'] = False
         
         # Extract weight from URL first (more reliable), then product name
         import re
