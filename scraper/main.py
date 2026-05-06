@@ -778,9 +778,13 @@ def scrape_1mg(product_url):
             )
         
         # --- VISUAL STOCK FALLBACK ---
-        # 1mg JSON-LD is generally reliable, but double-check
+        # 1mg JSON-LD often lies. Check raw HTML for explicit stock status.
+        # Stock indicator is in JSON/script data: "SKU_availability_status":"SOLD OUT"
         if result['in_stock'] is True:
-            if 'out of stock' in page_text.lower() or 'sold out' in page_text.lower():
+            raw_html = resp.text.lower()
+            if 'sku_availability_status":"sold out"' in raw_html:
+                result['in_stock'] = False
+            elif 'out of stock' in raw_html or 'sold out' in raw_html:
                 result['in_stock'] = False
         
     except Exception as e:
