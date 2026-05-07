@@ -46,6 +46,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   // Searchable Dropdown State
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -93,7 +94,8 @@ export default function Home() {
     return ['All', ...list.sort()];
   }, [data]);
 
-  const hasActiveFilters = budgetLimit !== 15000 || filterLabTested || filterInStock || filterBrand !== 'All';
+  const activeFilterCount = (budgetLimit !== 15000 ? 1 : 0) + (filterLabTested ? 1 : 0) + (filterInStock ? 1 : 0) + (filterBrand !== 'All' ? 1 : 0);
+  const hasActiveFilters = activeFilterCount > 0;
 
   const processedData = useMemo(() => {
     let filtered = data
@@ -168,24 +170,70 @@ export default function Home() {
       )}
 
       {/* Control Panel */}
-      <section className="bg-slate-900/60 backdrop-blur-xl p-5 md:p-6 rounded-3xl shadow-lg border border-slate-800 mb-8 flex flex-col lg:flex-row gap-6 lg:gap-8 items-start lg:items-center justify-between sticky top-4 z-10">
+      <section className="bg-slate-900 p-5 md:p-6 rounded-3xl shadow-lg border border-slate-800 mb-8 flex flex-col lg:flex-row gap-4 lg:gap-8 items-start lg:items-center justify-between sticky top-4 z-10">
         
-        {/* Budget Slider */}
-        <div className="flex flex-col w-full lg:flex-1 lg:max-w-xs">
-          <label className="text-sm font-bold text-slate-300 mb-2 flex justify-between">
-            <span>Max Budget</span>
-            <span className="text-indigo-300 font-mono">₹{budgetLimit.toLocaleString()}</span>
-          </label>
-          <input 
-            type="range" min="500" max="15000" step="500" 
-            value={budgetLimit} 
-            onChange={(e) => setBudgetLimit(Number(e.target.value))}
-            className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
-          />
+        {/* Sort Select - Always Visible */}
+        <div className="flex flex-col w-full sm:w-56" ref={sortDropdownRef}>
+          <label className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Sort By</label>
+          <div className="relative">
+            <button
+              className="w-full bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 py-2.5 px-4 pr-8 rounded-xl font-medium text-sm flex items-center justify-between transition-colors text-left"
+              onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
+            >
+              <span className="truncate">{SORT_LABELS[sortBy]}</span>
+              <svg className={`absolute right-3 h-4 w-4 text-slate-400 transition-transform ${sortDropdownOpen ? 'rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="currentColor" d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+            </button>
+            
+            {sortDropdownOpen && (
+              <div className="absolute z-50 mt-2 w-full bg-slate-800 border border-slate-700 rounded-xl shadow-2xl overflow-hidden flex flex-col">
+                {(Object.entries(SORT_LABELS) as [SortKey, string][]).map(([key, label]) => (
+                  <button
+                    key={key}
+                    className={`px-4 py-2.5 text-sm text-left cursor-pointer transition-colors ${sortBy === key ? 'bg-indigo-500/20 text-indigo-300 font-bold' : 'text-slate-300 hover:bg-slate-700/50'}`}
+                    onClick={() => {
+                      setSortBy(key);
+                      setSortDropdownOpen(false);
+                    }}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Filters Group */}
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full lg:w-auto">
+        {/* Mobile Filters Toggle */}
+        <button
+          onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
+          className="lg:hidden w-full bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 py-2.5 px-4 rounded-xl font-medium text-sm flex items-center justify-between transition-colors"
+        >
+          <span className="flex items-center gap-2">
+            Filters
+            {activeFilterCount > 0 && (
+              <span className="bg-indigo-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">{activeFilterCount}</span>
+            )}
+          </span>
+          <svg className={`h-4 w-4 text-slate-400 transition-transform ${mobileFiltersOpen ? 'rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="currentColor" d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+        </button>
+
+        {/* Collapsible Filter Controls */}
+        <div className={`${mobileFiltersOpen ? 'flex' : 'hidden'} lg:flex flex-col lg:flex-row gap-4 lg:gap-8 w-full lg:w-auto items-start lg:items-center`}>
+          
+          {/* Budget Slider */}
+          <div className="flex flex-col w-full lg:flex-1 lg:max-w-xs">
+            <label className="text-sm font-bold text-slate-300 mb-2 flex justify-between">
+              <span>Max Budget</span>
+              <span className="text-indigo-300 font-mono">₹{budgetLimit.toLocaleString()}</span>
+            </label>
+            <input 
+              type="range" min="500" max="15000" step="500" 
+              value={budgetLimit} 
+              onChange={(e) => setBudgetLimit(Number(e.target.value))}
+              className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+            />
+          </div>
+
           {/* Brand Select */}
           <div className="flex flex-col w-full sm:w-48" ref={dropdownRef}>
             <label className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Brand</label>
@@ -235,37 +283,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Sort Select */}
-          <div className="flex flex-col w-full sm:w-56" ref={sortDropdownRef}>
-            <label className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Sort By</label>
-            <div className="relative">
-              <button
-                className="w-full bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 py-2.5 px-4 pr-8 rounded-xl font-medium text-sm flex items-center justify-between transition-colors text-left"
-                onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
-              >
-                <span className="truncate">{SORT_LABELS[sortBy]}</span>
-                <svg className={`absolute right-3 h-4 w-4 text-slate-400 transition-transform ${sortDropdownOpen ? 'rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="currentColor" d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-              </button>
-              
-              {sortDropdownOpen && (
-                <div className="absolute z-50 mt-2 w-full bg-slate-800 border border-slate-700 rounded-xl shadow-2xl overflow-hidden flex flex-col">
-                  {(Object.entries(SORT_LABELS) as [SortKey, string][]).map(([key, label]) => (
-                    <button
-                      key={key}
-                      className={`px-4 py-2.5 text-sm text-left cursor-pointer transition-colors ${sortBy === key ? 'bg-indigo-500/20 text-indigo-300 font-bold' : 'text-slate-300 hover:bg-slate-700/50'}`}
-                      onClick={() => {
-                        setSortBy(key);
-                        setSortDropdownOpen(false);
-                      }}
-                    >
-                      {label}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-
           {/* Toggles */}
           <div className="flex flex-row sm:flex-col gap-3 sm:gap-2 justify-center sm:justify-start">
             <label className="flex items-center space-x-2 cursor-pointer select-none group">
@@ -285,17 +302,17 @@ export default function Home() {
               <span className="text-xs font-semibold text-slate-400 group-hover:text-slate-200">In Stock</span>
             </label>
           </div>
-        </div>
 
-        {/* Clear All */}
-        {hasActiveFilters && (
-          <button
-            onClick={clearAllFilters}
-            className="text-xs font-semibold text-slate-500 hover:text-slate-300 transition-colors underline decoration-slate-700 underline-offset-4"
-          >
-            Clear All
-          </button>
-        )}
+          {/* Clear All */}
+          {hasActiveFilters && (
+            <button
+              onClick={clearAllFilters}
+              className="text-xs font-semibold text-slate-500 hover:text-slate-300 transition-colors underline decoration-slate-700 underline-offset-4"
+            >
+              Clear All
+            </button>
+          )}
+        </div>
       </section>
 
       {/* Results Count */}
@@ -319,14 +336,41 @@ export default function Home() {
         </div>
       ) : (
         <section className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {visibleData.map((product) => {
+          {visibleData.map((product, index) => {
             const isExpanded = expandedCards.has(product.id);
+            const isBestValue = index === 0 && (sortBy === 'cost_per_gram_claimed' || sortBy === 'cost_per_gram_verified') && (
+              sortBy === 'cost_per_gram_verified' ? product.cost_per_gram_verified !== null : product.cost_per_gram_claimed !== null
+            );
             return (
-              <article key={product.id} className="bg-slate-900/40 border border-slate-800 rounded-3xl p-5 md:p-6 hover:border-slate-700/60 transition-all duration-300 group flex flex-col">
+              <article key={product.id} className={`bg-slate-900/40 border rounded-3xl p-5 md:p-6 hover:border-slate-700/60 transition-all duration-300 group flex flex-col ${isBestValue ? 'border-indigo-500/30' : 'border-slate-800'}`}>
                 
+                {/* Best Value Badge */}
+                {isBestValue && (
+                  <div className="mb-2">
+                    <span className="inline-flex items-center gap-1 bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-md">
+                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                      Best Value
+                    </span>
+                  </div>
+                )}
+
                 {/* HERO: Cost per gram */}
                 <div className="mb-1">
-                  {product.cost_per_gram_claimed ? (
+                  {product.cost_per_gram_verified ? (
+                    <div className="flex flex-col">
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-3xl md:text-4xl font-black text-indigo-300 tracking-tight">
+                          ₹{product.cost_per_gram_verified}
+                        </span>
+                        <span className="text-sm font-bold text-indigo-400/60">/g verified</span>
+                      </div>
+                      {product.cost_per_gram_claimed && (
+                        <div className="text-xs text-slate-500 mt-0.5">
+                          claimed ₹{product.cost_per_gram_claimed}/g
+                        </div>
+                      )}
+                    </div>
+                  ) : product.cost_per_gram_claimed ? (
                     <div className="flex items-baseline gap-1">
                       <span className="text-3xl md:text-4xl font-black text-indigo-300 tracking-tight">
                         ₹{product.cost_per_gram_claimed}
@@ -340,7 +384,7 @@ export default function Home() {
 
                 {/* Brand + Name */}
                 <div className="mb-4">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-indigo-400/70 mb-1">
+                  <p className="text-[10px] font-medium uppercase tracking-widest text-slate-500 mb-1">
                     {product.brand}
                   </p>
                   <h2 className="font-bold text-base text-slate-200 leading-snug">
