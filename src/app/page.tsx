@@ -48,6 +48,44 @@ export default function Home() {
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
+  // Read URL state on mount
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const urlBudget = params.get('budget');
+    const urlBrand = params.get('brand');
+    const urlLab = params.get('lab');
+    const urlStock = params.get('stock');
+    const urlSort = params.get('sort');
+
+    if (urlBudget) setBudgetLimit(Number(urlBudget));
+    if (urlBrand) setFilterBrand(urlBrand);
+    if (urlLab === '1') setFilterLabTested(true);
+    if (urlStock === '1') setFilterInStock(true);
+    if (urlSort && (Object.keys(SORT_LABELS) as SortKey[]).includes(urlSort as SortKey)) {
+      setSortBy(urlSort as SortKey);
+    }
+
+    // Default mobile filters open on tall screens
+    if (window.innerHeight > 700) {
+      setMobileFiltersOpen(true);
+    }
+  }, []);
+
+  // Write URL state when filters/sort change
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams();
+    if (budgetLimit !== 15000) params.set('budget', String(budgetLimit));
+    if (filterBrand !== 'All') params.set('brand', filterBrand);
+    if (filterLabTested) params.set('lab', '1');
+    if (filterInStock) params.set('stock', '1');
+    if (sortBy !== 'cost_per_gram_claimed') params.set('sort', sortBy);
+
+    const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
+    window.history.replaceState({}, '', newUrl);
+  }, [budgetLimit, filterBrand, filterLabTested, filterInStock, sortBy]);
+
   // Searchable Dropdown State
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [brandSearch, setBrandSearch] = useState('');
@@ -187,13 +225,26 @@ export default function Home() {
         </div>
       )}
 
+      {/* Stale Data Warning */}
+      {!loading && !error && data.length > 0 && (() => {
+        const oldest = data.reduce((min, p) => new Date(p.last_updated) < new Date(min.last_updated) ? p : min, data[0]);
+        const hoursOld = Math.floor((Date.now() - new Date(oldest.last_updated).getTime()) / (1000 * 60 * 60));
+        if (hoursOld < 24) return null;
+        return (
+          <div className="mb-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg text-sm flex items-center gap-2">
+            <svg className="w-4 h-4 text-amber-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            <span className="text-amber-300">Some prices may be stale — oldest check is {hoursOld}h ago.</span>
+          </div>
+        );
+      })()}
+
       {/* Control Panel */}
-      <section className="bg-slate-900 p-5 md:p-6 rounded-3xl shadow-lg border border-slate-800 mb-8 flex flex-col lg:flex-row gap-4 lg:gap-8 items-start lg:items-center justify-between sticky top-4 z-10">
+      <section className="bg-slate-900 p-5 md:p-6 rounded-2xl shadow-lg border border-slate-800 mb-8 flex flex-col lg:flex-row gap-4 lg:gap-8 items-start lg:items-center justify-between sticky top-4 z-10">
 
         {/* Mobile Filters Toggle */}
         <button
           onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
-          className="lg:hidden w-full bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 py-2.5 px-4 rounded-xl font-medium text-sm flex items-center justify-between transition-colors"
+          className="lg:hidden w-full bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 py-2.5 px-4 rounded-lg font-medium text-sm flex items-center justify-between transition-colors"
         >
           <span className="flex items-center gap-2">
             Filters
@@ -226,7 +277,7 @@ export default function Home() {
             <label className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Brand</label>
             <div className="relative">
               <button
-                className="w-full bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 py-2.5 px-4 pr-8 rounded-xl font-medium text-sm flex items-center justify-between transition-colors text-left"
+                className="w-full bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 py-2.5 px-4 pr-8 rounded-lg font-medium text-sm flex items-center justify-between transition-colors text-left"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
                 <span className="truncate">{filterBrand}</span>
@@ -234,7 +285,7 @@ export default function Home() {
               </button>
               
               {dropdownOpen && (
-                <div className="absolute z-50 mt-2 w-full bg-slate-800 border border-slate-700 rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-64">
+                <div className="absolute z-50 mt-2 w-full bg-slate-800 border border-slate-700 rounded-lg shadow-2xl overflow-hidden flex flex-col max-h-64">
                   <div className="p-2 border-b border-slate-700">
                     <input 
                       type="text" 
@@ -313,14 +364,14 @@ export default function Home() {
           </div>
           <div className="relative" ref={sortDropdownRef}>
             <button
-              className="w-full sm:w-auto bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 py-2 px-4 pr-8 rounded-xl font-medium text-sm flex items-center justify-between transition-colors"
+              className="w-full sm:w-auto bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 py-2 px-4 pr-8 rounded-lg font-medium text-sm flex items-center justify-between transition-colors"
               onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
             >
               <span>Sort: {SORT_LABELS[sortBy]}</span>
               <svg className={`absolute right-3 h-4 w-4 text-slate-400 transition-transform ${sortDropdownOpen ? 'rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="currentColor" d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </button>
             {sortDropdownOpen && (
-              <div className="absolute right-0 z-50 mt-2 w-56 bg-slate-800 border border-slate-700 rounded-xl shadow-2xl overflow-hidden flex flex-col">
+              <div className="absolute right-0 z-50 mt-2 w-56 bg-slate-800 border border-slate-700 rounded-lg shadow-2xl overflow-hidden flex flex-col">
                 {(Object.entries(SORT_LABELS) as [SortKey, string][]).map(([key, label]) => (
                   <button
                     key={key}
@@ -352,7 +403,7 @@ export default function Home() {
         <section className="flex flex-col gap-2">
           {visibleData.map((product, index) => {
             const isExpanded = expandedCards.has(product.id);
-            const isTop3 = index < 3;
+            const isTop1 = index === 0;
             const isBestValue = index === 0 && (sortBy === 'cost_per_gram_claimed' || sortBy === 'cost_per_gram_verified');
             const hasVerified = product.cost_per_gram_verified !== null;
             
@@ -373,7 +424,7 @@ export default function Home() {
                     )}
                     {hasVerified ? (
                       <div className="flex items-baseline gap-1">
-                        <span className={`${isTop3 ? 'text-xl md:text-2xl font-black' : 'text-base font-bold'} text-indigo-300`}>
+                        <span className={`${isTop1 ? 'text-xl md:text-2xl font-black' : 'text-base font-bold'} text-indigo-300`}>
                           ₹{product.cost_per_gram_verified}
                         </span>
                         <span className="text-xs font-medium text-indigo-400/60">/g</span>
@@ -387,7 +438,7 @@ export default function Home() {
                       </div>
                     ) : product.cost_per_gram_claimed ? (
                       <div className="flex items-baseline gap-1">
-                        <span className={`${isTop3 ? 'text-xl md:text-2xl font-black' : 'text-base font-bold'} text-indigo-300`}>
+                        <span className={`${isTop1 ? 'text-xl md:text-2xl font-black' : 'text-base font-bold'} text-indigo-300`}>
                           ₹{product.cost_per_gram_claimed}
                         </span>
                         <span className="text-xs font-medium text-indigo-400/60">/g</span>
@@ -506,7 +557,7 @@ export default function Home() {
         <div className="mt-10 text-center pb-8">
           <button 
             onClick={() => setLoadedCount(c => c + 15)}
-            className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold py-3 px-8 rounded-xl transition-colors text-sm"
+            className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold py-3 px-8 rounded-lg transition-colors text-sm"
           >
             Load More ({processedData.length - loadedCount})
           </button>
