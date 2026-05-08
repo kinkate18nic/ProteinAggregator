@@ -219,7 +219,7 @@ export default function Home() {
 
       {/* Error State */}
       {error && (
-        <div className="mb-8 p-6 bg-rose-500/10 border border-rose-500/20 rounded-2xl text-center">
+        <div role="alert" className="mb-8 p-6 bg-rose-500/10 border border-rose-500/20 rounded-2xl text-center">
           <p className="text-rose-300 font-semibold mb-3">{error}</p>
           <button
             onClick={() => window.location.reload()}
@@ -236,7 +236,7 @@ export default function Home() {
         const hoursOld = Math.floor((Date.now() - new Date(oldest.last_updated).getTime()) / (1000 * 60 * 60));
         if (hoursOld < 24) return null;
         return (
-          <div className="mb-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg text-sm flex items-center gap-2">
+          <div role="status" className="mb-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg text-sm flex items-center gap-2">
             <svg className="w-4 h-4 text-amber-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
             <span className="text-amber-300">Some prices may be stale — oldest check is {hoursOld}h ago.</span>
           </div>
@@ -248,6 +248,8 @@ export default function Home() {
 
         {/* Mobile Filters Toggle */}
         <button
+          aria-expanded={mobileFiltersOpen}
+          aria-controls="filter-controls"
           onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
           className="lg:hidden w-full bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 py-2.5 px-4 rounded-lg font-medium text-sm flex items-center justify-between transition-colors"
         >
@@ -265,11 +267,12 @@ export default function Home() {
           
           {/* Budget Slider */}
           <div className="flex flex-col w-full lg:flex-1 lg:max-w-xs">
-            <label className="text-sm font-bold text-slate-300 mb-2 flex justify-between">
+            <label htmlFor="budget-slider" className="text-sm font-bold text-slate-300 mb-2 flex justify-between">
               <span>Max Budget</span>
               <span className="text-indigo-300 font-mono">₹{budgetLimit.toLocaleString()}</span>
             </label>
             <input 
+              id="budget-slider"
               type="range" min="500" max="15000" step="500" 
               value={budgetLimit} 
               onChange={(e) => setBudgetLimit(Number(e.target.value))}
@@ -282,6 +285,9 @@ export default function Home() {
             <label className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Brand</label>
             <div className="relative">
               <button
+                aria-expanded={dropdownOpen}
+                aria-haspopup="listbox"
+                aria-controls="brand-dropdown"
                 className="w-full bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 py-2.5 px-4 pr-8 rounded-lg font-medium text-sm flex items-center justify-between transition-colors text-left"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
@@ -289,8 +295,8 @@ export default function Home() {
                 <svg className={`absolute right-3 h-4 w-4 text-slate-400 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="currentColor" d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
               </button>
               
-              {dropdownOpen && (
-                <div className="absolute z-50 mt-2 w-full bg-slate-800 border border-slate-700 rounded-lg shadow-2xl overflow-hidden flex flex-col max-h-64">
+                {dropdownOpen && (
+                <div id="brand-dropdown" role="listbox" className="absolute z-50 mt-2 w-full bg-slate-800 border border-slate-700 rounded-lg shadow-2xl overflow-hidden flex flex-col max-h-64">
                   <div className="p-2 border-b border-slate-700">
                     <input 
                       type="text" 
@@ -307,16 +313,19 @@ export default function Home() {
                       <li className="px-4 py-3 text-sm text-slate-500 text-center">No brands found</li>
                     ) : (
                       brands.filter(b => b.toLowerCase().includes(brandSearch.toLowerCase())).map(b => (
-                        <li 
-                          key={b} 
-                          className={`px-4 py-2.5 text-sm cursor-pointer transition-colors ${filterBrand === b ? 'bg-indigo-500/20 text-indigo-300 font-bold' : 'text-slate-300 hover:bg-slate-700/50'}`}
-                          onClick={() => {
-                            setFilterBrand(b);
-                            setDropdownOpen(false);
-                            setBrandSearch('');
-                          }}
-                        >
-                          {b}
+                        <li key={b} role="none">
+                          <button
+                            role="option"
+                            aria-selected={filterBrand === b}
+                            className={`w-full text-left px-4 py-2.5 text-sm cursor-pointer transition-colors ${filterBrand === b ? 'bg-indigo-500/20 text-indigo-300 font-bold' : 'text-slate-300 hover:bg-slate-700/50'}`}
+                            onClick={() => {
+                              setFilterBrand(b);
+                              setDropdownOpen(false);
+                              setBrandSearch('');
+                            }}
+                          >
+                            {b}
+                          </button>
                         </li>
                       ))
                     )}
@@ -327,11 +336,11 @@ export default function Home() {
           </div>
 
           {/* Toggles */}
-          <div className="flex flex-row sm:flex-col gap-3 sm:gap-2 justify-center sm:justify-start">
+          <div id="filter-controls" className="flex flex-row sm:flex-col gap-3 sm:gap-2 justify-center sm:justify-start">
             <label className="flex items-center space-x-2 cursor-pointer select-none group">
               <div className="relative flex items-center justify-center">
                 <input type="checkbox" checked={filterLabTested} onChange={(e) => setFilterLabTested(e.target.checked)} className="peer sr-only" />
-                <div className="w-4 h-4 bg-slate-800 border border-slate-600 rounded peer-checked:bg-indigo-500 peer-checked:border-indigo-500 transition-colors"></div>
+                <div className="w-4 h-4 bg-slate-800 border border-slate-600 rounded peer-focus:ring-2 peer-focus:ring-indigo-500 peer-focus:ring-offset-2 peer-focus:ring-offset-slate-900 peer-checked:bg-indigo-500 peer-checked:border-indigo-500 transition-colors"></div>
                 <svg className="absolute w-2.5 h-2.5 text-white opacity-0 peer-checked:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
               </div>
               <span className="text-xs font-semibold text-slate-400 group-hover:text-slate-200">Lab Verified</span>
@@ -339,7 +348,7 @@ export default function Home() {
             <label className="flex items-center space-x-2 cursor-pointer select-none group">
               <div className="relative flex items-center justify-center">
                 <input type="checkbox" checked={filterInStock} onChange={(e) => setFilterInStock(e.target.checked)} className="peer sr-only" />
-                <div className="w-4 h-4 bg-slate-800 border border-slate-600 rounded peer-checked:bg-emerald-500 peer-checked:border-emerald-500 transition-colors"></div>
+                <div className="w-4 h-4 bg-slate-800 border border-slate-600 rounded peer-focus:ring-2 peer-focus:ring-emerald-500 peer-focus:ring-offset-2 peer-focus:ring-offset-slate-900 peer-checked:bg-emerald-500 peer-checked:border-emerald-500 transition-colors"></div>
                 <svg className="absolute w-2.5 h-2.5 text-white opacity-0 peer-checked:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
               </div>
               <span className="text-xs font-semibold text-slate-400 group-hover:text-slate-200">In Stock</span>
@@ -376,6 +385,9 @@ export default function Home() {
             </button>
             <div className="relative" ref={sortDropdownRef}>
               <button
+                aria-expanded={sortDropdownOpen}
+                aria-haspopup="listbox"
+                aria-controls="sort-dropdown"
                 className="w-full sm:w-auto bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 py-2 px-4 pr-8 rounded-lg font-medium text-sm flex items-center justify-between transition-colors"
                 onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
               >
@@ -383,10 +395,12 @@ export default function Home() {
                 <svg className={`absolute right-3 h-4 w-4 text-slate-400 transition-transform ${sortDropdownOpen ? 'rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="currentColor" d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
               </button>
               {sortDropdownOpen && (
-                <div className="absolute right-0 z-50 mt-2 w-56 bg-slate-800 border border-slate-700 rounded-lg shadow-2xl overflow-hidden flex flex-col">
+                <div id="sort-dropdown" role="listbox" className="absolute right-0 z-50 mt-2 w-56 bg-slate-800 border border-slate-700 rounded-lg shadow-2xl overflow-hidden flex flex-col">
                   {(Object.entries(SORT_LABELS) as [SortKey, string][]).map(([key, label]) => (
                     <button
                       key={key}
+                      role="option"
+                      aria-selected={sortBy === key}
                       className={`px-4 py-2.5 text-sm text-left cursor-pointer transition-colors ${sortBy === key ? 'bg-indigo-500/20 text-indigo-300 font-bold' : 'text-slate-300 hover:bg-slate-700/50'}`}
                       onClick={() => {
                         setSortBy(key);
@@ -423,19 +437,13 @@ export default function Home() {
             return (
               <article 
                 key={product.id} 
-                className={`bg-slate-900 border rounded-xl p-3 md:p-4 transition-colors cursor-pointer ${isBestValue ? 'border-indigo-500/30' : 'border-slate-800 hover:border-slate-700'}`}
-                onClick={(e) => {
-                  // Don't toggle if clicking a link or button inside the card
-                  const target = e.target as HTMLElement;
-                  if (target.closest('a') || target.closest('button')) return;
-                  toggleExpanded(product.id);
-                }}
+                className={`bg-slate-900 border rounded-xl p-3 md:p-4 transition-colors ${isBestValue ? 'border-indigo-500/30' : 'border-slate-800 hover:border-slate-700'}`}
               >
                 {/* Main Row */}
-                <div className="flex flex-col md:flex-row md:items-start gap-2 md:gap-4 pointer-events-none">
+                <div className="flex flex-col md:flex-row md:items-start gap-2 md:gap-4">
                   
                   {/* Cost/g */}
-                  <div className="md:w-36 shrink-0 pointer-events-auto">
+                  <div className="md:w-36 shrink-0">
                     {isBestValue && (
                       <span className="text-[10px] font-bold text-indigo-300 uppercase tracking-wide block mb-0.5">
                         Best Value
@@ -448,10 +456,7 @@ export default function Home() {
                         </span>
                         <span className="text-xs font-medium text-indigo-400/60">/g</span>
                         <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setInfoTooltip(infoTooltip === product.id ? null : product.id);
-                          }}
+                          onClick={() => setInfoTooltip(infoTooltip === product.id ? null : product.id)}
                           className="ml-1 text-slate-500 hover:text-slate-300"
                           aria-label="What is verified cost?"
                         >
@@ -481,12 +486,12 @@ export default function Home() {
                   </div>
                   
                   {/* Brand + Name */}
-                  <div className="md:flex-1 min-w-0 pointer-events-auto">
+                  <div className="md:flex-1 min-w-0">
                     <p className="text-[10px] font-medium uppercase tracking-widest text-slate-500">
                       {product.brand}
                     </p>
                     <h2 className="font-semibold text-sm text-slate-200 leading-snug">
-                      <a href={product.product_url} target="_blank" rel="noreferrer" className="hover:text-indigo-300 transition-colors" onClick={(e) => e.stopPropagation()}>
+                      <a href={product.product_url} target="_blank" rel="noreferrer" className="hover:text-indigo-300 transition-colors">
                         {product.product_name}
                       </a>
                     </h2>
@@ -510,11 +515,10 @@ export default function Home() {
                       </span>
                     </div>
                     <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleExpanded(product.id);
-                      }}
-                      className="md:w-12 md:text-right text-xs font-medium text-slate-500 hover:text-slate-300 transition-colors pointer-events-auto"
+                      aria-expanded={isExpanded}
+                      aria-controls={`details-${product.id}`}
+                      onClick={() => toggleExpanded(product.id)}
+                      className="md:w-12 md:text-right text-xs font-medium text-slate-500 hover:text-slate-300 transition-colors"
                     >
                       {isExpanded ? 'Less' : 'More'}
                     </button>
@@ -523,7 +527,7 @@ export default function Home() {
                 
                 {/* Expanded Details */}
                 {isExpanded && (
-                  <div className="mt-3 pt-3 border-t border-slate-800/60">
+                  <div id={`details-${product.id}`} className="mt-3 pt-3 border-t border-slate-800/60">
                     <div className="grid grid-cols-2 md:grid-cols-6 gap-3 text-xs">
                       <div>
                         <span className="text-slate-500 block mb-0.5">Net Weight</span>
@@ -548,7 +552,7 @@ export default function Home() {
                       {product.is_lab_tested && (
                         <div>
                           <span className="text-slate-500 block mb-0.5">Lab Verified</span>
-                          <a href={product.lab_details?.report_url || "#"} target="_blank" rel="noreferrer" className="font-medium text-emerald-300 hover:text-emerald-200 underline decoration-emerald-500/30 transition-colors" onClick={(e) => e.stopPropagation()}>
+                          <a href={product.lab_details?.report_url || "#"} target="_blank" rel="noreferrer" className="font-medium text-emerald-300 hover:text-emerald-200 underline decoration-emerald-500/30 transition-colors">
                             {product.protein_verified_percent}% protein
                           </a>
                         </div>
