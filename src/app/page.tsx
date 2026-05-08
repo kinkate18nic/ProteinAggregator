@@ -370,7 +370,7 @@ export default function Home() {
       {/* Sort + Results Count */}
       {!loading && !error && (
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
-          <div className="text-sm text-slate-500">
+          <div className="text-sm text-slate-400">
             Showing {visibleData.length} of {processedData.length} products
             {processedData.length < data.length && (
               <span> (filtered from {data.length})</span>
@@ -379,7 +379,7 @@ export default function Home() {
           <div className="flex items-center gap-3">
             <button
               onClick={visibleData.length > 0 && visibleData.every(p => expandedCards.has(p.id)) ? collapseAll : expandAll}
-              className="text-xs font-semibold text-slate-500 hover:text-slate-300 transition-colors"
+              className="text-xs font-semibold text-slate-400 hover:text-slate-300 transition-colors"
             >
               {visibleData.length > 0 && visibleData.every(p => expandedCards.has(p.id)) ? 'Collapse All' : 'Expand All'}
             </button>
@@ -454,7 +454,7 @@ export default function Home() {
                         <span className={`${isTop1 ? 'text-xl md:text-2xl font-black' : 'text-base font-bold'} text-indigo-300`}>
                           ₹{product.cost_per_gram_verified}
                         </span>
-                        <span className="text-xs font-medium text-indigo-400/60">/g</span>
+                        <span className="text-xs font-medium text-indigo-400">/g</span>
                         <button
                           onClick={() => setInfoTooltip(infoTooltip === product.id ? null : product.id)}
                           className="ml-1 text-slate-500 hover:text-slate-300"
@@ -468,10 +468,10 @@ export default function Home() {
                         <span className={`${isTop1 ? 'text-xl md:text-2xl font-black' : 'text-base font-bold'} text-indigo-300`}>
                           ₹{product.cost_per_gram_claimed}
                         </span>
-                        <span className="text-xs font-medium text-indigo-400/60">/g</span>
+                        <span className="text-xs font-medium text-indigo-400">/g</span>
                       </div>
                     ) : (
-                      <span className="text-base font-bold text-slate-600">—</span>
+                      <span className="text-base font-bold text-slate-500">—</span>
                     )}
                     
                     {/* Tooltip */}
@@ -487,7 +487,7 @@ export default function Home() {
                   
                   {/* Brand + Name */}
                   <div className="md:flex-1 min-w-0">
-                    <p className="text-[10px] font-medium uppercase tracking-widest text-slate-500">
+                    <p className="text-[10px] font-medium uppercase tracking-widest text-slate-400">
                       {product.brand}
                     </p>
                     <h2 className="font-semibold text-sm text-slate-200 leading-snug">
@@ -502,10 +502,10 @@ export default function Home() {
                     <div className="md:w-24 md:text-right">
                       {product.in_stock === true && <span className="text-xs font-medium text-emerald-400">In Stock</span>}
                       {product.in_stock === false && <span className="text-xs font-medium text-rose-400">Out of Stock</span>}
-                      {product.in_stock === null && <span className="text-xs text-slate-600">—</span>}
+                      {product.in_stock === null && <span className="text-xs text-slate-500">—</span>}
                     </div>
                     <div className="md:w-14 md:text-right">
-                      <span className="text-xs text-slate-500">
+                      <span className="text-xs text-slate-400">
                         {product.protein_claimed_percent ? `${product.protein_claimed_percent}%` : "—"}
                       </span>
                     </div>
@@ -518,7 +518,7 @@ export default function Home() {
                       aria-expanded={isExpanded}
                       aria-controls={`details-${product.id}`}
                       onClick={() => toggleExpanded(product.id)}
-                      className="md:w-12 md:text-right text-xs font-medium text-slate-500 hover:text-slate-300 transition-colors"
+                      className="md:w-12 md:text-right text-xs font-medium text-slate-400 hover:text-slate-300 transition-colors"
                     >
                       {isExpanded ? 'Less' : 'More'}
                     </button>
@@ -570,7 +570,7 @@ export default function Home() {
                 <svg className="w-8 h-8 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
               </div>
               <p className="text-slate-200 font-bold text-xl mb-2">No products found</p>
-              <p className="text-slate-500 text-sm mb-4">Try adjusting your filters or budget.</p>
+              <p className="text-slate-400 text-sm mb-4">Try adjusting your filters or budget.</p>
               <button
                 onClick={clearAllFilters}
                 className="bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 font-semibold py-2 px-6 rounded-lg transition-colors"
