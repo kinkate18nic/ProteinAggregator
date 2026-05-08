@@ -409,10 +409,27 @@ def scrape_plix(product_url):
                 else:
                     result['total_weight_g'] = val
             
+            # Fallback: extract weight from SKU (e.g., "FG-SSP-POW-YEAST-CHOC-1KG" → 1000g)
+            if result['total_weight_g'] is None and target_sku:
+                sku_wt_match = re.search(r'(\d+(?:\.\d+)?)\s*(kg|g)\b', target_sku, re.IGNORECASE)
+                if sku_wt_match:
+                    val = float(sku_wt_match.group(1))
+                    unit = sku_wt_match.group(2).lower()
+                    if unit == 'kg':
+                        result['total_weight_g'] = val * 1000
+                    else:
+                        result['total_weight_g'] = val
+            
             # --- Servings from variant name ("27 Scoops") ---
             scoops_match = re.search(r'(\d+)\s*Scoops', raw_variant, re.IGNORECASE)
             if scoops_match:
                 result['num_servings'] = int(scoops_match.group(1))
+            
+            # Fallback: compute servings from weight / serving_size if we have override data
+            if result['num_servings'] is None and result['total_weight_g']:
+                # serving_size may come from nutrition_overrides later, but we can also
+                # try to read it from the product's nutrition facts if available on page
+                pass
                     
     except Exception as e:
         print(f"  [Plix Error] {product_url}: {e}")
