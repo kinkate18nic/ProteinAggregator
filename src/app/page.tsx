@@ -94,6 +94,7 @@ export default function Home() {
   // Sort dropdown state
   const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
   const sortDropdownRef = useRef<HTMLDivElement>(null);
+  const [sortFocusIndex, setSortFocusIndex] = useState(-1);
 
   useEffect(() => {
     fetch(`master_catalog.json?v=${Date.now()}`)
@@ -389,22 +390,57 @@ export default function Home() {
                 aria-haspopup="listbox"
                 aria-controls="sort-dropdown"
                 className="w-full sm:w-auto bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 py-2 px-4 pr-8 rounded-lg font-medium text-sm flex items-center justify-between transition-colors"
-                onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
+                onClick={() => {
+                  setSortDropdownOpen(!sortDropdownOpen);
+                  setSortFocusIndex(-1);
+                }}
               >
                 <span>Sort: {SORT_LABELS[sortBy]}</span>
                 <svg className={`absolute right-3 h-4 w-4 text-slate-400 transition-transform ${sortDropdownOpen ? 'rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="currentColor" d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
               </button>
               {sortDropdownOpen && (
-                <div id="sort-dropdown" role="listbox" className="absolute right-0 z-50 mt-2 w-56 bg-slate-800 border border-slate-700 rounded-lg shadow-2xl overflow-hidden flex flex-col">
-                  {(Object.entries(SORT_LABELS) as [SortKey, string][]).map(([key, label]) => (
+                <div
+                  id="sort-dropdown"
+                  role="listbox"
+                  tabIndex={-1}
+                  onKeyDown={(e) => {
+                    const keys = Object.keys(SORT_LABELS) as SortKey[];
+                    const maxIndex = keys.length - 1;
+                    if (e.key === 'ArrowDown') {
+                      e.preventDefault();
+                      setSortFocusIndex(prev => (prev >= maxIndex ? 0 : prev + 1));
+                    } else if (e.key === 'ArrowUp') {
+                      e.preventDefault();
+                      setSortFocusIndex(prev => (prev <= 0 ? maxIndex : prev - 1));
+                    } else if (e.key === 'Home') {
+                      e.preventDefault();
+                      setSortFocusIndex(0);
+                    } else if (e.key === 'End') {
+                      e.preventDefault();
+                      setSortFocusIndex(maxIndex);
+                    } else if (e.key === 'Escape') {
+                      e.preventDefault();
+                      setSortDropdownOpen(false);
+                    } else if (e.key === 'Enter' && sortFocusIndex >= 0) {
+                      e.preventDefault();
+                      setSortBy(keys[sortFocusIndex]);
+                      setSortDropdownOpen(false);
+                      setSortFocusIndex(-1);
+                    }
+                  }}
+                  className="absolute right-0 z-50 mt-2 w-56 bg-slate-800 border border-slate-700 rounded-lg shadow-2xl overflow-hidden flex flex-col"
+                >
+                  {(Object.entries(SORT_LABELS) as [SortKey, string][]).map(([key, label], idx) => (
                     <button
                       key={key}
                       role="option"
                       aria-selected={sortBy === key}
-                      className={`px-4 py-2.5 text-sm text-left cursor-pointer transition-colors ${sortBy === key ? 'bg-indigo-500/20 text-indigo-300 font-bold' : 'text-slate-300 hover:bg-slate-700/50'}`}
+                      ref={(el) => { if (idx === sortFocusIndex) el?.focus(); }}
+                      className={`px-4 py-2.5 text-sm text-left cursor-pointer transition-colors ${sortBy === key ? 'bg-indigo-500/20 text-indigo-300 font-bold' : 'text-slate-300 hover:bg-slate-700/50'} ${idx === sortFocusIndex ? 'ring-1 ring-indigo-500' : ''}`}
                       onClick={() => {
                         setSortBy(key);
                         setSortDropdownOpen(false);
+                        setSortFocusIndex(-1);
                       }}
                     >
                       {label}
