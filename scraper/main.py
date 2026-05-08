@@ -970,6 +970,20 @@ def main():
             # Use scraped name if available, otherwise fall back to our static name
             display_name = scraped.get('scraped_name') or product['name']
             
+            # Append qualifiers from product_id that get dropped by scrapers
+            # (e.g., "refill", "sachet", "combo" so users can distinguish variants)
+            id_lower = product_id.lower()
+            suffix_map = {
+                'refill': 'Refill',
+                'sachet': 'Sachet',
+                'combo': 'Combo',
+                'unflav': 'Unflavoured',
+            }
+            for key, suffix in suffix_map.items():
+                if key in id_lower and suffix.lower() not in display_name.lower():
+                    display_name = f"{display_name} ({suffix})"
+                    break
+            
             catalog_entry = {
                 "id": product_id,
                 "brand": brand_name,
