@@ -337,19 +337,19 @@ export default function Home() {
 
           {/* Toggles */}
           <div id="filter-controls" className="flex flex-row sm:flex-col gap-3 sm:gap-2 justify-center sm:justify-start">
-            <label className="flex items-center space-x-2 cursor-pointer select-none group">
-              <div className="relative flex items-center justify-center">
+            <label className="flex items-center space-x-2 cursor-pointer select-none group min-h-[44px]">
+              <div className="relative flex items-center justify-center min-w-[44px] min-h-[44px]">
                 <input type="checkbox" checked={filterLabTested} onChange={(e) => setFilterLabTested(e.target.checked)} className="peer sr-only" />
-                <div className="w-4 h-4 bg-slate-800 border border-slate-600 rounded peer-focus:ring-2 peer-focus:ring-indigo-500 peer-focus:ring-offset-2 peer-focus:ring-offset-slate-900 peer-checked:bg-indigo-500 peer-checked:border-indigo-500 transition-colors"></div>
-                <svg className="absolute w-2.5 h-2.5 text-white opacity-0 peer-checked:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+                <div className="w-5 h-5 bg-slate-800 border border-slate-600 rounded peer-focus:ring-2 peer-focus:ring-indigo-500 peer-focus:ring-offset-2 peer-focus:ring-offset-slate-900 peer-checked:bg-indigo-500 peer-checked:border-indigo-500 transition-colors"></div>
+                <svg className="absolute w-3 h-3 text-white opacity-0 peer-checked:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
               </div>
               <span className="text-xs font-semibold text-slate-400 group-hover:text-slate-200">Lab Verified</span>
             </label>
-            <label className="flex items-center space-x-2 cursor-pointer select-none group">
-              <div className="relative flex items-center justify-center">
+            <label className="flex items-center space-x-2 cursor-pointer select-none group min-h-[44px]">
+              <div className="relative flex items-center justify-center min-w-[44px] min-h-[44px]">
                 <input type="checkbox" checked={filterInStock} onChange={(e) => setFilterInStock(e.target.checked)} className="peer sr-only" />
-                <div className="w-4 h-4 bg-slate-800 border border-slate-600 rounded peer-focus:ring-2 peer-focus:ring-emerald-500 peer-focus:ring-offset-2 peer-focus:ring-offset-slate-900 peer-checked:bg-emerald-500 peer-checked:border-emerald-500 transition-colors"></div>
-                <svg className="absolute w-2.5 h-2.5 text-white opacity-0 peer-checked:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+                <div className="w-5 h-5 bg-slate-800 border border-slate-600 rounded peer-focus:ring-2 peer-focus:ring-emerald-500 peer-focus:ring-offset-2 peer-focus:ring-offset-slate-900 peer-checked:bg-emerald-500 peer-checked:border-emerald-500 transition-colors"></div>
+                <svg className="absolute w-3 h-3 text-white opacity-0 peer-checked:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
               </div>
               <span className="text-xs font-semibold text-slate-400 group-hover:text-slate-200">In Stock</span>
             </label>
@@ -457,7 +457,7 @@ export default function Home() {
                         <span className="text-xs font-medium text-indigo-400">/g</span>
                         <button
                           onClick={() => setInfoTooltip(infoTooltip === product.id ? null : product.id)}
-                          className="ml-1 text-slate-500 hover:text-slate-300"
+                          className="ml-1 p-2 -m-1 text-slate-500 hover:text-slate-300 min-w-[44px] min-h-[44px] flex items-center justify-center"
                           aria-label="What is verified cost?"
                         >
                           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -518,7 +518,7 @@ export default function Home() {
                       aria-expanded={isExpanded}
                       aria-controls={`details-${product.id}`}
                       onClick={() => toggleExpanded(product.id)}
-                      className="md:w-12 md:text-right text-xs font-medium text-slate-400 hover:text-slate-300 transition-colors"
+                      className="md:w-12 md:text-right text-xs font-medium text-slate-400 hover:text-slate-300 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-end"
                     >
                       {isExpanded ? 'Less' : 'More'}
                     </button>
