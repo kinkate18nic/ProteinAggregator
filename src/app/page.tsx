@@ -40,8 +40,6 @@ export default function Home() {
   const [budgetLimit, setBudgetLimit] = useState<number>(10000);
   const [filterLabTested, setFilterLabTested] = useState(false);
   const [filterInStock, setFilterInStock] = useState(false);
-  const [filterMissingWeight, setFilterMissingWeight] = useState(false);
-  const [filterMissingStock, setFilterMissingStock] = useState(false);
   const [filterBrand, setFilterBrand] = useState('All');
   const [sortBy, setSortBy] = useState<SortKey>('cost_per_gram_claimed');
   const [loadedCount, setLoadedCount] = useState(12);
@@ -58,16 +56,12 @@ export default function Home() {
     const urlBrand = params.get('brand');
     const urlLab = params.get('lab');
     const urlStock = params.get('stock');
-    const urlNoWeight = params.get('noweight');
-    const urlNoStock = params.get('nostock');
     const urlSort = params.get('sort');
 
     if (urlBudget) setBudgetLimit(Number(urlBudget));
     if (urlBrand) setFilterBrand(urlBrand);
     if (urlLab === '1') setFilterLabTested(true);
     if (urlStock === '1') setFilterInStock(true);
-    if (urlNoWeight === '1') setFilterMissingWeight(true);
-    if (urlNoStock === '1') setFilterMissingStock(true);
     if (urlSort && (Object.keys(SORT_LABELS) as SortKey[]).includes(urlSort as SortKey)) {
       setSortBy(urlSort as SortKey);
     }
@@ -86,13 +80,11 @@ export default function Home() {
     if (filterBrand !== 'All') params.set('brand', filterBrand);
     if (filterLabTested) params.set('lab', '1');
     if (filterInStock) params.set('stock', '1');
-    if (filterMissingWeight) params.set('noweight', '1');
-    if (filterMissingStock) params.set('nostock', '1');
     if (sortBy !== 'cost_per_gram_claimed') params.set('sort', sortBy);
 
     const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
     window.history.replaceState({}, '', newUrl);
-  }, [budgetLimit, filterBrand, filterLabTested, filterInStock, filterMissingWeight, filterMissingStock, sortBy]);
+  }, [budgetLimit, filterBrand, filterLabTested, filterInStock, sortBy]);
 
   // Searchable Dropdown State
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -140,7 +132,7 @@ export default function Home() {
     return ['All', ...list.sort()];
   }, [data]);
 
-  const activeFilterCount = (budgetLimit !== 15000 ? 1 : 0) + (filterLabTested ? 1 : 0) + (filterInStock ? 1 : 0) + (filterMissingWeight ? 1 : 0) + (filterMissingStock ? 1 : 0) + (filterBrand !== 'All' ? 1 : 0);
+  const activeFilterCount = (budgetLimit !== 15000 ? 1 : 0) + (filterLabTested ? 1 : 0) + (filterInStock ? 1 : 0) + (filterBrand !== 'All' ? 1 : 0);
   const hasActiveFilters = activeFilterCount > 0;
 
   const processedData = useMemo(() => {
@@ -150,8 +142,6 @@ export default function Home() {
         if (product.live_price_inr !== null && product.live_price_inr > budgetLimit) return false;
         if (filterLabTested && !product.is_lab_tested) return false;
         if (filterInStock && product.in_stock === false) return false;
-        if (filterMissingWeight && product.total_weight_g !== null) return false;
-        if (filterMissingStock && product.in_stock !== null) return false;
         return true;
       });
 
@@ -167,7 +157,7 @@ export default function Home() {
     });
 
     return filtered;
-  }, [data, budgetLimit, filterLabTested, filterInStock, filterMissingWeight, filterMissingStock, filterBrand, sortBy]);
+  }, [data, budgetLimit, filterLabTested, filterInStock, filterBrand, sortBy]);
 
   const visibleData = processedData.slice(0, loadedCount);
 
@@ -175,8 +165,6 @@ export default function Home() {
     setBudgetLimit(15000);
     setFilterLabTested(false);
     setFilterInStock(false);
-    setFilterMissingWeight(false);
-    setFilterMissingStock(false);
     setFilterBrand('All');
     setSortBy('cost_per_gram_claimed');
   }
@@ -355,22 +343,6 @@ export default function Home() {
                 <svg className="absolute w-2.5 h-2.5 text-white opacity-0 peer-checked:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
               </div>
               <span className="text-xs font-semibold text-slate-400 group-hover:text-slate-200">In Stock</span>
-            </label>
-            <label className="flex items-center space-x-2 cursor-pointer select-none group">
-              <div className="relative flex items-center justify-center">
-                <input type="checkbox" checked={filterMissingWeight} onChange={(e) => setFilterMissingWeight(e.target.checked)} className="peer sr-only" />
-                <div className="w-4 h-4 bg-slate-800 border border-slate-600 rounded peer-checked:bg-amber-500 peer-checked:border-amber-500 transition-colors"></div>
-                <svg className="absolute w-2.5 h-2.5 text-white opacity-0 peer-checked:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-              </div>
-              <span className="text-xs font-semibold text-slate-400 group-hover:text-slate-200">Missing Weight</span>
-            </label>
-            <label className="flex items-center space-x-2 cursor-pointer select-none group">
-              <div className="relative flex items-center justify-center">
-                <input type="checkbox" checked={filterMissingStock} onChange={(e) => setFilterMissingStock(e.target.checked)} className="peer sr-only" />
-                <div className="w-4 h-4 bg-slate-800 border border-slate-600 rounded peer-checked:bg-amber-500 peer-checked:border-amber-500 transition-colors"></div>
-                <svg className="absolute w-2.5 h-2.5 text-white opacity-0 peer-checked:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-              </div>
-              <span className="text-xs font-semibold text-slate-400 group-hover:text-slate-200">Missing Stock</span>
             </label>
           </div>
 
