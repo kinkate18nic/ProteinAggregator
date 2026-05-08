@@ -40,6 +40,8 @@ export default function Home() {
   const [budgetLimit, setBudgetLimit] = useState<number>(10000);
   const [filterLabTested, setFilterLabTested] = useState(false);
   const [filterInStock, setFilterInStock] = useState(false);
+  const [filterHasWeight, setFilterHasWeight] = useState(false);
+  const [filterHasStockInfo, setFilterHasStockInfo] = useState(false);
   const [filterBrand, setFilterBrand] = useState('All');
   const [sortBy, setSortBy] = useState<SortKey>('cost_per_gram_claimed');
   const [loadedCount, setLoadedCount] = useState(12);
@@ -56,12 +58,16 @@ export default function Home() {
     const urlBrand = params.get('brand');
     const urlLab = params.get('lab');
     const urlStock = params.get('stock');
+    const urlWeight = params.get('weight');
+    const urlStockInfo = params.get('stockinfo');
     const urlSort = params.get('sort');
 
     if (urlBudget) setBudgetLimit(Number(urlBudget));
     if (urlBrand) setFilterBrand(urlBrand);
     if (urlLab === '1') setFilterLabTested(true);
     if (urlStock === '1') setFilterInStock(true);
+    if (urlWeight === '1') setFilterHasWeight(true);
+    if (urlStockInfo === '1') setFilterHasStockInfo(true);
     if (urlSort && (Object.keys(SORT_LABELS) as SortKey[]).includes(urlSort as SortKey)) {
       setSortBy(urlSort as SortKey);
     }
@@ -80,11 +86,13 @@ export default function Home() {
     if (filterBrand !== 'All') params.set('brand', filterBrand);
     if (filterLabTested) params.set('lab', '1');
     if (filterInStock) params.set('stock', '1');
+    if (filterHasWeight) params.set('weight', '1');
+    if (filterHasStockInfo) params.set('stockinfo', '1');
     if (sortBy !== 'cost_per_gram_claimed') params.set('sort', sortBy);
 
     const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
     window.history.replaceState({}, '', newUrl);
-  }, [budgetLimit, filterBrand, filterLabTested, filterInStock, sortBy]);
+  }, [budgetLimit, filterBrand, filterLabTested, filterInStock, filterHasWeight, filterHasStockInfo, sortBy]);
 
   // Searchable Dropdown State
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -132,7 +140,7 @@ export default function Home() {
     return ['All', ...list.sort()];
   }, [data]);
 
-  const activeFilterCount = (budgetLimit !== 15000 ? 1 : 0) + (filterLabTested ? 1 : 0) + (filterInStock ? 1 : 0) + (filterBrand !== 'All' ? 1 : 0);
+  const activeFilterCount = (budgetLimit !== 15000 ? 1 : 0) + (filterLabTested ? 1 : 0) + (filterInStock ? 1 : 0) + (filterHasWeight ? 1 : 0) + (filterHasStockInfo ? 1 : 0) + (filterBrand !== 'All' ? 1 : 0);
   const hasActiveFilters = activeFilterCount > 0;
 
   const processedData = useMemo(() => {
@@ -142,6 +150,8 @@ export default function Home() {
         if (product.live_price_inr !== null && product.live_price_inr > budgetLimit) return false;
         if (filterLabTested && !product.is_lab_tested) return false;
         if (filterInStock && product.in_stock === false) return false;
+        if (filterHasWeight && product.total_weight_g === null) return false;
+        if (filterHasStockInfo && product.in_stock === null) return false;
         return true;
       });
 
@@ -151,16 +161,13 @@ export default function Home() {
       if (aVal === null && bVal === null) return 0;
       if (aVal === null) return 1;
       if (bVal === null) return -1;
-      // For protein %, sort descending (higher is better)
-      // For brand, sort ascending alphabetically
-      // For everything else, sort ascending (lower price/cost is better)
       if (sortBy === 'protein_claimed_percent') return (bVal as number) - (aVal as number);
       if (sortBy === 'brand') return (aVal as string).localeCompare(bVal as string);
       return (aVal as number) - (bVal as number);
     });
 
     return filtered;
-  }, [data, budgetLimit, filterLabTested, filterInStock, filterBrand, sortBy]);
+  }, [data, budgetLimit, filterLabTested, filterInStock, filterHasWeight, filterHasStockInfo, filterBrand, sortBy]);
 
   const visibleData = processedData.slice(0, loadedCount);
 
@@ -168,6 +175,8 @@ export default function Home() {
     setBudgetLimit(15000);
     setFilterLabTested(false);
     setFilterInStock(false);
+    setFilterHasWeight(false);
+    setFilterHasStockInfo(false);
     setFilterBrand('All');
     setSortBy('cost_per_gram_claimed');
   }
@@ -179,6 +188,14 @@ export default function Home() {
       else next.add(id);
       return next;
     });
+  }
+
+  function expandAll() {
+    setExpandedCards(new Set(visibleData.map(p => p.id)));
+  }
+
+  function collapseAll() {
+    setExpandedCards(new Set());
   }
 
   function formatRelativeTime(dateStr: string): string {
@@ -339,6 +356,22 @@ export default function Home() {
               </div>
               <span className="text-xs font-semibold text-slate-400 group-hover:text-slate-200">In Stock</span>
             </label>
+            <label className="flex items-center space-x-2 cursor-pointer select-none group">
+              <div className="relative flex items-center justify-center">
+                <input type="checkbox" checked={filterHasWeight} onChange={(e) => setFilterHasWeight(e.target.checked)} className="peer sr-only" />
+                <div className="w-4 h-4 bg-slate-800 border border-slate-600 rounded peer-checked:bg-indigo-500 peer-checked:border-indigo-500 transition-colors"></div>
+                <svg className="absolute w-2.5 h-2.5 text-white opacity-0 peer-checked:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span className="text-xs font-semibold text-slate-400 group-hover:text-slate-200">Has Weight</span>
+            </label>
+            <label className="flex items-center space-x-2 cursor-pointer select-none group">
+              <div className="relative flex items-center justify-center">
+                <input type="checkbox" checked={filterHasStockInfo} onChange={(e) => setFilterHasStockInfo(e.target.checked)} className="peer sr-only" />
+                <div className="w-4 h-4 bg-slate-800 border border-slate-600 rounded peer-checked:bg-emerald-500 peer-checked:border-emerald-500 transition-colors"></div>
+                <svg className="absolute w-2.5 h-2.5 text-white opacity-0 peer-checked:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span className="text-xs font-semibold text-slate-400 group-hover:text-slate-200">Has Stock</span>
+            </label>
           </div>
 
           {/* Clear All */}
@@ -362,30 +395,38 @@ export default function Home() {
               <span> (filtered from {data.length})</span>
             )}
           </div>
-          <div className="relative" ref={sortDropdownRef}>
+          <div className="flex items-center gap-3">
             <button
-              className="w-full sm:w-auto bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 py-2 px-4 pr-8 rounded-lg font-medium text-sm flex items-center justify-between transition-colors"
-              onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
+              onClick={visibleData.length > 0 && visibleData.every(p => expandedCards.has(p.id)) ? collapseAll : expandAll}
+              className="text-xs font-semibold text-slate-500 hover:text-slate-300 transition-colors"
             >
-              <span>Sort: {SORT_LABELS[sortBy]}</span>
-              <svg className={`absolute right-3 h-4 w-4 text-slate-400 transition-transform ${sortDropdownOpen ? 'rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="currentColor" d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              {visibleData.length > 0 && visibleData.every(p => expandedCards.has(p.id)) ? 'Collapse All' : 'Expand All'}
             </button>
-            {sortDropdownOpen && (
-              <div className="absolute right-0 z-50 mt-2 w-56 bg-slate-800 border border-slate-700 rounded-lg shadow-2xl overflow-hidden flex flex-col">
-                {(Object.entries(SORT_LABELS) as [SortKey, string][]).map(([key, label]) => (
-                  <button
-                    key={key}
-                    className={`px-4 py-2.5 text-sm text-left cursor-pointer transition-colors ${sortBy === key ? 'bg-indigo-500/20 text-indigo-300 font-bold' : 'text-slate-300 hover:bg-slate-700/50'}`}
-                    onClick={() => {
-                      setSortBy(key);
-                      setSortDropdownOpen(false);
-                    }}
-                  >
-                    {label}
-                  </button>
-                ))}
-              </div>
-            )}
+            <div className="relative" ref={sortDropdownRef}>
+              <button
+                className="w-full sm:w-auto bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 py-2 px-4 pr-8 rounded-lg font-medium text-sm flex items-center justify-between transition-colors"
+                onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
+              >
+                <span>Sort: {SORT_LABELS[sortBy]}</span>
+                <svg className={`absolute right-3 h-4 w-4 text-slate-400 transition-transform ${sortDropdownOpen ? 'rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="currentColor" d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </button>
+              {sortDropdownOpen && (
+                <div className="absolute right-0 z-50 mt-2 w-56 bg-slate-800 border border-slate-700 rounded-lg shadow-2xl overflow-hidden flex flex-col">
+                  {(Object.entries(SORT_LABELS) as [SortKey, string][]).map(([key, label]) => (
+                    <button
+                      key={key}
+                      className={`px-4 py-2.5 text-sm text-left cursor-pointer transition-colors ${sortBy === key ? 'bg-indigo-500/20 text-indigo-300 font-bold' : 'text-slate-300 hover:bg-slate-700/50'}`}
+                      onClick={() => {
+                        setSortBy(key);
+                        setSortDropdownOpen(false);
+                      }}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
@@ -410,13 +451,19 @@ export default function Home() {
             return (
               <article 
                 key={product.id} 
-                className={`bg-slate-900 border rounded-xl p-3 md:p-4 transition-colors ${isBestValue ? 'border-indigo-500/30' : 'border-slate-800 hover:border-slate-700'}`}
+                className={`bg-slate-900 border rounded-xl p-3 md:p-4 transition-colors cursor-pointer ${isBestValue ? 'border-indigo-500/30' : 'border-slate-800 hover:border-slate-700'}`}
+                onClick={(e) => {
+                  // Don't toggle if clicking a link or button inside the card
+                  const target = e.target as HTMLElement;
+                  if (target.closest('a') || target.closest('button')) return;
+                  toggleExpanded(product.id);
+                }}
               >
                 {/* Main Row */}
-                <div className="flex flex-col md:flex-row md:items-start gap-2 md:gap-4">
+                <div className="flex flex-col md:flex-row md:items-start gap-2 md:gap-4 pointer-events-none">
                   
                   {/* Cost/g */}
-                  <div className="md:w-36 shrink-0">
+                  <div className="md:w-36 shrink-0 pointer-events-auto">
                     {isBestValue && (
                       <span className="text-[10px] font-bold text-indigo-300 uppercase tracking-wide block mb-0.5">
                         Best Value
@@ -429,7 +476,10 @@ export default function Home() {
                         </span>
                         <span className="text-xs font-medium text-indigo-400/60">/g</span>
                         <button
-                          onClick={() => setInfoTooltip(infoTooltip === product.id ? null : product.id)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setInfoTooltip(infoTooltip === product.id ? null : product.id);
+                          }}
                           className="ml-1 text-slate-500 hover:text-slate-300"
                           aria-label="What is verified cost?"
                         >
@@ -459,12 +509,12 @@ export default function Home() {
                   </div>
                   
                   {/* Brand + Name */}
-                  <div className="md:flex-1 min-w-0">
+                  <div className="md:flex-1 min-w-0 pointer-events-auto">
                     <p className="text-[10px] font-medium uppercase tracking-widest text-slate-500">
                       {product.brand}
                     </p>
                     <h2 className="font-semibold text-sm text-slate-200 leading-snug">
-                      <a href={product.product_url} target="_blank" rel="noreferrer" className="hover:text-indigo-300 transition-colors">
+                      <a href={product.product_url} target="_blank" rel="noreferrer" className="hover:text-indigo-300 transition-colors" onClick={(e) => e.stopPropagation()}>
                         {product.product_name}
                       </a>
                     </h2>
@@ -472,9 +522,9 @@ export default function Home() {
                   
                   {/* Meta row */}
                   <div className="flex items-center justify-between md:justify-end gap-3 md:gap-4 w-full md:w-auto mt-1 md:mt-0">
-                    <div className="md:w-20 md:text-right">
+                    <div className="md:w-24 md:text-right">
                       {product.in_stock === true && <span className="text-xs font-medium text-emerald-400">In Stock</span>}
-                      {product.in_stock === false && <span className="text-xs font-medium text-rose-400">Out</span>}
+                      {product.in_stock === false && <span className="text-xs font-medium text-rose-400">Out of Stock</span>}
                       {product.in_stock === null && <span className="text-xs text-slate-600">—</span>}
                     </div>
                     <div className="md:w-14 md:text-right">
@@ -488,8 +538,11 @@ export default function Home() {
                       </span>
                     </div>
                     <button
-                      onClick={() => toggleExpanded(product.id)}
-                      className="md:w-12 md:text-right text-xs font-medium text-slate-500 hover:text-slate-300 transition-colors"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleExpanded(product.id);
+                      }}
+                      className="md:w-12 md:text-right text-xs font-medium text-slate-500 hover:text-slate-300 transition-colors pointer-events-auto"
                     >
                       {isExpanded ? 'Less' : 'More'}
                     </button>
@@ -523,7 +576,7 @@ export default function Home() {
                       {product.is_lab_tested && (
                         <div>
                           <span className="text-slate-500 block mb-0.5">Lab Verified</span>
-                          <a href={product.lab_details?.report_url || "#"} target="_blank" rel="noreferrer" className="font-medium text-emerald-300 hover:text-emerald-200 underline decoration-emerald-500/30 transition-colors">
+                          <a href={product.lab_details?.report_url || "#"} target="_blank" rel="noreferrer" className="font-medium text-emerald-300 hover:text-emerald-200 underline decoration-emerald-500/30 transition-colors" onClick={(e) => e.stopPropagation()}>
                             {product.protein_verified_percent}% protein
                           </a>
                         </div>
