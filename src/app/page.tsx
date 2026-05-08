@@ -224,7 +224,7 @@ export default function Home() {
           <p className="text-rose-300 font-semibold mb-3">{error}</p>
           <button
             onClick={() => window.location.reload()}
-            className="bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 font-semibold py-2 px-6 rounded-lg transition-colors"
+            className="bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 font-semibold py-2 px-6 rounded-xl transition-colors active:scale-95"
           >
             Retry
           </button>
@@ -252,7 +252,7 @@ export default function Home() {
           aria-expanded={mobileFiltersOpen}
           aria-controls="filter-controls"
           onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
-          className="lg:hidden w-full bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 py-2.5 px-4 rounded-lg font-medium text-sm flex items-center justify-between transition-colors"
+          className="lg:hidden w-full bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 py-2.5 px-4 rounded-xl font-medium text-sm flex items-center justify-between transition-colors active:scale-95"
         >
           <span className="flex items-center gap-2">
             Filters
@@ -277,7 +277,7 @@ export default function Home() {
               type="range" min="500" max="15000" step="500" 
               value={budgetLimit} 
               onChange={(e) => setBudgetLimit(Number(e.target.value))}
-              className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+              className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
@@ -289,7 +289,7 @@ export default function Home() {
                 aria-expanded={dropdownOpen}
                 aria-haspopup="listbox"
                 aria-controls="brand-dropdown"
-                className="w-full bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 py-2.5 px-4 pr-8 rounded-lg font-medium text-sm flex items-center justify-between transition-colors text-left"
+                className="w-full bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 py-2.5 px-4 pr-8 rounded-xl font-medium text-sm flex items-center justify-between transition-colors text-left active:scale-95"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
                 <span className="truncate">{filterBrand}</span>
@@ -299,10 +299,11 @@ export default function Home() {
                 {dropdownOpen && (
                 <div id="brand-dropdown" role="listbox" className="absolute z-50 mt-2 w-full bg-slate-800 border border-slate-700 rounded-lg shadow-2xl overflow-hidden flex flex-col max-h-64">
                   <div className="p-2 border-b border-slate-700">
-                    <input 
-                      type="text" 
-                      placeholder="Search brand..." 
-                      className="w-full text-sm bg-slate-900 border-slate-700 text-slate-200 placeholder-slate-500 rounded-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500 border"
+                    <input
+                      type="text"
+                      placeholder="Search brand..."
+                      aria-label="Search brands"
+                      className="w-full text-sm bg-slate-900 border-slate-700 text-slate-200 placeholder-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500 border"
                       value={brandSearch}
                       onChange={(e) => setBrandSearch(e.target.value)}
                       onClick={(e) => e.stopPropagation()}
@@ -311,7 +312,7 @@ export default function Home() {
                   </div>
                   <ul className="overflow-y-auto">
                     {brands.filter(b => b.toLowerCase().includes(brandSearch.toLowerCase())).length === 0 ? (
-                      <li className="px-4 py-3 text-sm text-slate-500 text-center">No brands found</li>
+                      <li className="px-4 py-3 text-sm text-slate-400 text-center">No brands found</li>
                     ) : (
                       brands.filter(b => b.toLowerCase().includes(brandSearch.toLowerCase())).map(b => (
                         <li key={b} role="none">
@@ -360,7 +361,7 @@ export default function Home() {
           {hasActiveFilters && (
             <button
               onClick={clearAllFilters}
-              className="text-xs font-semibold text-slate-500 hover:text-slate-300 transition-colors underline decoration-slate-700 underline-offset-4"
+              className="text-xs font-semibold text-slate-400 hover:text-slate-300 transition-colors underline decoration-slate-700 underline-offset-4"
             >
               Clear All
             </button>
@@ -380,7 +381,7 @@ export default function Home() {
           <div className="flex items-center gap-3">
             <button
               onClick={visibleData.length > 0 && visibleData.every(p => expandedCards.has(p.id)) ? collapseAll : expandAll}
-              className="text-xs font-semibold text-slate-400 hover:text-slate-300 transition-colors"
+              className="text-xs font-semibold text-slate-400 hover:text-slate-300 transition-colors active:scale-95"
             >
               {visibleData.length > 0 && visibleData.every(p => expandedCards.has(p.id)) ? 'Collapse All' : 'Expand All'}
             </button>
@@ -389,7 +390,7 @@ export default function Home() {
                 aria-expanded={sortDropdownOpen}
                 aria-haspopup="listbox"
                 aria-controls="sort-dropdown"
-                className="w-full sm:w-auto bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 py-2 px-4 pr-8 rounded-lg font-medium text-sm flex items-center justify-between transition-colors"
+                className="w-full sm:w-auto bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 py-2 px-4 pr-8 rounded-xl font-medium text-sm flex items-center justify-between transition-colors active:scale-95"
                 onClick={() => {
                   setSortDropdownOpen(!sortDropdownOpen);
                   setSortFocusIndex(-1);
@@ -455,8 +456,8 @@ export default function Home() {
 
       {/* Results */}
       {loading ? (
-        <div className="text-center py-16">
-          <div className="animate-pulse space-y-3">
+          <div className="text-center py-16">
+          <div className="animate-pulse motion-reduce:animate-none space-y-3">
             {[...Array(6)].map((_, i) => (
               <div key={i} className="bg-slate-900 border border-slate-800 rounded-xl p-4 h-16"></div>
             ))}
@@ -493,8 +494,9 @@ export default function Home() {
                         <span className="text-xs font-medium text-indigo-400">/g</span>
                         <button
                           onClick={() => setInfoTooltip(infoTooltip === product.id ? null : product.id)}
-                          className="ml-1 p-2 -m-1 text-slate-500 hover:text-slate-300 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                          className="ml-1 p-2 -m-1 text-slate-400 hover:text-slate-300 min-w-[44px] min-h-[44px] flex items-center justify-center"
                           aria-label="What is verified cost?"
+                          aria-describedby={infoTooltip === product.id ? `tooltip-${product.id}` : undefined}
                         >
                           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </button>
@@ -507,15 +509,15 @@ export default function Home() {
                         <span className="text-xs font-medium text-indigo-400">/g</span>
                       </div>
                     ) : (
-                      <span className="text-base font-bold text-slate-500">—</span>
+                      <span className="text-base font-bold text-slate-400">—</span>
                     )}
                     
                     {/* Tooltip */}
                     {infoTooltip === product.id && hasVerified && (
-                      <div className="mt-1 text-[11px] text-slate-400 bg-slate-800 p-2 rounded border border-slate-700">
+                      <div id={`tooltip-${product.id}`} role="tooltip" className="mt-1 text-[11px] text-slate-400 bg-slate-800 p-2 rounded border border-slate-700">
                         <span className="font-semibold text-slate-300">Verified</span> cost uses lab-tested protein content. <span className="font-semibold text-slate-300">Claimed</span> uses the brand's marketing numbers.
                         {product.cost_per_gram_claimed && (
-                          <span className="block mt-0.5 text-slate-500">Claimed: ₹{product.cost_per_gram_claimed}/g</span>
+                          <span className="block mt-0.5 text-slate-400">Claimed: ₹{product.cost_per_gram_claimed}/g</span>
                         )}
                       </div>
                     )}
@@ -538,7 +540,7 @@ export default function Home() {
                     <div className="md:w-24 md:text-right">
                       {product.in_stock === true && <span className="text-xs font-medium text-emerald-400">In Stock</span>}
                       {product.in_stock === false && <span className="text-xs font-medium text-rose-400">Out of Stock</span>}
-                      {product.in_stock === null && <span className="text-xs text-slate-500">—</span>}
+                      {product.in_stock === null && <span className="text-xs text-slate-400">—</span>}
                     </div>
                     <div className="md:w-14 md:text-right">
                       <span className="text-xs text-slate-400">
@@ -546,7 +548,7 @@ export default function Home() {
                       </span>
                     </div>
                     <div className="md:w-24 md:text-right">
-                      <span className={`text-sm font-bold ${product.live_price_inr ? 'text-slate-200' : 'text-slate-600'}`}>
+                       <span className={`text-sm font-bold ${product.live_price_inr ? 'text-slate-200' : 'text-slate-400'}`}>
                         {product.live_price_inr ? `₹${product.live_price_inr.toLocaleString()}` : "—"}
                       </span>
                     </div>
@@ -554,7 +556,7 @@ export default function Home() {
                       aria-expanded={isExpanded}
                       aria-controls={`details-${product.id}`}
                       onClick={() => toggleExpanded(product.id)}
-                      className="md:w-12 md:text-right text-xs font-medium text-slate-400 hover:text-slate-300 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-end"
+                      className="md:w-12 md:text-right text-xs font-medium text-slate-400 hover:text-slate-300 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-end active:scale-95"
                     >
                       {isExpanded ? 'Less' : 'More'}
                     </button>
@@ -566,28 +568,28 @@ export default function Home() {
                   <div id={`details-${product.id}`} className="mt-3 pt-3 border-t border-slate-800/60">
                     <div className="grid grid-cols-2 md:grid-cols-6 gap-3 text-xs">
                       <div>
-                        <span className="text-slate-500 block mb-0.5">Net Weight</span>
+                        <span className="text-slate-400 block mb-0.5">Net Weight</span>
                         <span className="font-medium text-slate-300">{product.total_weight_g ? `${product.total_weight_g}g` : "—"}</span>
                       </div>
                       <div>
-                        <span className="text-slate-500 block mb-0.5">Serving Size</span>
+                        <span className="text-slate-400 block mb-0.5">Serving Size</span>
                         <span className="font-medium text-slate-300">{product.serving_size_g ? `${product.serving_size_g}g` : "—"}</span>
                       </div>
                       <div>
-                        <span className="text-slate-500 block mb-0.5">Servings</span>
+                        <span className="text-slate-400 block mb-0.5">Servings</span>
                         <span className="font-medium text-slate-300">{product.num_servings ?? "—"}</span>
                       </div>
                       <div>
-                        <span className="text-slate-500 block mb-0.5">Protein/Serving</span>
+                        <span className="text-slate-400 block mb-0.5">Protein/Serving</span>
                         <span className="font-medium text-slate-300">{product.protein_per_serving_g ? `${product.protein_per_serving_g}g` : "—"}</span>
                       </div>
                       <div>
-                        <span className="text-slate-500 block mb-0.5">Price Checked</span>
+                        <span className="text-slate-400 block mb-0.5">Price Checked</span>
                         <span className="font-medium text-slate-300">{formatRelativeTime(product.last_updated)}</span>
                       </div>
                       {product.is_lab_tested && (
                         <div>
-                          <span className="text-slate-500 block mb-0.5">Lab Verified</span>
+                          <span className="text-slate-400 block mb-0.5">Lab Verified</span>
                           <a href={product.lab_details?.report_url || "#"} target="_blank" rel="noreferrer" className="font-medium text-emerald-300 hover:text-emerald-200 underline decoration-emerald-500/30 transition-colors">
                             {product.protein_verified_percent}% protein
                           </a>
@@ -609,7 +611,7 @@ export default function Home() {
               <p className="text-slate-400 text-sm mb-4">Try adjusting your filters or budget.</p>
               <button
                 onClick={clearAllFilters}
-                className="bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 font-semibold py-2 px-6 rounded-lg transition-colors"
+                className="bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 font-semibold py-2 px-6 rounded-xl transition-colors active:scale-95"
               >
                 Clear All Filters
               </button>
@@ -620,9 +622,9 @@ export default function Home() {
       {/* Load More */}
       {!loading && !error && loadedCount < processedData.length && (
         <div className="mt-10 text-center pb-8">
-          <button 
+          <button
             onClick={() => setLoadedCount(c => c + 15)}
-            className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold py-3 px-8 rounded-lg transition-colors text-sm"
+            className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold py-3 px-8 rounded-xl transition-colors text-sm active:scale-95"
           >
             Load More ({processedData.length - loadedCount})
           </button>
