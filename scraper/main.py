@@ -651,7 +651,7 @@ def scrape_jsonld(product_url):
 
 
 # =============================================================================
-# THE WHOLE TRUTH SCRAPER (Playwright headless)
+# THE WHOLE TRUTH SCRAPER (JSON-LD static)
 # =============================================================================
 
 def scrape_twt(product_url):
