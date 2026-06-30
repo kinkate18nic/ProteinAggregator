@@ -616,19 +616,27 @@ def scrape_jsonld(product_url):
                 except ValueError:
                     pass
         
-            # Sanity check: JSON-LD often lies about stock status.
-            # If it claims InStock, verify the actual page doesn't explicitly say "out of stock"
-            # or "sold out". We ONLY trust these two exact phrases (not generic words like
-            # "unavailable" or "notify me" which appear in newsletters and contact forms).
-            if result['in_stock'] is True:
-                page_text = soup.get_text(separator=' ').lower()
-                if 'out of stock' in page_text or 'sold out' in page_text:
+        # Sanity check: JSON-LD often lies about stock status.
+        # If it claims InStock, verify the actual page doesn't explicitly say "out of stock"
+        # or "sold out". We ONLY trust these two exact phrases (not generic words like
+        # "unavailable" or "notify me" which appear in newsletters and contact forms).
+        if result['in_stock'] is True:
+            page_text = soup.get_text(separator=' ').lower()
+            if 'out of stock' in page_text or 'sold out' in page_text:
+                result['in_stock'] = False
+            else:
+                # Check if Add to Cart button is explicitly disabled
+                atc = soup.find('button', {'type': 'submit', 'name': 'add'})
+                if atc and atc.get('disabled'):
                     result['in_stock'] = False
-                else:
-                    # Check if Add to Cart button is explicitly disabled
-                    atc = soup.find('button', {'type': 'submit', 'name': 'add'})
-                    if atc and atc.get('disabled'):
-                        result['in_stock'] = False
+            
+            # Check __NEXT_DATA__ for stock status if present (useful for Next.js storefronts)
+            next_data_script = soup.find('script', id='__NEXT_DATA__')
+            if next_data_script and next_data_script.string:
+                next_data_str = next_data_script.string.lower()
+                next_data_str_clean = next_data_str.replace(" ", "")
+                if '"outofstock":true' in next_data_str_clean or '"out_of_stock":true' in next_data_str_clean:
+                    result['in_stock'] = False
         
         # Extract weight from URL first (more reliable), then product name
         import re
