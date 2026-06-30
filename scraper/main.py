@@ -657,9 +657,7 @@ def scrape_jsonld(product_url):
 def scrape_twt(product_url):
     """
     Scraper for The Whole Truth Foods.
-    Uses Playwright headless browser since the site is fully CSR (Next.js).
-    Extracts name, price, and stock status from the rendered DOM.
-    Nutritional data comes from nutrition_overrides.json (displayed as images on site).
+    Extracts name, price, stock status, and weight using JSON-LD.
     """
     result = {k: None for k in [
         'scraped_name', 'price', 'in_stock', 'protein_percent',
@@ -667,62 +665,84 @@ def scrape_twt(product_url):
     ]}
     
     try:
-        from playwright.sync_api import sync_playwright
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0'}
+        resp = requests.get(product_url, headers=headers, timeout=15)
+        if resp.status_code != 200:
+            print(f"  [TWT Error] Failed to fetch {product_url}: HTTP {resp.status_code}")
+            return result
+            
+        soup = BeautifulSoup(resp.text, 'html.parser')
         
-        with sync_playwright() as p:
-            browser = p.chromium.launch(headless=True)
-            page = browser.new_page(
-                user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0'
-            )
-            page.goto(product_url, timeout=30000)
-            # Wait for the product content to render
-            page.wait_for_timeout(5000)
-            
-            # --- PRODUCT NAME ---
+        # Locate the product schema JSON-LD script
+        product_data = None
+        for script in soup.find_all('script', type='application/ld+json'):
             try:
-                name_el = page.query_selector('h1')
-                if name_el:
-                    result['scraped_name'] = name_el.inner_text().strip()
+                ld = json.loads(script.string)
+                if isinstance(ld, dict) and ld.get('@type') == 'Product':
+                    product_data = ld
+                    break
             except Exception:
                 pass
-
-            # --- PRICE ---
-            # TWT shows price like "₹3,539" — look for the offer/sale price
-            try:
-                body_text = page.inner_text('body')
-                price_matches = re.findall(r'₹\s*([\d,]+)', body_text)
-                if price_matches:
-                    prices = [int(m.replace(',', '')) for m in price_matches if int(m.replace(',', '')) > 100]
-                    if prices:
-                        result['price'] = float(prices[0])
-            except Exception:
-                pass
-
-            # --- STOCK STATUS ---
-            try:
-                add_to_cart = page.query_selector('button:has-text("ADD TO CART")')
-                buy_now = page.query_selector('button:has-text("BUY NOW")')
-                result['in_stock'] = bool(add_to_cart or buy_now)
-            except Exception:
-                result['in_stock'] = None
-
-            # --- WEIGHT from product name ---
-            if result['scraped_name']:
-                name_lower = result['scraped_name'].lower()
-                kg_m = re.search(r'(\d+(?:\.\d+)?)\s*kg', name_lower)
-                g_m = re.search(r'(\d{3,})\s*g\b', name_lower)
-                if kg_m:
-                    result['total_weight_g'] = float(kg_m.group(1)) * 1000
-                elif g_m:
-                    result['total_weight_g'] = float(g_m.group(1))
+                
+        if not product_data:
+            print(f"  [TWT Error] No Product JSON-LD found on page: {product_url}")
+            return result
             
-            browser.close()
-    
-    except ImportError:
-        print("  [TWT Error] playwright not installed. Run: pip install playwright && playwright install chromium")
+        # Extract product name
+        product_name = product_data.get('name', '')
+        
+        # Parse offers (can be a list or a single dict)
+        offers = product_data.get('offers', [])
+        if isinstance(offers, dict):
+            offers = [offers]
+            
+        # Extract target sku_id from product URL to match the correct variant offer
+        sku_match = re.search(r'sku_id=(\d+)', product_url)
+        target_sku = sku_match.group(1) if sku_match else None
+        
+        # Map target_sku (variant ID) to merchant SKU from HTML
+        merchant_sku = None
+        if target_sku:
+            sku_map_match = re.search(r'\\"id\\":\\"' + target_sku + r'\\".*?\\"sku\\":\\"([^"\\]+)\\"', resp.text)
+            if sku_map_match:
+                merchant_sku = sku_map_match.group(1)
+        
+        # Find matching offer
+        matching_offer = None
+        if merchant_sku:
+            for offer in offers:
+                if offer.get('sku') == merchant_sku:
+                    matching_offer = offer
+                    break
+                    
+        # Fallback to the first offer if no SKU matched
+        if not matching_offer and offers:
+            matching_offer = offers[0]
+            
+        if matching_offer:
+            offer_name = matching_offer.get('name', '')
+            if offer_name:
+                result['scraped_name'] = f"{product_name} {offer_name}"
+            else:
+                result['scraped_name'] = product_name
+            result['price'] = float(matching_offer.get('price')) if matching_offer.get('price') else None
+            
+            avail = matching_offer.get('availability', '')
+            result['in_stock'] = 'InStock' in avail
+            
+            # Combine product name and offer name to get the weight (e.g. "Pack of 1 KG")
+            combined_name = f"{product_name} {matching_offer.get('name', '')}"
+            name_lower = combined_name.lower()
+            kg_m = re.search(r'(\d+(?:\.\d+)?)\s*kg', name_lower)
+            g_m = re.search(r'(\d{3,})\s*g\b', name_lower)
+            if kg_m:
+                result['total_weight_g'] = float(kg_m.group(1)) * 1000
+            elif g_m:
+                result['total_weight_g'] = float(g_m.group(1))
+                
     except Exception as e:
         print(f"  [TWT Error] {product_url}: {e}")
-    
+        
     return result
 
 

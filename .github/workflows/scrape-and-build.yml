@@ -33,7 +33,6 @@ jobs:
       - name: Install Scraper Dependencies
         run: |
           pip install -r scraper/requirements.txt
-          playwright install chromium
 
       - name: Run Scraper
         run: python scraper/main.py
