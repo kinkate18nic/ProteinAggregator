@@ -74,12 +74,16 @@ def scrape_healthkart(product_url):
         # --- NUTRITIONAL DATA from nut_info_grp ---
         nut_info = results.get('nut_info_grp', [])
         for item in nut_info:
-            nm = (item.get('nm') or item.get('dis_nm') or '').lower()
+            nm = (item.get('nm') or '').lower()
+            dis_nm = (item.get('dis_nm') or '').lower()
             val_str = item.get('val', '')
-            if 'protein' in nm and val_str:
+            if ('protein' in nm or 'protein' in dis_nm) and val_str:
                 num = re.search(r'([\d.]+)', val_str)
                 if num:
-                    result['protein_per_serving_g'] = float(num.group(1))
+                    if '%' in dis_nm or 'percent' in dis_nm or 'prctn' in nm:
+                        result['protein_percent'] = float(num.group(1))
+                    else:
+                        result['protein_per_serving_g'] = float(num.group(1))
         
         # --- VARIANT ATTRIBUTES (Protein %, Serving Size, Number of Servings) ---
         # These are inside each variant's 'hghAttr' within 'availVar', NOT the top-level 'attr'.
@@ -142,6 +146,10 @@ def scrape_healthkart(product_url):
             # Read the variant's actual full name (includes weight + flavor)
             if selected_variant.get('fullName'):
                 result['scraped_name'] = selected_variant['fullName'].strip()
+        
+        # Fallback for scraped_name if no selected_variant was found (e.g., out of stock)
+        if not result['scraped_name'] and results.get('nm'):
+            result['scraped_name'] = results['nm'].strip()
         
         # --- COMPUTE TOTAL WEIGHT ---
         if result['serving_size_g'] and result['num_servings']:
@@ -801,6 +809,11 @@ def scrape_1mg(product_url):
         serv_match = re.search(r'(\d+)\.?\d*\s*(?:servings?|sachets?)', page_text, re.IGNORECASE)
         if serv_match:
             result['num_servings'] = int(serv_match.group(1))
+        # Fallback: look for servings in product URL (qv parameter)
+        if not result['num_servings']:
+            url_serv_match = re.search(r'[?&]qv=(\d+)', product_url, re.IGNORECASE)
+            if url_serv_match:
+                result['num_servings'] = int(url_serv_match.group(1))
         
         # Total weight from product name or title
         name_for_weight = result['scraped_name'] or ''
@@ -808,10 +821,15 @@ def scrape_1mg(product_url):
         if wt_match:
             result['total_weight_g'] = float(wt_match.group(1)) * 1000
         else:
-            # Fallback: look for weight in page text (e.g., "1 kg pack")
+            # Fallback 1: look for weight in page text (e.g., "1 kg pack")
             wt_match_2 = re.search(r'(\d+(?:\.\d+)?)\s*kg\s*(?:pack|packs)', page_text, re.IGNORECASE)
             if wt_match_2:
                 result['total_weight_g'] = float(wt_match_2.group(1)) * 1000
+            else:
+                # Fallback 2: look for weight in product URL (e.g., "1kg-pack")
+                url_wt_match = re.search(r'(\d+(?:\.\d+)?)\s*kg', product_url, re.IGNORECASE)
+                if url_wt_match:
+                    result['total_weight_g'] = float(url_wt_match.group(1)) * 1000
         
         # --- DERIVED: serving_size_g and protein_percent ---
         if result['total_weight_g'] and result['num_servings']:
